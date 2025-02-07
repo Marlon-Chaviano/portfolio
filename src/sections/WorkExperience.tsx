@@ -43,7 +43,7 @@ const data = [
 
 				<div>
 					<img
-						src="/src/assets/observatorio-minem.webp"
+						src="src/assets/observatorio-minem.webp"
 						width={1920}
 						height={1080}
 						alt="Observatorio Tecnológico CIPIMM"
@@ -83,7 +83,7 @@ const data = [
 				</div>
 				<div>
 					<img
-						src="/src/assets/nel&shey.webp"
+						src="src/assets/nel&shey.webp"
 						width={1920}
 						height={1080}
 						alt="Nel & Shey Medical Center"
@@ -140,7 +140,7 @@ const data = [
 
 				<div>
 					<img
-						src="/src/assets/connetcare.webp"
+						src="src/assets/connetcare.webp"
 						width={1920}
 						height={1080}
 						alt="ConnetCare"
