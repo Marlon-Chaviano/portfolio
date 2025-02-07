@@ -1,0 +1,12 @@
+---
+interface Props {
+	quantity: number
+	text: string
+}
+const { quantity, text } = Astro.props
+---
+
+<article class="border-slate-400/52 flex w-fit flex-col space-y-3 rounded-xl border p-6 shadow-xl">
+	<p class="text-gradient text-5xl text-orange-500">{quantity}+</p>
+	<p class="gradient-text text-left">{text}</p>
+</article>

@@ -1,0 +1,34 @@
+---
+import LandingPage from "./icons/LandingPage.astro"
+import WebSolutions from "./icons/WebSolutions.astro"
+import BackendService from "./icons/BackendService.astro"
+import RightArrowWithDots from "./icons/RightArrowWithDots.astro"
+
+const { title, body, id } = Astro.props
+---
+
+<article
+	class="custom-card-border custom-card-shadow group grid w-full max-w-sm gap-y-4 rounded-xl bg-slate-900/60 p-8"
+>
+	<div
+		class="flex w-fit rounded-full border border-orange-500/[0.50] p-4 shadow-md shadow-orange-600/[0.50]"
+	>
+		<span>
+			{id == 1 && <LandingPage />}
+			{id == 2 && <WebSolutions />}
+			{id == 3 && <BackendService />}
+		</span>
+	</div>
+	<p class="text-xl font-bold text-slate-300">{title}</p>
+	<p class="text-sm text-slate-400">{body}</p>
+
+	<a
+		class="relative -ml-2 mt-auto flex w-fit items-center rounded-full border border-transparent px-2 py-1 text-center font-semibold text-orange-500 transition duration-500 group-hover:border-orange-500/[0.50] group-hover:shadow-xl group-hover:shadow-orange-600/[0.60]"
+		href="/servicios/"
+	>
+		<span>Ver más</span>
+		<span class="absolute -right-5 transition duration-200 group-hover:translate-x-2">
+			<RightArrowWithDots />
+		</span>
+	</a>
+</article>

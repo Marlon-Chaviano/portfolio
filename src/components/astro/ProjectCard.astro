@@ -1,0 +1,56 @@
+---
+interface Props {
+	title: string
+	description: string
+	thumbnail: string
+	tech_stack: {
+		title: string
+		icon: string
+	}[]
+	siteURL: string
+	repository: string
+}
+
+const { title, description, thumbnail, tech_stack, siteURL, repository } = Astro.props
+---
+
+<article
+	class="custom-card-border custom-card-shadow flex flex-col space-y-4 rounded-2xl bg-slate-900/60 p-8"
+>
+	<div>
+		<img src={thumbnail} alt={title} class="rounded-xl" width="600" height="400" />
+	</div>
+	<div class="flex flex-col space-y-4 text-slate-400">
+		<h4 class="text-xl font-bold text-slate-200">{title}</h4>
+		<p class="text-balance">{description}</p>
+		<div class="flex w-full items-center justify-between">
+			<div class="flex space-x-2">
+				{
+					tech_stack.map(({ title, icon }) => (
+						<img src={icon} class="h-10 w-10 text-orange-500" title={title} />
+					))
+				}
+			</div>
+			<div class="mt-4 flex space-x-4">
+				<a
+					title="Repositorio del proyecto ConnetCare"
+					target="_blank"
+					rel="noreferrer"
+					href="https://github.com/ezi-arts/connect-care"
+					class="rounded-full border border-transparent p-2 transition duration-200 hover:border-orange-500 hover:shadow-xl hover:shadow-orange-500/50"
+				>
+					git
+				</a>
+				<a
+					title="Sitio Web ConnetCare"
+					target="_blank"
+					rel="noreferrer"
+					href="http://connetcare.com"
+					class="rounded-full border border-transparent p-2 transition duration-200 hover:border-orange-500 hover:shadow-xl hover:shadow-orange-500/50"
+				>
+					page
+				</a>
+			</div>
+		</div>
+	</div>
+</article>

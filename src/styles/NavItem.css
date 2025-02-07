@@ -1,0 +1,33 @@
+li {
+	font-family: inherit;
+	position: relative;
+	border: none;
+	background: none;
+	transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+	transition-duration: 400ms;
+	transition-property: color;
+}
+
+.inactive:focus:after,
+.inactive:hover:after {
+	width: 100%;
+	left: 0%;
+}
+.active:focus:after,
+.active:hover:after {
+	width: 0%;
+	left: 0%;
+}
+
+.inactive:after {
+	content: "";
+	pointer-events: none;
+	bottom: -2px;
+	left: 50%;
+	position: absolute;
+	width: 0%;
+	height: 2px;
+	transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+	transition-duration: 400ms;
+	transition-property: width, left;
+}

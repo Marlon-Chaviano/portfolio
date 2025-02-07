@@ -1,0 +1,86 @@
+---
+import Header from "@/components/astro/Header.astro"
+
+const { title, keywords, description } = Astro.props
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="description" content={description} />
+		<meta name="keywords" content={keywords} />
+		<title>{title} · Marlon Chaviano</title>
+	</head>
+	<body class="grid bg-slate-950 text-white">
+		<Header />
+		<main class="flex min-h-screen w-full">
+			<div class="relative flex-1 flex-grow px-8">
+				<slot />
+			</div>
+		</main>
+		<footer class="mt-auto">footer</footer>
+	</body>
+</html>
+
+<style>
+	/* CSS Reset */
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
+	* {
+		margin: 0;
+	}
+
+	body {
+		line-height: 1.5;
+		-webkit-font-smoothing: antialiased;
+	}
+
+	img,
+	picture,
+	video,
+	canvas,
+	svg {
+		display: block;
+		max-width: 100%;
+	}
+
+	input,
+	button,
+	textarea,
+	select {
+		font: inherit;
+	}
+
+	p,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		overflow-wrap: break-word;
+	}
+
+	p {
+		text-wrap: pretty;
+	}
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		text-wrap: balance;
+	}
+	#root,
+	#__next {
+		isolation: isolate;
+	}
+</style>

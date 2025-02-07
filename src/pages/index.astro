@@ -1,0 +1,23 @@
+---
+import Layout from "../layouts/Layout.astro"
+import "@/styles/globals.css"
+import LampEffect from "@/sections/LampEffect"
+import Services from "@/components/astro/Services.astro"
+import WorkExperience from "@/sections/WorkExperience"
+import InfoCard from "@/components/astro/InfoCard.astro"
+import { info_es } from "@/constants/infoCards"
+import Projects from "@/sections/Projects.astro"
+---
+
+<Layout
+	title="</>"
+	description="Descubre el portafolio de Marlon Chaviano Guevara, desarrollador front-end especializado en la creación de páginas web. Explora mis proyectos y contacta para llevar tu presencia en línea al siguiente nivel."
+	keywords="desarrollador front-end, páginas web, Marlon Chaviano Guevara, diseño web, HTML, CSS, JavaScript, soluciones digitales, portafolio web, presencia en línea, React, Astro, Astro portafolio, Next.js, landing pages, cuba, desarrollador en cuba"
+>
+	<div class="min-h-screen pt-28">
+		<LampEffect client:only="react" />
+	</div>
+	<Services />
+	<WorkExperience client:only="react" />
+	<Projects />
+</Layout>
