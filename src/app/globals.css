@@ -1,26 +1,646 @@
 @import "tailwindcss";
 
+/*
+ * Black, white and the greys between them. The only colour on the site comes
+ * from project previews and book covers. Follows the visitor's system theme.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f4f4f4;
+  --fg: #0e0e0e;
+  --muted: #6e6e6e;
+  --faint: #707070;
+  --line: rgb(0 0 0 / 0.14);
+  --tile: rgb(0 0 0 / 0.04);
+  --card: #ececec;
+  --page-gutter: 1.25rem;
+
+  --duration-exit: 150ms;
+  --duration-enter: 240ms;
+  --duration-move: 420ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@media (min-width: 640px) {
+  :root { --page-gutter: 2.5rem; }
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg: #0b0b0b;
+    --fg: #ededed;
+    --muted: #8c8c8c;
+    --faint: #969696;
+    --line: rgb(255 255 255 / 0.14);
+    --tile: rgb(255 255 255 / 0.05);
+    --card: #141414;
+
+    color-scheme: dark;
   }
 }
 
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-tile: var(--tile);
+  --color-card: var(--card);
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  background: var(--bg);
+  scrollbar-color: var(--faint) transparent;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+:focus-visible {
+  outline: 1px solid var(--fg);
+  outline-offset: 4px;
+}
+
+/* ---------- Type ---------- */
+
+/* Headlines are a heavy grotesque in sentence case: big and tight, never uppercase. */
+.display {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.title {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+/* Page headlines: wide enough to own the page, short enough to leave room beside them. */
+.page-title {
+  margin-left: -0.04em;
+  font-size: clamp(3rem, 7vw, 6rem);
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* The outer frame follows the shared 1320px shell without consuming its inset. */
+.site-frame { position: relative; }
+.site-frame::after {
+  content: "";
+  position: absolute;
+  z-index: 20;
+  top: 3.5rem;
+  bottom: 0;
+  left: 50%;
+  width: min(100%, 1320px);
+  transform: translateX(-50%);
+  border-inline: 1px solid var(--line);
+  pointer-events: none;
+}
+.site-frame-standalone::after { top: 0; }
+
+.site-navbar { position: relative; }
+.site-navbar::before,
+.site-mobile-menu::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-inline: 1px solid var(--line);
+  pointer-events: none;
+}
+
+/* Section rules span the frame while their contents retain the shared inset. */
+.frame-rule-top,
+.editorial-row {
+  position: relative;
+  border-top: 1px solid transparent;
+}
+.frame-rule-top::before,
+.editorial-row::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: calc(-1 * var(--page-gutter));
+  right: calc(-1 * var(--page-gutter));
+  height: 1px;
+  background: var(--line);
+  pointer-events: none;
+}
+
+/* One margin column and one content edge across the whole portfolio. */
+.page-header,
+.editorial-row {
+  position: relative;
+  display: grid;
+  gap: 1.5rem 2.5rem;
+  padding-block: 2rem;
+}
+.page-header { padding-bottom: 3rem; }
+.editorial-content { min-width: 0; }
+.section-label {
+  align-self: start;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.page-sections { display: grid; }
+.page-sections > .editorial-row:last-child { padding-bottom: 0; }
+
+.library-tab-bar {
+  position: relative;
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Keep Contact's bottom spacing inside the ruled section, up to the footer. */
+.contact-page { padding-bottom: 0; }
+.contact-details { padding-bottom: 6rem; }
+.contact-form-column { position: relative; min-width: 0; }
+
+@media (min-width: 1024px) {
+  .page-header,
+  .editorial-row { grid-template-columns: 13rem minmax(0, 1fr); }
+  /* One continuous rule includes every section gap and the space before the footer. */
+  .editorial-content { border-left: 1px solid transparent; padding-left: 2.5rem; }
+  .page-shell:has(.page-header, .editorial-row)::before {
+    content: "";
+    position: absolute;
+    top: 3.5rem;
+    bottom: 0;
+    left: 18rem;
+    width: 1px;
+    background: var(--line);
+    pointer-events: none;
+  }
+  .section-label { position: sticky; top: 6rem; }
+  .library-tab-bar { margin-left: 18rem; }
+  .contact-socials {
+    margin-left: calc(-2.5rem - 1px);
+    padding-left: calc(2.5rem + 1px);
+  }
+}
+
+@media (min-width: 1280px) {
+  /* Bisect the column gap and connect both section boundaries. */
+  .contact-form-column::before {
+    content: "";
+    position: absolute;
+    top: calc(-2rem - 1px);
+    bottom: -6rem;
+    left: -1.5rem;
+    width: 1px;
+    background: var(--line);
+    pointer-events: none;
+  }
+  .contact-socials { margin-right: -1.5rem; }
+}
+
+.contact-field {
+  display: block;
+  width: 100%;
+  margin-top: 0.75rem;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  padding: 0.875rem 1rem;
+  font: inherit;
+  color: var(--fg);
+  transition: border-color 160ms ease;
+}
+.contact-field:focus { border-color: var(--fg); }
+.contact-field::placeholder { color: var(--muted); }
+
+.puzzle-board {
+  position: relative;
+  aspect-ratio: 1;
+  width: min(100%, 24rem);
+  margin-inline: auto;
+  isolation: isolate;
+}
+.puzzle-tiles {
+  position: absolute;
+  inset: 12.5%;
+}
+.puzzle-tile {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: calc(100% / 3 - 8px);
+  height: calc(100% / 3 - 8px);
+  margin: 4px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--fg);
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 200ms var(--ease-out), background-color 160ms ease;
+}
+.puzzle-tile[aria-disabled="true"] { cursor: default; }
+.puzzle-board[data-rendered="true"] .puzzle-tile { border-color: transparent; background: transparent; }
+.puzzle-tile:focus-visible { outline: 2px solid var(--fg); outline-offset: -4px; }
+.puzzle-complete-mark {
+  position: absolute;
+  inset: auto 0 0 auto;
+  display: grid;
+  width: calc(100% / 3);
+  height: calc(100% / 3);
+  place-items: center;
+  color: var(--fg);
+  animation: rise var(--duration-enter) var(--ease-out) both;
+}
+.puzzle-board[data-solved="true"] {
+  animation: puzzle-victory 700ms var(--ease-out) 200ms both;
+}
+@keyframes puzzle-victory {
+  0%, 100% { transform: none; }
+  35% { transform: translateY(-10px) rotate(-2deg) scale(1.04); }
+  65% { transform: translateY(-4px) rotate(1deg) scale(1.02); }
+}
+.puzzle-success { animation: rise var(--duration-enter) var(--ease-out) both; }
+.brand-icon { flex: none; object-fit: contain; }
+.brand-icon-mono { filter: brightness(0); }
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  opacity: 0.65;
+  transition: opacity 160ms ease;
+}
+.social-link:hover, .social-link:focus-visible { opacity: 1; }
+@media (prefers-color-scheme: dark) {
+  .brand-icon-mono { filter: brightness(0) invert(1); }
+}
+@media (hover: hover) and (pointer: fine) {
+  .puzzle-tile:not([aria-disabled="true"]):hover { background: var(--tile); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .puzzle-tile { transition: none; }
+  .puzzle-board[data-solved="true"], .puzzle-complete-mark, .puzzle-success { animation: none; }
+}
+
+.serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.link {
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+  transition: text-decoration-color 200ms ease;
+}
+.link:hover {
+  text-decoration-color: var(--fg);
+}
+
+/* ---------- Buttons ---------- */
+
+/* Square, hairline, mono: a button is a labelled edge, not a pill. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border: 1px solid var(--line);
+  padding: 0.85rem 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
+}
+.btn:hover {
+  border-color: var(--fg);
+}
+.btn-primary {
+  border-color: var(--fg);
+  background: var(--fg);
+  color: var(--bg);
+}
+.btn-primary:hover {
+  background: transparent;
+  color: var(--fg);
+}
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+/* ---------- Motion ---------- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.6em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 800ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 80ms);
+}
+
+/* Scroll-driven reveal where supported; visible by default elsewhere. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 45%;
+    }
+  }
+}
+
+@keyframes pulse-dot {
+  50% {
+    opacity: 0.25;
+  }
+}
+.live-dot {
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+/* ---------- View transitions ---------- */
+
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-old(.move-forward) {
+  --slide-offset: -32px;
+  animation:
+    var(--duration-exit) ease-in both vt-fade reverse,
+    var(--duration-move) ease-in-out both vt-slide reverse;
+}
+::view-transition-new(.move-forward) {
+  --slide-offset: 32px;
+  animation:
+    var(--duration-enter) ease-out var(--duration-exit) both vt-fade,
+    var(--duration-move) ease-in-out both vt-slide;
+}
+::view-transition-old(.move-back) {
+  --slide-offset: 32px;
+  animation:
+    var(--duration-exit) ease-in both vt-fade reverse,
+    var(--duration-move) ease-in-out both vt-slide reverse;
+}
+::view-transition-new(.move-back) {
+  --slide-offset: -32px;
+  animation:
+    var(--duration-enter) ease-out var(--duration-exit) both vt-fade,
+    var(--duration-move) ease-in-out both vt-slide;
+}
+
+@keyframes vt-fade {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+@keyframes vt-slide {
+  from {
+    translate: var(--slide-offset);
+  }
+  to {
+    translate: 0;
+  }
+}
+
+::view-transition-group(.morph) {
+  animation-duration: var(--duration-move);
+  animation-timing-function: var(--ease-out);
+}
+
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+
+  .rise,
+  .live-dot {
+    animation: none;
+  }
+}
+
+/* ---------- Pieces ---------- */
+
+/* Static stand-in for the animated background (reduced motion, low power). */
+.poster {
+  background-image: radial-gradient(var(--line) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+dialog::backdrop {
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+/* ---------- Articles (blog posts) ---------- */
+
+.prose {
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: color-mix(in srgb, var(--fg) 82%, transparent);
+}
+.prose > * + * {
+  margin-top: 1.4em;
+}
+.prose h2 {
+  margin-top: 2.2em;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  color: var(--fg);
+}
+.prose h3 {
+  margin-top: 2em;
+  font-size: 1.3rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+.prose a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--faint);
+  text-underline-offset: 0.25em;
+}
+.prose strong {
+  font-weight: 600;
+  color: var(--fg);
+}
+.prose ul,
+.prose ol {
+  padding-left: 1.25em;
+}
+.prose ul {
+  list-style: disc;
+}
+.prose ol {
+  list-style: decimal;
+}
+.prose li + li {
+  margin-top: 0.4em;
+}
+.prose li::marker {
+  color: var(--muted);
+}
+.prose blockquote {
+  border-left: 1px solid var(--fg);
+  padding-left: 1.25em;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--fg);
+}
+.prose code {
+  border: 1px solid var(--line);
+  background: var(--tile);
+  padding: 0.1em 0.35em;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+.prose pre {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  background: var(--card);
+  padding: 1.1rem 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.prose pre code {
+  border: 0;
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+.prose hr {
+  margin-block: 2.5em;
+  border-color: var(--line);
+}
+.prose img {
+  border: 1px solid var(--line);
+}
+
+/* ---------- Home ---------- */
+
+/* An endless, slow line of the tools in use. */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee {
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee > div {
+  display: flex;
+  width: max-content;
+  animation: marquee 48s linear infinite;
+}
+.marquee:hover > div {
+  animation-play-state: paused;
+}
+
+/* The process line draws itself as the section scrolls into view. */
+.track {
+  transform-origin: left;
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .track {
+      animation: track-grow linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 55%;
+    }
+  }
+}
+@keyframes track-grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* Hero lines climb out from behind their own baseline, one after another. */
+@keyframes line-up {
+  from {
+    transform: translateY(110%);
+  }
+}
+.line-up {
+  animation: line-up 1000ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 120ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee > div,
+  .line-up {
+    animation: none;
+  }
 }

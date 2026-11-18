@@ -1,0 +1,601 @@
+{
+  "syncedOn": "2026-11-17",
+  "notes": [
+    "Software combines AI Product Engineer roadmap book resources with previously completed software books from the Notion reading log and portfolio, restored at Marlon’s request. Roadmap reading and queue statuses come from Resources; prior completion dates remain from their original Notion sources.",
+    "Literature preserves the 24 nontechnical completed books in the personal Books database.",
+    "Chess excludes discarded books and merges the two references to Silman's Complete Endgame Course.",
+    "Marlon explicitly confirmed in conversation that Silman and Polgár are his current chess reading, resolving the outdated Chess overview.",
+    "Covers identify the work; they do not claim the reader used that edition. Completion dates are included only where recorded."
+  ],
+  "descriptionReferences": {
+    "AI Engineering": "https://huyenchip.com/books/",
+    "The Mom Test": "https://www.momtestbook.com/",
+    "Silman's Complete Endgame Course": "https://app.notion.com/3fcc9cbe6a7b81b7b24feb696082d93e",
+    "Chess: 5334 Problems, Combinations, and Games": "https://app.notion.com/3fcc9cbe6a7b815498ade1759d4524df"
+  },
+  "books": [
+    {
+      "title": "$100M Offers",
+      "notion": "https://app.notion.com/41bc9cbe6a7b81969306e8e6600ece31",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "AI Engineering",
+      "notion": "https://app.notion.com/41bc9cbe6a7b815791b0f4b0e6255e9b",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144",
+      "cover": {
+        "file": "/books/ai-engineering.jpg",
+        "image": "https://covers.openlibrary.org/b/id/15091156-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL39671094W"
+      }
+    },
+    {
+      "title": "Fluent React",
+      "notion": "https://app.notion.com/41bc9cbe6a7b8153b808e808bdd885be",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144",
+      "cover": {
+        "file": "/books/fluent-react.jpg",
+        "image": "https://learning.oreilly.com/library/cover/9781098138707/400w/",
+        "catalog": "https://www.oreilly.com/library/view/fluent-react/9781098138707/"
+      }
+    },
+    {
+      "title": "Obviously Awesome",
+      "notion": "https://app.notion.com/41bc9cbe6a7b81e08da3f31377db0636",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "Real-World Next.js",
+      "notion": "https://app.notion.com/41bc9cbe6a7b81e392f0ff629cf5753b",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144",
+      "cover": {
+        "file": "/books/real-world-next-js.jpg",
+        "image": "https://covers.openlibrary.org/b/id/13166260-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL27708692W"
+      }
+    },
+    {
+      "title": "The Mom Test",
+      "notion": "https://app.notion.com/41bc9cbe6a7b8132b252e0fb7bad340e",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144",
+      "cover": {
+        "file": "/books/the-mom-test.jpg",
+        "image": "https://covers.openlibrary.org/b/id/10660557-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL23982116W"
+      }
+    },
+    {
+      "title": "Writing for Developers",
+      "notion": "https://app.notion.com/41bc9cbe6a7b817d96b7f6c1e041ef7b",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "$100M Leads",
+      "notion": "https://app.notion.com/41bc9cbe6a7b81a8b134ce3967c7dbdc",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "A Philosophy of Software Design",
+      "notion": "https://app.notion.com/41bc9cbe6a7b819c9154e41c911a6d5b",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144",
+      "cover": {
+        "file": "/books/a-philosophy-of-software-design.jpg",
+        "image": "https://covers.openlibrary.org/b/id/10352230-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL21221785W"
+      }
+    },
+    {
+      "title": "Designing Data-Intensive Applications (2ª ed.)",
+      "notion": "https://app.notion.com/41bc9cbe6a7b81f59efee9f574bd0cb8",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "Founding Sales",
+      "notion": "https://app.notion.com/41bc9cbe6a7b81ef9855f2e80d499686",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "High Performance PostgreSQL for Rails",
+      "notion": "https://app.notion.com/41bc9cbe6a7b812c993cfa0774f2dac7",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144",
+      "cover": {
+        "file": "/books/high-performance-postgresql-for-rails.jpg",
+        "image": "https://covers.openlibrary.org/b/id/15169416-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL41881364W"
+      }
+    },
+    {
+      "title": "Learning OpenTelemetry",
+      "notion": "https://app.notion.com/41bc9cbe6a7b816a9f88d9fccea4af1b",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "OAuth 2.0 Simplified",
+      "notion": "https://app.notion.com/41bc9cbe6a7b811fad2dc901f168bc3b",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "Evals for AI Engineers",
+      "notion": "https://app.notion.com/41bc9cbe6a7b81b89017cbfc8705b5c2",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "Fluent Python (2ª ed.)",
+      "notion": "https://app.notion.com/41bc9cbe6a7b814299bad772521c1c58",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "Release It!",
+      "notion": "https://app.notion.com/41bc9cbe6a7b81b6b5ddd20f9e2fb233",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "Traction",
+      "notion": "https://app.notion.com/41bc9cbe6a7b81ec8d13cf55f53714de",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "$100M Money Models",
+      "notion": "https://app.notion.com/41bc9cbe6a7b810b8fe8cc9d7cf7ea99",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "Effective TypeScript (2ª ed.)",
+      "notion": "https://app.notion.com/41bc9cbe6a7b8168aea0c563dadf175e",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "Generative AI System Design Interview",
+      "notion": "https://app.notion.com/41bc9cbe6a7b8187b309e22824750206",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "Refactoring UI",
+      "notion": "https://app.notion.com/41bc9cbe6a7b817e957de1884da9a4cd",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "System Design Interview Vol. 1",
+      "notion": "https://app.notion.com/41bc9cbe6a7b819eae97cac591728b1a",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "The SaaS Playbook",
+      "notion": "https://app.notion.com/41bc9cbe6a7b814d9de8ce6a396fe417",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "The Software Engineer's Guidebook",
+      "notion": "https://app.notion.com/41bc9cbe6a7b815b9905f52bdef44017",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "The Staff Engineer's Path",
+      "notion": "https://app.notion.com/41bc9cbe6a7b8178bf36c5a8469940a6",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "Beyond Cracking the Coding Interview",
+      "notion": "https://app.notion.com/41bc9cbe6a7b81ea8d51c07c316ef639",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "Never Split the Difference",
+      "notion": "https://app.notion.com/41bc9cbe6a7b81f49a37c61689673a1a",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "Don't Make Me Think",
+      "notion": "https://app.notion.com/41bc9cbe6a7b81259eeece82112e30a0",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "Hands-On Large Language Models",
+      "notion": "https://app.notion.com/41bc9cbe6a7b817c8a03f10219966d23",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "Influence",
+      "notion": "https://app.notion.com/41bc9cbe6a7b81c18ac5cfc300aceccc",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "Laws of UX",
+      "notion": "https://app.notion.com/41bc9cbe6a7b818ab8f7fec797baaa59",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "Lean Analytics",
+      "notion": "https://app.notion.com/41bc9cbe6a7b81ef84a1ebeddac92d89",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "Observability Engineering (2ª ed.)",
+      "notion": "https://app.notion.com/41bc9cbe6a7b81318a4ac3b7ad56d358",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "Shape Up",
+      "notion": "https://app.notion.com/41bc9cbe6a7b817880f8ed910c68446d",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "The Adweek Copywriting Handbook",
+      "notion": "https://app.notion.com/41bc9cbe6a7b817eb56dee3988af7ff8",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "The Design of Everyday Things",
+      "notion": "https://app.notion.com/41bc9cbe6a7b816a9f59c52487b51ab7",
+      "roadmap": "https://app.notion.com/p/22dc9cbe6a7b808fab66fff74557c144"
+    },
+    {
+      "title": "Ensayo sobre la ceguera",
+      "notion": "https://app.notion.com/2f8c9cbe6a7b80f69be2f7d7f22db2d7",
+      "cover": {
+        "file": "/books/ensayo-sobre-la-ceguera.jpg",
+        "image": "https://covers.openlibrary.org/b/id/12329495-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL26382672W"
+      }
+    },
+    {
+      "title": "The Five People You Meet in Heaven",
+      "notion": "https://app.notion.com/2a0c9cbe6a7b80d7b673fa1a86f46a8b",
+      "cover": {
+        "file": "/books/the-five-people-you-meet-in-heaven.jpg",
+        "image": "https://covers.openlibrary.org/b/id/12553870-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL1822312W"
+      }
+    },
+    {
+      "title": "El signo de los cuatro",
+      "notion": "https://app.notion.com/27ec9cbe6a7b80c9ab61cc822ae182ff",
+      "cover": {
+        "file": "/books/el-signo-de-los-cuatro.jpg",
+        "image": "https://covers.openlibrary.org/b/id/14083533-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL35099753W"
+      }
+    },
+    {
+      "title": "Estudio en escarlata",
+      "notion": "https://app.notion.com/261c9cbe6a7b80478897f84f388856e6",
+      "cover": {
+        "file": "/books/estudio-en-escarlata.jpg",
+        "image": "https://covers.openlibrary.org/b/id/13971705-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL35011514W"
+      }
+    },
+    {
+      "title": "El extranjero",
+      "notion": "https://app.notion.com/1eac9cbe6a7b806c9af6f791a5686a95",
+      "cover": {
+        "file": "/books/el-extranjero.jpg",
+        "image": "https://covers.openlibrary.org/b/id/13151269-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL1230613W"
+      }
+    },
+    {
+      "title": "El amor en los tiempos del cólera",
+      "notion": "https://app.notion.com/1eac9cbe6a7b8015a8eee45bf817ebd9",
+      "cover": {
+        "file": "/books/el-amor-en-los-tiempos-de-colera.jpg",
+        "image": "https://covers.openlibrary.org/b/id/10096404-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL274518W"
+      }
+    },
+    {
+      "title": "Fahrenheit 451",
+      "notion": "https://app.notion.com/14fc9cbe6a7b80cd9fb3ca2a9dac4a41",
+      "cover": {
+        "file": "/books/fahrenheit-451.jpg",
+        "image": "https://covers.openlibrary.org/b/id/12993656-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL103123W"
+      }
+    },
+    {
+      "title": "El gran Gatsby",
+      "notion": "https://app.notion.com/84242e9657694922a24d1b64039e7a19",
+      "cover": {
+        "file": "/books/el-gran-gatsby.jpg",
+        "image": "https://covers.openlibrary.org/b/id/13479285-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL34754638W"
+      }
+    },
+    {
+      "title": "El señor de las moscas",
+      "notion": "https://app.notion.com/11ec9cbe6a7b807a9df5e0428455bfe8",
+      "cover": {
+        "file": "/books/el-senor-de-las-moscas.jpg",
+        "image": "https://covers.openlibrary.org/b/id/8684447-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL455327W"
+      }
+    },
+    {
+      "title": "1984",
+      "notion": "https://app.notion.com/48f890a08eb44fb485446fff40611bff",
+      "cover": {
+        "file": "/books/1984.jpg",
+        "image": "https://covers.openlibrary.org/b/id/9267242-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL1168083W"
+      }
+    },
+    {
+      "title": "El retrato de Dorian Gray",
+      "notion": "https://app.notion.com/b8e06b330a2f446fa230a940b8384914",
+      "cover": {
+        "file": "/books/el-retrato-de-dorian-gray.jpg",
+        "image": "https://covers.openlibrary.org/b/id/8061086-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL17783251W"
+      }
+    },
+    {
+      "title": "Orgullo y prejuicio",
+      "notion": "https://app.notion.com/6c52f71172f942cf9bcdf5baebe58298",
+      "cover": {
+        "file": "/books/orgullo-y-prejuicio.jpg",
+        "image": "https://covers.openlibrary.org/b/id/8566990-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL19651512W"
+      }
+    },
+    {
+      "title": "El alquimista",
+      "notion": "https://app.notion.com/df6f5cb84f654271812228838b4a35fe",
+      "cover": {
+        "file": "/books/el-alquimista.jpg",
+        "image": "https://covers.openlibrary.org/b/id/12674818-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL27690419W"
+      }
+    },
+    {
+      "title": "Crimen y castigo",
+      "notion": "https://app.notion.com/dbba569165b0441b9b9affdbcfcba97d",
+      "cover": {
+        "file": "/books/crimen-y-castigo.jpg",
+        "image": "https://covers.openlibrary.org/b/id/12328823-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL26382038W"
+      }
+    },
+    {
+      "title": "Cien años de soledad",
+      "notion": "https://app.notion.com/c2d5475ff1774b59a1539688909178b2",
+      "cover": {
+        "file": "/books/cien-anos-de-soledad.jpg",
+        "image": "https://covers.openlibrary.org/b/id/12627383-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL274505W"
+      }
+    },
+    {
+      "title": "El diablo ilustrado",
+      "notion": "https://app.notion.com/9007333e669a4059adecd9fabd344671",
+      "cover": {
+        "file": "/books/el-diablo-ilustrado.jpg",
+        "image": "https://covers.openlibrary.org/b/id/6274069-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL6078237W"
+      }
+    },
+    {
+      "title": "El viejo y el mar",
+      "notion": "https://app.notion.com/ba3b2ed1b20b42b6a2ccbfe6c0897221",
+      "cover": {
+        "file": "/books/el-viejo-y-el-mar.jpg",
+        "image": "https://covers.openlibrary.org/b/id/14289984-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL35257183W"
+      }
+    },
+    {
+      "title": "Rich Dad, Poor Dad",
+      "notion": "https://app.notion.com/d3f70d21a2344d81bf96f6e2c75e5ee8",
+      "cover": {
+        "file": "/books/rich-dad-poor-dad.jpg",
+        "image": "https://covers.openlibrary.org/b/id/8315603-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL2010879W"
+      }
+    },
+    {
+      "title": "Sapiens: De animales a dioses",
+      "notion": "https://app.notion.com/17348212320c447681e36c1fe12da14f",
+      "cover": {
+        "file": "/books/sapiens-de-animales-a-dioses.jpg",
+        "image": "https://covers.openlibrary.org/b/id/8634250-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL17075811W"
+      }
+    },
+    {
+      "title": "El cuervo",
+      "notion": "https://app.notion.com/10dc9cbe6a7b80c69947d5dbbd43d863",
+      "cover": {
+        "file": "/books/el-cuervo.jpg",
+        "image": "https://covers.openlibrary.org/b/id/8246077-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL41081W"
+      }
+    },
+    {
+      "title": "Animal Farm",
+      "notion": "https://app.notion.com/1f4c9cbe6a7b808cab91c07fef8a4823",
+      "cover": {
+        "file": "/books/animal-farm.jpg",
+        "image": "https://covers.openlibrary.org/b/id/11261770-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL1168007W"
+      }
+    },
+    {
+      "title": "Cumbres borrascosas",
+      "notion": "https://app.notion.com/22dc9cbe6a7b804988b5fda21aecd8a4",
+      "cover": {
+        "file": "/books/cumbres-borrascosas.jpg",
+        "image": "https://covers.openlibrary.org/b/id/15235867-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL45726200W"
+      }
+    },
+    {
+      "title": "The Adventures of Sherlock Holmes",
+      "notion": "https://app.notion.com/28dc9cbe6a7b800a813fd922bf54c2c0",
+      "cover": {
+        "file": "/books/the-adventures-of-sherlock-holmes.jpg",
+        "image": "https://covers.openlibrary.org/b/id/6717853-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL262421W"
+      }
+    },
+    {
+      "title": "El principito",
+      "notion": "https://app.notion.com/9fc23a8ee69b4fdfad2a97351d555179",
+      "cover": {
+        "file": "/books/el-principito.jpg",
+        "image": "https://covers.openlibrary.org/b/id/4978949-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL10278W"
+      }
+    },
+    {
+      "title": "Logical Chess: Move by Move",
+      "notion": "https://app.notion.com/3fcc9cbe6a7b8144bdc7dd72cabc5f5d",
+      "roadmap": "https://app.notion.com/p/2dfc9cbe6a7b803ba7aedee697424fa5",
+      "cover": {
+        "file": "/books/logical-chess-move-by-move.jpg",
+        "image": "https://covers.openlibrary.org/b/id/6877988-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL16043919W"
+      }
+    },
+    {
+      "title": "Winning Chess Tactics",
+      "notion": "https://app.notion.com/3fcc9cbe6a7b81cfa8cdc2e0ab721c34",
+      "roadmap": "https://app.notion.com/p/2dfc9cbe6a7b803ba7aedee697424fa5",
+      "cover": {
+        "file": "/books/winning-chess-tactics.jpg",
+        "image": "https://covers.openlibrary.org/b/id/909559-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL9047146W"
+      }
+    },
+    {
+      "title": "Silman's Complete Endgame Course",
+      "notion": "https://app.notion.com/3fcc9cbe6a7b81b7b24feb696082d93e",
+      "roadmap": "https://app.notion.com/p/2dfc9cbe6a7b803ba7aedee697424fa5",
+      "cover": {
+        "file": "/books/silmans-complete-endgame-course.jpg",
+        "image": "https://covers.openlibrary.org/b/id/938090-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL1806211W"
+      }
+    },
+    {
+      "title": "Chess: 5334 Problems, Combinations, and Games",
+      "notion": "https://app.notion.com/3fcc9cbe6a7b815498ade1759d4524df",
+      "roadmap": "https://app.notion.com/p/2dfc9cbe6a7b803ba7aedee697424fa5",
+      "cover": {
+        "file": "/books/chess-5334-problems.jpg",
+        "image": "https://covers.openlibrary.org/b/id/8558574-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL19641960W"
+      }
+    },
+    {
+      "title": "The Woodpecker Method",
+      "notion": "https://app.notion.com/415c9cbe6a7b8164a326db6694105626",
+      "roadmap": "https://app.notion.com/p/2dfc9cbe6a7b803ba7aedee697424fa5"
+    },
+    {
+      "title": "The Amateur's Mind",
+      "notion": "https://app.notion.com/3fcc9cbe6a7b810d80e3d24e7983f25d",
+      "roadmap": "https://app.notion.com/p/2dfc9cbe6a7b803ba7aedee697424fa5"
+    },
+    {
+      "title": "Mastering Chess Strategy",
+      "notion": "https://app.notion.com/3fcc9cbe6a7b81d99a64dcef03398ed3",
+      "roadmap": "https://app.notion.com/p/2dfc9cbe6a7b803ba7aedee697424fa5"
+    },
+    {
+      "title": "Improve Your Chess Calculation",
+      "notion": "https://app.notion.com/3fcc9cbe6a7b817d9423c83d751e552d",
+      "roadmap": "https://app.notion.com/p/2dfc9cbe6a7b803ba7aedee697424fa5"
+    },
+    {
+      "title": "100 Endgames You Must Know",
+      "notion": "https://app.notion.com/3fcc9cbe6a7b81d4abcbeb01fda32156",
+      "roadmap": "https://app.notion.com/p/2dfc9cbe6a7b803ba7aedee697424fa5"
+    },
+    {
+      "title": "Chess Structures: A Grandmaster Guide",
+      "notion": "https://app.notion.com/3fcc9cbe6a7b8132b89ff29d210acb9b",
+      "roadmap": "https://app.notion.com/p/2dfc9cbe6a7b803ba7aedee697424fa5"
+    },
+    {
+      "title": "Grandmaster Preparation Series",
+      "notion": "https://app.notion.com/3fcc9cbe6a7b8197960ad2702e12b35b",
+      "roadmap": "https://app.notion.com/p/2dfc9cbe6a7b803ba7aedee697424fa5"
+    },
+    {
+      "title": "Dvoretsky's Endgame Manual",
+      "notion": "https://app.notion.com/3ffc9cbe6a7b81079ff5c8e9b45a14d5",
+      "roadmap": "https://app.notion.com/p/2dfc9cbe6a7b803ba7aedee697424fa5"
+    },
+    {
+      "title": "Even Faster Web Sites",
+      "notion": "https://app.notion.com/p/41bc9cbe6a7b81d68844d8bda70c5dd0",
+      "cover": {
+        "file": "/books/even-faster-web-sites.jpg",
+        "image": "https://covers.openlibrary.org/b/id/7262416-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL15471115W"
+      }
+    },
+    {
+      "title": "Inclusive Design Patterns",
+      "notion": "https://app.notion.com/2b9c9cbe6a7b8096ab9cf8f1df07c78d",
+      "cover": {
+        "file": "/books/inclusive-design-patterns-publisher.png",
+        "image": "https://res.cloudinary.com/indysigner/image/upload/v1543836827/shop/inclusive-design-patterns-shop.png",
+        "catalog": "https://shop.smashingmagazine.com/ebooks/inclusive-design-patterns-ebook/"
+      }
+    },
+    {
+      "title": "JavaScript: The Definitive Guide",
+      "notion": "https://app.notion.com/293c9cbe6a7b805187a4fd29c2b4f4e7",
+      "cover": {
+        "file": "/books/javascript-the-definitive-guide-publisher.jpg",
+        "image": "https://learning.oreilly.com/library/cover/9781491952016/1000w/",
+        "catalog": "https://www.oreilly.com/library/view/javascript-the-definitive/9781491952016/"
+      }
+    },
+    {
+      "title": "Frontend Architecture for Design Systems",
+      "notion": "https://app.notion.com/281c9cbe6a7b807398f0c0f4eddda8bc",
+      "cover": {
+        "file": "/books/frontend-architecture-for-design-systems.jpg",
+        "image": "https://covers.openlibrary.org/b/id/8906207-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL20250236W"
+      }
+    },
+    {
+      "title": "The Road to React",
+      "notion": "https://app.notion.com/p/41bc9cbe6a7b81d68844d8bda70c5dd0",
+      "cover": {
+        "file": "/books/the-road-to-react.jpg",
+        "image": "https://covers.openlibrary.org/b/id/9383710-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL20706310W"
+      }
+    },
+    {
+      "title": "Data Structure & Algorithm: Simply in Depth",
+      "notion": "https://app.notion.com/e35304875dee4d0fb831c1ebdce37926",
+      "cover": {
+        "file": "/books/data-structures-algorithms-in-depth.jpg",
+        "image": "https://books.google.com/books/content?id=TrJZDwAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+        "catalog": "https://play.google.com/store/books/details?id=TrJZDwAAQBAJ"
+      }
+    },
+    {
+      "title": "Cracking the Coding Interview",
+      "notion": "https://app.notion.com/0cdece719b594f579f5306aa6d4bbf3b",
+      "cover": {
+        "file": "/books/cracking-the-coding-interview.jpg",
+        "image": "https://covers.openlibrary.org/b/id/7276811-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL16816263W"
+      }
+    },
+    {
+      "title": "Clean Code",
+      "notion": "https://app.notion.com/150c9cbe6a7b80a88cabd23ac42fed5f",
+      "cover": {
+        "file": "/books/clean-code.jpg",
+        "image": "https://covers.openlibrary.org/b/id/8065615-L.jpg?default=false",
+        "catalog": "https://openlibrary.org/works/OL17618370W"
+      }
+    }
+  ]
+}

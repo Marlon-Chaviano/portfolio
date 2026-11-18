@@ -1,0 +1,181 @@
+{
+  "github": {
+    "source": "https://github.com/logos",
+    "provider": "Brandfetch"
+  },
+  "twilio": {
+    "source": "https://www.twilio.com",
+    "provider": "Brandfetch"
+  },
+  "playwright": {
+    "source": "https://github.com/microsoft/playwright.dev/blob/main/static/img/playwright-logo.svg",
+    "provider": "Microsoft"
+  },
+  "rspec": {
+    "source": "https://rspec.info/images/logo.png",
+    "provider": "RSpec"
+  },
+  "heroku": {
+    "source": "https://www.heroku.com",
+    "provider": "Brandfetch"
+  },
+  "maestro": {
+    "source": "https://maestro.dev/favicon.svg",
+    "provider": "Maestro"
+  },
+  "zustand": {
+    "source": "https://github.com/pmndrs/zustand/blob/main/docs/favicon.ico",
+    "provider": "Zustand",
+    "note": "Official favicon converted to PNG"
+  },
+  "react": {
+    "source": "https://github.com/facebook/create-react-app/blob/282c03f9525fdf8061ffa1ec50dce89296d916bd/test/fixtures/relative-paths/src/logo.svg",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "vue": {
+    "source": "https://github.com/vuejs/art/blob/a1c78b74569b70a25300925b4eacfefcc143b8f6/logo.svg",
+    "provider": "Simple Icons",
+    "license": "CC-BY-NC-SA-4.0"
+  },
+  "next": {
+    "source": "https://vercel.com/design/brands#next-js",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "astro": {
+    "source": "https://astro.build/press",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "typescript": {
+    "source": "https://www.typescriptlang.org/branding",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "rails": {
+    "source": "https://github.com/simple-icons/simple-icons/issues/9619#issuecomment-1735150580",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "postgresql": {
+    "source": "https://wiki.postgresql.org/wiki/Logo",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "redis": {
+    "source": "https://redis.io/brand-guidelines",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "sidekiq": {
+    "source": "https://sidekiq.org/about.html",
+    "provider": "Simple Icons",
+    "license": "CC-BY-SA-4.0"
+  },
+  "expo": {
+    "source": "https://expo.dev/brand/",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "mcp": {
+    "source": "https://github.com/modelcontextprotocol/docs/blob/573dc60c2e7aab2605b29d0bf27194aa7b02e4fb/logo/light.svg",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "x": {
+    "source": "https://x.com",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "leetcode": {
+    "source": "https://leetcode.com/store",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "node": {
+    "source": "https://nodejs.org/en/about/branding",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "pnpm": {
+    "source": "https://pnpm.io/logos",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "zod": {
+    "source": "https://github.com/colinhacks/zod/blob/ff89187172ac6aa4a6264592980d1628ee785242/logo/Logo%20White.ai",
+    "provider": "Simple Icons",
+    "license": "MIT"
+  },
+  "vitest": {
+    "source": "https://github.com/voidzero-dev/community-design-resources/blob/55902097229cf01cf2a4ceb376f992f5cf306756/brand-assets/vitest/vitest-icon-color-bracketless.svg",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "githubactions": {
+    "source": "https://github.com/features/actions",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "tanstack": {
+    "source": "https://tanstack.com/images/brand/tanstack-emblem-cream.svg",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "tailwind": {
+    "source": "https://tailwindcss.com/brand",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "stripe": {
+    "source": "https://stripe.com/newsroom/information",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "analytics": {
+    "source": "https://marketingplatform.google.com/intl/en_uk/about/analytics/",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "firebase": {
+    "source": "https://firebase.google.com/brand-guidelines",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "gsap": {
+    "source": "https://greensock.com",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "reacthookform": {
+    "source": "https://github.com/react-hook-form/documentation/blob/d049ffe923336ce7a5bf58990c54c07f39ab2429/src/images/Logo.svg",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "sqlite": {
+    "source": "https://github.com/sqlite/sqlite/blob/43e862723ec680542ca6f608f9963c0993dd7324/art/sqlite370.eps",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "jest": {
+    "source": "https://jestjs.io",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "radix": {
+    "source": "https://www.radix-ui.com",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "vercel": {
+    "source": "https://vercel.com/geist/brands",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  },
+  "whatsapp": {
+    "source": "https://about.meta.com/brand/resources/whatsapp/whatsapp-brand",
+    "provider": "Simple Icons",
+    "license": "CC0-1.0 collection; brand trademarks belong to their owners"
+  }
+}
