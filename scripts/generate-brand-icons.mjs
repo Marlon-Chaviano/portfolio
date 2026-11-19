@@ -3,15 +3,20 @@ import * as icons from "simple-icons";
 
 // Official brand shapes distributed by Simple Icons; retain provenance for updates.
 const names = {
+  javascript: "siJavascript", python: "siPython", django: "siDjango", nestjs: "siNestjs", prisma: "siPrisma",
+  supabase: "siSupabase", php: "siPhp", laravel: "siLaravel", drizzle: "siDrizzle",
+  pinia: "siPinia", vite: "siVite", three: "siThreedotjs", mdx: "siMdx",
+  celery: "siCelery", passport: "siPassport",
   react: "siReact", vue: "siVuedotjs", next: "siNextdotjs", astro: "siAstro",
   typescript: "siTypescript", rails: "siRubyonrails", postgresql: "siPostgresql",
   redis: "siRedis", sidekiq: "siSidekiq", expo: "siExpo", mcp: "siModelcontextprotocol",
-  x: "siX", leetcode: "siLeetcode", node: "siNodedotjs", pnpm: "siPnpm",
+  x: "siX", leetcode: "siLeetcode", chessdotcom: "siChessdotcom", node: "siNodedotjs", pnpm: "siPnpm",
   zod: "siZod", vitest: "siVitest", githubactions: "siGithubactions",
   tanstack: "siTanstack", tailwind: "siTailwindcss", stripe: "siStripe",
   analytics: "siGoogleanalytics", firebase: "siFirebase", gsap: "siGreensock",
   reacthookform: "siReacthookform", sqlite: "siSqlite", jest: "siJest",
   radix: "siRadixui", vercel: "siVercel", whatsapp: "siWhatsapp",
+  apple: "siApple", android: "siAndroid",
 };
 const provenance = {
   github: { source: "https://github.com/logos", provider: "Brandfetch" },

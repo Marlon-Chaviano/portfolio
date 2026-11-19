@@ -1,6 +1,13 @@
 import Image from "next/image";
 
 const brands: Record<string, { file: string; mono?: boolean; format?: "png" }> = {
+  JavaScript: { file: "javascript" },
+  Python: { file: "python" }, Django: { file: "django" }, "Django REST Framework": { file: "django" },
+  NestJS: { file: "nestjs" }, Prisma: { file: "prisma" }, Supabase: { file: "supabase" },
+  PHP: { file: "php" }, Laravel: { file: "laravel" }, "Drizzle ORM": { file: "drizzle" },
+  Pinia: { file: "pinia" }, Vuex: { file: "vue" }, Vite: { file: "vite" },
+  "Three.js": { file: "three", mono: true }, MDX: { file: "mdx", mono: true },
+  Celery: { file: "celery" }, "Passport.js": { file: "passport" },
   React: { file: "react" }, "React Native": { file: "react" },
   Vue: { file: "vue" }, "Vue 3": { file: "vue" },
   "Next.js": { file: "next", mono: true }, Astro: { file: "astro" },
@@ -19,7 +26,8 @@ const brands: Record<string, { file: string; mono?: boolean; format?: "png" }> =
   RSpec: { file: "rspec", format: "png" }, Heroku: { file: "heroku", format: "png" },
   Zustand: { file: "zustand", format: "png" }, Maestro: { file: "maestro" },
   github: { file: "github", mono: true }, x: { file: "x", mono: true },
-  leetcode: { file: "leetcode" }, whatsapp: { file: "whatsapp" },
+  iOS: { file: "apple", mono: true }, Android: { file: "android" },
+  leetcode: { file: "leetcode" }, chessdotcom: { file: "chessdotcom" }, whatsapp: { file: "whatsapp" },
 };
 
 export function BrandIcon({ name, size = 24, monochrome = false }: { name: string; size?: number; monochrome?: boolean }) {
@@ -28,12 +36,12 @@ export function BrandIcon({ name, size = 24, monochrome = false }: { name: strin
   return <Image src={`/brands/${brand.file}.${brand.format ?? "svg"}`} alt="" aria-hidden="true" width={size} height={size} className={`brand-icon${monochrome || brand.mono ? " brand-icon-mono" : ""}`} style={{ width: size, height: size }} />;
 }
 
-export function TechnologyList({ items }: { items: string[] }) {
+export function TechnologyList({ items, compact = false }: { items: string[]; compact?: boolean }) {
   return (
-    <ul className="flex flex-wrap gap-x-6 gap-y-5">
+    <ul className={`flex flex-wrap ${compact ? "gap-x-4 gap-y-2" : "gap-x-6 gap-y-5"}`}>
       {items.map((name) => (
-        <li key={name} className="flex min-h-9 items-center gap-2.5 text-sm">
-          <BrandIcon name={name} />
+        <li key={name} className={`flex items-center text-sm ${compact ? "gap-1.5" : "min-h-9 gap-2.5"}`}>
+          <BrandIcon name={name} size={compact ? 16 : 24} />
           <span>{name}</span>
         </li>
       ))}

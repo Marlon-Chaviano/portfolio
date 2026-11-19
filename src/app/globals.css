@@ -1,14 +1,11 @@
 @import "tailwindcss";
 
-/*
- * Black, white and the greys between them. The only colour on the site comes
- * from project previews and book covers. Follows the visitor's system theme.
- */
+/* Neutral ink and paper tones follow the visitor’s system theme. */
 :root {
   --bg: #f4f4f4;
   --fg: #0e0e0e;
-  --muted: #6e6e6e;
-  --faint: #707070;
+  --muted: #595959;
+  --faint: #686868;
   --line: rgb(0 0 0 / 0.14);
   --tile: rgb(0 0 0 / 0.04);
   --card: #ececec;
@@ -30,7 +27,7 @@
   :root {
     --bg: #0b0b0b;
     --fg: #ededed;
-    --muted: #8c8c8c;
+    --muted: #b6b6b6;
     --faint: #969696;
     --line: rgb(255 255 255 / 0.14);
     --tile: rgb(255 255 255 / 0.05);
@@ -170,6 +167,10 @@ body {
 .page-sections { display: grid; }
 .page-sections > .editorial-row:last-child { padding-bottom: 0; }
 
+@media (min-width: 1024px) {
+  .page-shell { --editorial-divider: 18rem; }
+}
+
 .library-tab-bar {
   position: relative;
   display: flex;
@@ -191,7 +192,7 @@ body {
     position: absolute;
     top: 3.5rem;
     bottom: 0;
-    left: 18rem;
+    left: var(--editorial-divider);
     width: 1px;
     background: var(--line);
     pointer-events: none;
@@ -283,7 +284,7 @@ body {
   65% { transform: translateY(-4px) rotate(1deg) scale(1.02); }
 }
 .puzzle-success { animation: rise var(--duration-enter) var(--ease-out) both; }
-.brand-icon { flex: none; object-fit: contain; }
+.brand-icon { filter: grayscale(1); flex: none; object-fit: contain; }
 .brand-icon-mono { filter: brightness(0); }
 .social-link {
   display: inline-flex;
