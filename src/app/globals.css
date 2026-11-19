@@ -363,17 +363,7 @@ body {
   height: calc(100% / 3);
   place-items: center;
   color: var(--fg);
-  animation: rise var(--duration-enter) var(--ease-out) both;
 }
-.puzzle-board[data-solved="true"] {
-  animation: puzzle-victory 700ms var(--ease-out) 200ms both;
-}
-@keyframes puzzle-victory {
-  0%, 100% { transform: none; }
-  35% { transform: translateY(-10px) rotate(-2deg) scale(1.04); }
-  65% { transform: translateY(-4px) rotate(1deg) scale(1.02); }
-}
-.puzzle-success { animation: rise var(--duration-enter) var(--ease-out) both; }
 .brand-icon { filter: grayscale(1); flex: none; object-fit: contain; }
 .brand-icon-mono { filter: brightness(0); }
 .social-link {
@@ -394,7 +384,6 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .puzzle-tile { transition: none; }
-  .puzzle-board[data-solved="true"], .puzzle-complete-mark, .puzzle-success { animation: none; }
 }
 
 .serif {
