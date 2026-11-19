@@ -34,9 +34,8 @@ export const en = {
     ctaButton: "Start a conversation",
     explore: "Explore",
     elsewhere: "Elsewhere",
-    status: "Status",
     localTime: "Local time",
-    built: "Built with Next.js and React Bits.",
+    credit: { madeWith: "Made with", love: "love", by: "by" },
     top: "Back to top",
   },
   meta: {

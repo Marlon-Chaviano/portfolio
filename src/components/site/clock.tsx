@@ -21,3 +21,12 @@ export function Clock({ timeZone, label }: { timeZone: string; label: string }) 
     </span>
   );
 }
+
+export function LocalDate({ timeZone, locale }: { timeZone: string; locale: string }) {
+  const date = useSyncExternalStore(
+    subscribe,
+    () => new Intl.DateTimeFormat(locale, { timeZone, month: "short", day: "numeric" }).format(new Date()),
+    () => "—",
+  );
+  return <span className="tabular-nums">{date}</span>;
+}

@@ -121,6 +121,21 @@ body {
 .site-frame-standalone::after { top: 0; }
 
 .site-navbar { position: relative; }
+.nav-icon {
+  display: inline-grid;
+  width: 2.5rem;
+  min-height: 2.75rem;
+  flex: none;
+  place-items: center;
+  color: var(--muted);
+}
+.nav-tool {
+  display: grid;
+  place-items: center;
+  border-inline-start: 1px solid var(--line);
+}
+.nav-tool:is(:hover, :focus-visible),
+.nav-icon:is(:hover, :focus-visible) { color: var(--fg); }
 .site-navbar::before,
 .site-mobile-menu::after {
   content: "";

@@ -36,9 +36,8 @@ export const es: Dict = {
     ctaButton: "Empecemos a hablar",
     explore: "Explorar",
     elsewhere: "En otros sitios",
-    status: "Estado",
     localTime: "Hora local",
-    built: "Hecho con Next.js y React Bits.",
+    credit: { madeWith: "Hecho con", love: "amor", by: "por" },
     top: "Volver arriba",
   },
   meta: {

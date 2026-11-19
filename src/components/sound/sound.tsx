@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useSyncExternalStore } from "react";
+import { hasDesktopInteractions, useDesktopInteractions } from "@/lib/desktop-interactions";
 import type { Recipe } from "../sounds/react-bits-sound";
 import check from "../sounds/check";
 import hover from "../sounds/hover";
@@ -61,13 +62,16 @@ const loadEngine = () => {
 };
 
 export function playSound(name: SoundName) {
-  if (!enabled || !unlocked) return;
+  if (!enabled || !unlocked || !hasDesktopInteractions()) return;
   loadEngine()
-    .then((mod) => mod.playSound(recipes[name]))
+    .then((mod) => {
+      if (enabled && hasDesktopInteractions()) return mod.playSound(recipes[name]);
+    })
     .catch(() => undefined);
 }
 
 export function setSoundEnabled(next: boolean) {
+  if (!hasDesktopInteractions()) return;
   enabled = next;
   try {
     localStorage.setItem(STORAGE_KEY, next ? "on" : "off");
@@ -92,6 +96,7 @@ const INTERACTIVE = "a[href], button, [data-sound]";
 export function SoundEffects() {
   const pathname = usePathname();
   const firstPath = useRef(true);
+  const desktop = useDesktopInteractions();
 
   useEffect(() => {
     if (firstPath.current) {
@@ -102,6 +107,7 @@ export function SoundEffects() {
   }, [pathname]);
 
   useEffect(() => {
+    if (!desktop) return;
     let lastHover: Element | null = null;
 
     const unlock = () => {
@@ -143,7 +149,7 @@ export function SoundEffects() {
       window.removeEventListener("click", onClick);
       window.removeEventListener("keydown", onKey);
     };
-  }, []);
+  }, [desktop]);
 
   return null;
 }
@@ -154,21 +160,17 @@ export function SoundToggle({ on, off, hint }: { on: string; off: string; hint: 
     <button
       type="button"
       onClick={toggleSound}
+      aria-label={isOn ? on : off}
       aria-pressed={isOn}
+      aria-keyshortcuts="M"
       title={`${isOn ? on : off} · ${hint}`}
       data-sound="none"
-      className="flex items-center gap-2 py-2 text-faint uppercase transition-colors hover:text-fg aria-pressed:text-fg"
+      className="nav-tool aria-pressed:text-fg"
     >
-      <span aria-hidden className="flex h-3 items-end gap-[2px]">
-        {[0.45, 1, 0.65, 0.85].map((h, i) => (
-          <span
-            key={i}
-            className="w-[2px] origin-bottom bg-current transition-transform duration-300"
-            style={{ height: "100%", transform: `scaleY(${isOn ? h : 0.18})` }}
-          />
-        ))}
-      </span>
-      <span className="sr-only sm:not-sr-only">{isOn ? on : off}</span>
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 9h4l5-4v14l-5-4H3z" />
+        {isOn ? <path d="M15.5 8a6 6 0 0 1 0 8M18.5 5a10 10 0 0 1 0 14" /> : <path d="m16 9 5 6m0-6-5 6" />}
+      </svg>
     </button>
   );
 }

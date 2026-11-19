@@ -3,29 +3,22 @@ import type { Dict } from "@/i18n/en";
 import type { Locale } from "@/lib/i18n";
 import { navRoutes } from "@/lib/routes";
 import { MoveLink } from "../ui/move-link";
-import { Clock } from "./clock";
+import { Clock, LocalDate } from "./clock";
 import { SocialLinks } from "./social-links";
+import "./footer.css";
 
 export function Footer({ locale, t }: { locale: Locale; t: Dict }) {
   const f = t.footer;
-  const column = "label text-faint";
-  const item = "text-muted transition-colors hover:text-fg";
 
   return (
     <footer className="relative z-10 text-fg">
       <div className="mx-auto max-w-[1320px] px-5 sm:px-10">
-        <div className="frame-rule-top grid gap-x-10 gap-y-10 py-8 sm:grid-cols-2 lg:grid-cols-[13rem_repeat(3,minmax(0,1fr))]">
-          <div className="text-sm">
-            <p>{site.name}</p>
-            <p className="text-muted">{site.role}</p>
-          </div>
-
+        <div className="footer-navigation frame-rule-top grid items-center gap-x-8 py-2 sm:flex sm:flex-wrap sm:justify-between">
           <nav aria-label={f.explore}>
-            <p className={column}>{f.explore}</p>
-            <ul className="mt-4 space-y-1.5 text-sm">
+            <ul role="list" className="footer-nav-links grid grid-cols-3 gap-x-4 text-sm sm:flex sm:flex-wrap lg:gap-x-6">
               {navRoutes.map((route) => (
                 <li key={route.key}>
-                  <MoveLink href={`/${locale}${route.path}`} className={item}>
+                  <MoveLink href={`/${locale}${route.path}`} className="inline-flex min-h-11 items-center text-muted transition-colors hover:text-fg">
                     {t.nav[route.key]}
                   </MoveLink>
                 </li>
@@ -33,30 +26,31 @@ export function Footer({ locale, t }: { locale: Locale; t: Dict }) {
             </ul>
           </nav>
 
-          <div>
-            <p className={column}>{f.elsewhere}</p>
-            <div className="mt-4"><SocialLinks variant="text" /></div>
-          </div>
-
-          <div>
-            <p className={column}>{f.status}</p>
-            <ul className="mt-4 space-y-1.5 text-sm text-muted">
-              <li>{site.location}</li>
-              <li className="flex items-center gap-2">
-                <span aria-hidden className="live-dot size-1.5 bg-fg" />
-                <Clock timeZone={site.timeZone} label={f.localTime} />
-                <span>{f.localTime.toLowerCase()}</span>
-              </li>
-            </ul>
-          </div>
+          <nav aria-label={f.elsewhere}><SocialLinks variant="footer" /></nav>
         </div>
 
-        <div className="frame-rule-top label flex flex-col gap-2 py-5 text-faint sm:flex-row sm:justify-between">
+        <div className="footer-meta frame-rule-top grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 py-3 font-mono text-xs text-muted sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:py-2">
           <p>
-            © {site.name} · {f.built}
+            {f.credit.madeWith}{" "}
+            <svg aria-hidden="true" className="inline-block align-[-0.15em] text-fg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 21.2 3.1 12.4a5.5 5.5 0 0 1 7.8-7.8L12 5.7l1.1-1.1a5.5 5.5 0 0 1 7.8 7.8L12 21.2Z" />
+            </svg>
+            <span className="sr-only">{f.credit.love}</span>{" "}{f.credit.by}{" "}
+            <a href={site.socials.github} target="_blank" rel="me noopener noreferrer" className="whitespace-nowrap text-fg underline underline-offset-4">
+              {site.name}
+            </a>
           </p>
-          <a href="#top" className="transition-colors hover:text-fg">
-            {f.top} ↑
+          <p className="footer-local-time flex flex-wrap items-center gap-x-2 gap-y-1 justify-self-center">
+            <span>{site.location}</span>
+            <span aria-hidden="true">·</span>
+            <Clock timeZone={site.timeZone} label={f.localTime} />
+          </p>
+          <p className="footer-mobile-date">
+            Cuba <span aria-hidden="true">·</span> <LocalDate locale={locale} timeZone={site.timeZone} />
+          </p>
+          <a href="#top" aria-label={f.top} className="footer-back-to-top inline-flex min-h-11 min-w-11 items-center justify-end gap-2 transition-colors hover:text-fg">
+            <span>{f.top}</span>
+            <span aria-hidden="true" className="text-base">↑</span>
           </a>
         </div>
       </div>

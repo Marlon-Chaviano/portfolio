@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useDesktopInteractions } from "@/lib/desktop-interactions";
 import { toggleSound } from "../sound/sound";
 
 const OPEN_EVENT = "palette:open";
@@ -31,6 +32,7 @@ export function CommandPalette({
   const dialog = useRef<HTMLDialogElement>(null);
   const [query, setQuery] = useState("");
   const [index, setIndex] = useState(0);
+  const desktop = useDesktopInteractions();
 
   const q = query.trim().toLowerCase();
   const results = q
@@ -39,6 +41,8 @@ export function CommandPalette({
   const selected = Math.min(index, Math.max(results.length - 1, 0));
 
   useEffect(() => {
+    if (!desktop) return;
+
     const open = () => {
       setQuery("");
       setIndex(0);
@@ -57,7 +61,7 @@ export function CommandPalette({
       window.removeEventListener(OPEN_EVENT, open);
       window.removeEventListener("keydown", onKey);
     };
-  }, []);
+  }, [desktop]);
 
   const run = (item: PaletteItem | undefined) => {
     if (!item) return;
@@ -65,6 +69,8 @@ export function CommandPalette({
     if (item.action === "sound") toggleSound();
     else if (item.href) router.push(item.href);
   };
+
+  if (!desktop) return null;
 
   return (
     <dialog

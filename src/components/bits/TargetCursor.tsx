@@ -28,6 +28,11 @@ type Spring = { x: number; v: number };
 const CORNER_ANGLES = [0, 90, 180, 270];
 const QUARTER = Math.PI / 2;
 
+const keepInside = (center: number, extent: number, viewportSize: number) => {
+  const inset = Math.min(extent + 1, viewportSize / 2);
+  return Math.max(inset, Math.min(viewportSize - inset, center));
+};
+
 const spring = (state: Spring, goal: number, stiffness: number, damping: number, dt: number) => {
   const steps = 2;
   const h = dt / steps;
@@ -84,7 +89,6 @@ const TargetCursor = ({
     container
   };
   const settingsRef = useRef(settings);
-  settingsRef.current = settings;
 
   useEffect(() => {
     const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
@@ -156,6 +160,8 @@ const TargetCursor = ({
         const corner = parseFloat(getComputedStyle(target).borderTopLeftRadius) || 0;
         targetRadius = corner;
         spinSpeed = 0;
+        lock.x = 0;
+        lock.v = 0;
       }
     };
 
@@ -168,13 +174,16 @@ const TargetCursor = ({
       if (target && !target.isConnected) lockOn(null);
       const rect = target ? target.getBoundingClientRect() : null;
       const locked = !!rect && pointer.inside;
+      const { clientWidth: viewportWidth, clientHeight: viewportHeight } = document.documentElement;
       const snapW = 4.6 / s.hoverDuration;
       const snapK = snapW * snapW;
-      const snapC = 2 * 0.62 * snapW;
+      const snapC = 2 * snapW;
 
       spring(presence, pointer.inside ? 1 : 0, 260, 32, dt);
-      spring(lock, locked ? 1 : 0, snapK, 2 * snapW, dt);
+      spring(lock, locked ? 1 : 0, snapK, snapC, dt);
       spring(press, pointer.pressed && s.clickEffect ? 1 : 0, 900, 40, dt);
+      // Once the expansion settles, follow the live bounds without lag during scrolling.
+      const settledLock = locked && (reduce || lock.x >= 0.998);
 
       let goalX = pointer.x;
       let goalY = pointer.y;
@@ -182,14 +191,18 @@ const TargetCursor = ({
       let goalH = s.size / 2;
       let goalR = Math.min(2, s.cornerSize / 4);
       if (locked) {
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
+        const left = Math.max(1, rect.left - s.padding);
+        const right = Math.min(viewportWidth - 1, rect.right + s.padding);
+        const top = Math.max(1, rect.top - s.padding);
+        const bottom = Math.min(viewportHeight - 1, rect.bottom + s.padding);
+        const cx = (left + right) / 2;
+        const cy = (top + bottom) / 2;
         const lean = s.parallaxOn ? 0.08 : 0;
         goalX = cx + (pointer.x - cx) * lean;
         goalY = cy + (pointer.y - cy) * lean;
         const odd = Math.abs(quarter) % 2 === 1;
-        const w = rect.width / 2 + s.padding;
-        const h = rect.height / 2 + s.padding;
+        const w = (right - left) / 2;
+        const h = (bottom - top) / 2;
         goalW = odd ? h : w;
         goalH = odd ? w : h;
         goalR = s.matchRadius ? Math.min(targetRadius + Math.max(0, s.padding), s.cornerSize) : 0;
@@ -197,22 +210,33 @@ const TargetCursor = ({
 
       if (!pointer.inside && presence.x < 0.01) pointer.seen = false;
       if (!pointer.seen) {
+        centerX.x = pointer.x;
+        centerY.x = pointer.y;
+        halfW.x = halfH.x = s.size / 2;
+        pointer.seen = pointer.inside;
+      }
+
+      if (settledLock) {
         centerX.x = goalX;
         centerY.x = goalY;
         halfW.x = goalW;
         halfH.x = goalH;
-        pointer.seen = pointer.inside;
+        radius.x = goalR;
+        centerX.v = centerY.v = halfW.v = halfH.v = radius.v = 0;
+      } else {
+        const follow = locked ? snapK : 2200;
+        const followC = locked ? snapC : 2 * Math.sqrt(2200);
+        spring(centerX, goalX, follow, followC, dt);
+        spring(centerY, goalY, follow, followC, dt);
+        spring(halfW, goalW, snapK, snapC, dt);
+        spring(halfH, goalH, snapK, snapC, dt);
+        spring(radius, goalR, snapK, snapC, dt);
       }
 
-      const follow = locked ? snapK : 2200;
-      const followC = locked ? snapC : 2 * Math.sqrt(2200);
-      spring(centerX, goalX, follow, followC, dt);
-      spring(centerY, goalY, follow, followC, dt);
-      spring(halfW, goalW, snapK, snapC, dt);
-      spring(halfH, goalH, snapK, snapC, dt);
-      spring(radius, goalR, snapK, 2 * snapW, dt);
-
-      if (locked) {
+      if (settledLock) {
+        turn.x = quarter * QUARTER;
+        turn.v = 0;
+      } else if (locked) {
         spring(turn, quarter * QUARTER, snapK, snapC, dt);
       } else {
         const speed = s.spinDuration > 0 && !reduce ? (Math.PI * 2) / s.spinDuration : 0;
@@ -221,11 +245,14 @@ const TargetCursor = ({
         turn.x += spinSpeed * dt;
       }
 
-      const squeeze = 1 - press.x * 0.14;
+      const squeeze = locked ? 1 : 1 - press.x * 0.14;
       const cos = Math.cos(turn.x);
       const sin = Math.sin(turn.x);
       const w = Math.max(0, halfW.x) * squeeze;
       const h = Math.max(0, halfH.x) * squeeze;
+      // The rotating corners also stay in bounds while the spring settles.
+      const xCenter = keepInside(centerX.x, Math.abs(w * cos) + Math.abs(h * sin), viewportWidth);
+      const yCenter = keepInside(centerY.x, Math.abs(w * sin) + Math.abs(h * cos), viewportHeight);
       const local = [
         [-w, -h],
         [w, -h],
@@ -239,8 +266,8 @@ const TargetCursor = ({
       cornerRefs.current.forEach((corner, i) => {
         if (!corner) return;
         const [lx, ly] = local[i];
-        const x = centerX.x + lx * cos - ly * sin;
-        const y = centerY.x + lx * sin + ly * cos;
+        const x = xCenter + lx * cos - ly * sin;
+        const y = yCenter + lx * sin + ly * cos;
         left = Math.min(left, x);
         top = Math.min(top, y);
         corner.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) rotate(${(CORNER_ANGLES[i] + degrees).toFixed(2)}deg)`;
@@ -367,6 +394,7 @@ const TargetCursor = ({
   }, [host]);
 
   useEffect(() => {
+    settingsRef.current = settings;
     wakeRef.current?.();
   });
 

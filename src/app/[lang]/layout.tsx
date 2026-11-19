@@ -110,6 +110,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
         <Header
           locale={locale}
           name={site.name}
+          cvHref={site.cv[locale]}
           labels={{
             home: t.nav.home,
             work: t.nav.work,
@@ -122,14 +123,15 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
             language: t.nav.language,
             languageLabel: t.nav.languageLabel,
             search: t.palette.open,
+            cv: t.home.ctaCv,
             soundOn: t.sound.on,
             soundOff: t.sound.off,
             soundHint: t.sound.hint,
           }}
         />
 
-        <div className="site-frame">
-          <div id="content" tabIndex={-1} className="outline-none">
+        <div className="site-frame flex min-h-dvh flex-col">
+          <div id="content" tabIndex={-1} className="grid flex-1 grid-cols-1 outline-none">
             <Sparks>{children}</Sparks>
           </div>
 
