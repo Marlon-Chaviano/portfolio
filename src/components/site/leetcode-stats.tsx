@@ -7,11 +7,11 @@ export async function LeetCodeStats({ labels, locale }: { labels: Dict["about"];
   const solved = await getLeetCodeSolved(site.leetcode.username);
 
   return solved !== null ? (
-    <dl>
-      <dt className="text-sm text-muted">{labels.problemsSolved}</dt>
-      <dd className="title mt-2 text-4xl tabular-nums">{new Intl.NumberFormat(locale).format(solved)}</dd>
+      <dl className="about-activity-metric">
+        <dt className="text-xs text-muted">{labels.problemsSolved}</dt>
+        <dd className="title text-2xl tabular-nums">{new Intl.NumberFormat(locale).format(solved)}</dd>
     </dl>
   ) : (
-    <p className="text-sm text-muted">{labels.leetcodeUnavailable}</p>
+      <p className="text-xs text-muted">{labels.leetcodeUnavailable}</p>
   );
 }

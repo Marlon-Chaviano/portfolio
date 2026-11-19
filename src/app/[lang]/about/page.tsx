@@ -1,16 +1,23 @@
+import Image from "next/image";
+import { CareerMarker, CareerProgress } from "@/components/site/career-progress";
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { career, education } from "@/content/career";
+import { coreTools } from "@/content/platform-tools";
 import { site } from "@/content/site";
 import { JsonLd } from "@/components/seo/json-ld";
 import { MoveLink } from "@/components/ui/move-link";
 import { PageHeader, PageShell, Row } from "@/components/ui/page-shell";
+import { CvDownload } from "@/components/ui/cv-download";
 import { SocialLinks } from "@/components/site/social-links";
-import { TechnologyList } from "@/components/ui/brand-icon";
+import { BrandIcon } from "@/components/ui/brand-icon";
+import { ToolCarousel } from "@/components/site/tool-carousel";
 import { TilePuzzle } from "@/components/play/tile-puzzle";
 import { ChessRatings } from "@/components/site/chess-ratings";
 import { LeetCodeStats } from "@/components/site/leetcode-stats";
 import { getDict } from "@/lib/locale";
 import { absolute, pageMetadata, personLd } from "@/lib/seo";
+import "./about.css";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { locale, t } = await getDict();
@@ -20,6 +27,24 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function AboutPage() {
   const { locale, t } = await getDict();
   const a = t.about;
+  const activities = [
+    {
+      name: "Chess.com",
+      icon: "chessdotcom",
+      href: site.chess.friendLink || `https://www.chess.com/member/${encodeURIComponent(site.chess.username)}`,
+      action: a.addFriend,
+      loading: a.chessLoading,
+      stats: <ChessRatings labels={a} />,
+    },
+    {
+      name: "LeetCode",
+      icon: "leetcode",
+      href: site.socials.leetcode,
+      action: a.viewProfile,
+      loading: a.leetcodeLoading,
+      stats: <LeetCodeStats labels={a} locale={locale} />,
+    },
+  ];
 
   return (
     <PageShell>
@@ -28,77 +53,108 @@ export default async function AboutPage() {
         <Row label={a.profile}>
           <p className="max-w-2xl text-xl leading-relaxed sm:text-2xl">{a.bio}</p>
           <p className="mt-5 max-w-2xl leading-relaxed text-muted">{a.bioMore}</p>
-          <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-sm">
-            <a href={site.cv[locale]} download className="link">{t.home.ctaCv}</a>
+          <div className="mt-6 flex flex-wrap items-center gap-2">
             <SocialLinks />
+            <CvDownload href={site.cv[locale]} label={t.home.ctaCv} className="social-link" />
           </div>
         </Row>
-        <Row label={a.experience}>
-          <p className="label text-muted">{a.engagements}</p>
-          <h3 className="title mt-3 text-3xl">{a.freelance}</h3>
-          <p className="mt-3 max-w-xl leading-relaxed text-muted">{a.collaboration}</p>
-          <ul className="mt-6 border-t border-line">
-            {a.clientWork.map((client) => (
-              <li key={client.name} className="grid items-baseline gap-2 border-b border-line py-4 sm:grid-cols-[12rem_1fr]">
-                <a href={client.url} className="link w-fit font-medium">{client.name} ↗</a>
-                <span className="text-sm leading-relaxed text-muted">{client.contribution}</span>
-              </li>
-            ))}
-          </ul>
-        </Row>
-        <Row label={a.current}>
-          <ul>
+        <section id="career" aria-labelledby="career-title" className="frame-rule-top scroll-mt-16 py-8">
+          <h2 id="career-title" className="mb-6 text-sm text-muted">{a.timeline}</h2>
+          <div className="career-inner relative">
+            <CareerProgress />
+            <ol className="career-timeline">
+              {[...career, education].map((entry) => (
+                <li key={entry.title.en} data-current={entry.current}>
+                  <div className="career-period">
+                    <CareerMarker />
+                    <p className="label text-muted">{entry.period[locale]}</p>
+                  </div>
+                  <div className="editorial-content">
+                    <h3 className="title text-3xl sm:text-4xl">{entry.title[locale]}</h3>
+                    <p className="mt-2 font-medium">{entry.role[locale]}</p>
+                    <ul className="mt-4 max-w-prose space-y-2 leading-relaxed text-muted">
+                      {entry.highlights.map((detail) => <li key={detail.en}>{detail[locale]}</li>)}
+                    </ul>
+                    {entry.links && (
+                      <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+                        {entry.links.map(({ label, url, logo }) => {
+                          const internal = url.startsWith("/");
+                          const content = (
+                            <>
+                              {logo && <Image src={logo} width={24} height={24} alt="" className="career-logo" />}
+                              <span className="link">{label}</span>
+                              <span aria-hidden>{internal ? "→" : "↗"}</span>
+                            </>
+                          );
+                          return internal ? (
+                            <MoveLink key={url} className="career-link" href={`/${locale}${url}`}>{content}</MoveLink>
+                          ) : (
+                            <a key={url} className="career-link" href={url}>{content}</a>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+        <Row label={a.current} className="about-building">
+          <ul role="list" className="about-projects">
             {a.currentProjects.map((project) => (
-              <li key={project.slug} className="border-b border-line last:border-0">
-                <MoveLink href={`/${locale}/work/${project.slug}`} className="group grid items-baseline gap-2 py-5 first:pt-0 sm:grid-cols-[9rem_minmax(0,1fr)_1rem] sm:gap-6">
-                  <span className="title text-2xl group-hover:underline">{project.name}</span>
-                  <span className="text-sm leading-relaxed text-muted">{project.description}</span>
-                  <svg aria-hidden="true" className="hidden sm:block" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 12h16m-6-6 6 6-6 6" /></svg>
+              <li key={project.slug} className="min-w-0">
+                <MoveLink href={`/${locale}/work/${project.slug}`} className="about-project-link" data-project={project.slug}>
+                  <span className="about-project-mark">
+                    <Image src={`/career/${project.slug}.png`} alt="" width={52} height={52} />
+                  </span>
+                  <span className="about-project-copy">
+                    <span className="title about-project-name block truncate">{project.name}</span>
+                    <span title={project.description} className="mt-1 block truncate text-xs text-muted sm:text-sm">{project.description}</span>
+                  </span>
+                  <svg aria-hidden="true" className="about-project-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 12h16m-6-6 6 6-6 6" /></svg>
                 </MoveLink>
               </li>
             ))}
           </ul>
         </Row>
-        <Row label={a.skills}>
-          <dl className="divide-y divide-line border-y border-line">
-            {a.stackSummary.map((area) => (
-              <div key={area.title} className="grid gap-4 py-6 sm:grid-cols-[minmax(8rem,1fr)_2fr]">
-                <dt className="title text-2xl">{area.title}</dt>
-                <dd>
-                  <TechnologyList items={area.tools} />
-                  <MoveLink href={`/${locale}/work/${area.project}`} className="link mt-3 inline-block text-sm text-muted">
-                    {area.example} ↗
-                  </MoveLink>
-                </dd>
-              </div>
+        <Row id="tools" label={a.skills} className="about-tools scroll-mt-16">
+          <ToolCarousel label={a.skills}>
+            {coreTools.map((name) => (
+              <li key={name} className="tool-carousel-item">
+                <BrandIcon name={name} size={26} />
+                <span className="whitespace-nowrap text-xs font-medium">{name}</span>
+              </li>
             ))}
-          </dl>
+          </ToolCarousel>
         </Row>
-        <Row label={a.chess}>
-          <div className="flex flex-wrap items-center gap-x-12 gap-y-6">
-            <div className="min-h-18 w-40 shrink-0">
-              <Suspense fallback={<p role="status" className="text-sm text-muted">{a.chessLoading}</p>}>
-                <ChessRatings labels={a} />
-              </Suspense>
-            </div>
-            <a href={site.chess.friendLink || `https://www.chess.com/member/${encodeURIComponent(site.chess.username)}`} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
-              {a.addFriend}
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M7 17 17 7M7 7h10v10" /></svg>
-            </a>
-          </div>
-        </Row>
-        <Row label="LeetCode">
-          <div className="flex flex-wrap items-center gap-x-12 gap-y-6">
-            <div className="min-h-18 w-40 shrink-0">
-              <Suspense fallback={<p role="status" className="text-sm text-muted">{a.leetcodeLoading}</p>}>
-                <LeetCodeStats labels={a} locale={locale} />
-              </Suspense>
-            </div>
-            <a href={site.socials.leetcode} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
-              {a.viewProfile}
-              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M7 17 17 7M7 7h10v10" /></svg>
-            </a>
-          </div>
+        <Row label={a.offTitle}>
+          <ul role="list" className="about-activities">
+            {activities.map(({ name, icon, href, action, loading, stats }) => (
+              <li key={icon} className="min-w-0">
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${name} · ${action}`}
+                  aria-describedby={`${icon}-metric`}
+                  title={action}
+                  className="about-activity-link"
+                >
+                  <span className="about-activity-mark"><BrandIcon name={icon} size={24} /></span>
+                  <div className="about-activity-copy">
+                    <h3 className="title text-base sm:text-lg">{name}</h3>
+                    <div id={`${icon}-metric`} className="about-activity-value">
+                      <Suspense fallback={<p role="status" className="text-xs text-muted">{loading}</p>}>
+                        {stats}
+                      </Suspense>
+                    </div>
+                  </div>
+                  <svg aria-hidden="true" className="about-activity-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M7 17 17 7M7 7h10v10" /></svg>
+                </a>
+              </li>
+            ))}
+          </ul>
         </Row>
         <Row label={a.play}>
           <TilePuzzle labels={a.puzzle} />

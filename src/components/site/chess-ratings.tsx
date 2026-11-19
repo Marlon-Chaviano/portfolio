@@ -8,12 +8,12 @@ export async function ChessRatings({ labels }: { labels: Dict["about"] }) {
 
   return (
     rating ? (
-      <dl>
-        <dt className="text-sm text-muted">{labels.rapid}</dt>
-        <dd className="title mt-2 text-4xl tabular-nums">{rating}</dd>
+      <dl className="about-activity-metric">
+        <dt className="text-xs text-muted">{labels.rapid}</dt>
+        <dd className="title text-2xl tabular-nums">{rating}</dd>
       </dl>
     ) : (
-      <p className="text-sm text-muted">{labels.chessUnavailable}</p>
+      <p className="text-xs text-muted">{labels.chessUnavailable}</p>
     )
   );
 }

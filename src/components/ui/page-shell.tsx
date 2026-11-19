@@ -22,11 +22,13 @@ export function PageShell({ children, className = "" }: { children: ReactNode; c
  * column for the content. Headers and sections all hang from it.
  */
 export function Row({
+  id,
   label,
   children,
   as: Tag = "section",
   className = "",
 }: {
+  id?: string;
   label: ReactNode;
   index?: string;
   children: ReactNode;
@@ -34,7 +36,7 @@ export function Row({
   className?: string;
 }) {
   return (
-    <Tag className={`editorial-row ${className}`}>
+    <Tag id={id} className={`editorial-row ${className}`}>
       <h2 className="section-label">{label}</h2>
       <div className="editorial-content">{children}</div>
     </Tag>

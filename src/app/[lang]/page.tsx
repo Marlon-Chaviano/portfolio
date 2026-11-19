@@ -26,7 +26,7 @@ export default async function HomePage() {
   const reading = books.find((b) => b.status === "reading");
   const latest = posts[0];
   const now = [
-    { label: h.nowBuilding, value: "Diodi, Grialink", href: `/${locale}/work` },
+    { label: h.nowBuilding, value: "Grialink, Diodi, B-Morï Mobile", href: `/${locale}/work` },
     { label: h.nowReading, value: reading?.title ?? h.nothing, href: `/${locale}/library` },
     {
       label: h.nowWriting,
@@ -51,6 +51,7 @@ export default async function HomePage() {
           <div className="mt-8 flex flex-wrap gap-3">
             <MagnetLink href={`/${locale}/work`} className="btn btn-primary">{h.ctaWork}</MagnetLink>
             <MoveLink href={`/${locale}/contact`} className="btn">{h.ctaContact}</MoveLink>
+            <MoveLink href={`/${locale}/about#career`} className="btn">{h.ctaCareer}</MoveLink>
             <a href={site.cv[locale]} download className="btn">{h.ctaCv}</a>
           </div>
         </div>

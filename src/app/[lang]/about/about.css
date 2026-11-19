@@ -1,0 +1,144 @@
+section.about-building { padding-block: clamp(2.75rem, 6vw, 5rem); }
+.about-building > .editorial-content { container-type: inline-size; }
+.about-projects { display: grid; gap: 0.75rem; }
+
+.about-project-link {
+  display: grid;
+  grid-template-areas: "mark copy arrow";
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  height: 100%;
+  padding: 0.875rem;
+  border: 1px solid var(--line);
+  background: var(--bg);
+}
+
+.about-project-mark {
+  grid-area: mark;
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  overflow: hidden;
+}
+.about-project-mark img { width: 100%; height: 100%; object-fit: contain; }
+.about-project-link[data-project="bmori-mobile"] .about-project-mark { border-radius: 0.625rem; }
+.about-project-copy { grid-area: copy; min-width: 0; }
+.about-project-name { font-size: 1.125rem; }
+.about-project-link[data-project="bmori-mobile"] .about-project-name { font-size: clamp(0.875rem, 5cqw, 1.125rem); }
+.about-project-arrow { grid-area: arrow; color: var(--faint); }
+.about-project-link:is(:hover, :focus-visible) { border-color: var(--faint); }
+.about-project-link:is(:hover, :focus-visible) .about-project-arrow { color: var(--fg); }
+
+@container (width >= 625px) {
+  .about-projects { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .about-project-link {
+    grid-template-areas: "mark arrow" "copy copy";
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-content: space-between;
+    align-items: start;
+    min-height: 10.25rem;
+    padding: clamp(0.875rem, 2cqw, 1.5rem);
+  }
+  .about-project-mark { width: 3.25rem; height: 3.25rem; }
+  .about-project-name { font-size: clamp(1.125rem, 2.75cqw, 1.625rem); }
+  .about-project-link[data-project="bmori-mobile"] .about-project-name { font-size: clamp(0.9375rem, 2.5cqw, 1.625rem); }
+}
+
+section.about-tools {
+  align-items: center;
+  gap: 0.75rem 2.5rem;
+  padding-block: 0.875rem 0;
+}
+.about-tools > .section-label { position: static; align-self: center; }
+.tool-carousel { contain: inline-size; overflow: clip; cursor: default; }
+.tool-carousel:focus-visible { outline-offset: -3px; }
+@media (width < 1024px) {
+  .about-tools .tool-carousel {
+    margin-inline: calc(-1 * var(--page-gutter));
+    border-block-start: 1px solid var(--line);
+  }
+}
+@media (min-width: 1024px) {
+  section.about-tools { padding-block: 0; }
+  .about-tools > .editorial-content { padding-inline-start: 0; }
+  .about-tools .tool-carousel { inline-size: calc(100% + var(--page-gutter)); }
+}
+.tool-carousel-track { display: flex; width: max-content; }
+.tool-carousel-list { display: flex; flex: none; }
+.tool-carousel-item {
+  display: flex;
+  width: clamp(9rem, 13vw, 12rem);
+  min-height: clamp(4.5rem, 6vw, 6rem);
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  border-inline-end: 1px solid var(--line);
+}
+.tool-carousel-track .brand-icon:not(.brand-icon-mono),
+.about-activity-mark .brand-icon:not(.brand-icon-mono) { filter: none; }
+
+.about-activities {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.about-activity-link {
+  display: grid;
+  grid-template-areas: "mark arrow" "copy copy";
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0.5rem;
+  height: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+}
+.about-activities > li + li .about-activity-link { border-inline-start: 0; }
+.about-activity-link:is(:hover, :focus-visible) { background: var(--tile); }
+.about-activity-mark {
+  grid-area: mark;
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  background: var(--tile);
+}
+.about-activity-copy { grid-area: copy; min-width: 0; }
+.about-activity-arrow { grid-area: arrow; color: var(--faint); }
+.about-activity-value { min-height: 2.75rem; margin-block-start: 0.375rem; }
+.about-activity-metric { display: flex; flex-direction: column-reverse; align-items: flex-start; gap: 0.125rem; }
+
+@media (min-width: 640px) {
+  .about-activity-link {
+    grid-template-areas: "mark copy arrow";
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(0.75rem, 1.5vw, 1.5rem);
+    padding: clamp(0.875rem, 2vw, 1.5rem);
+  }
+  .about-activity-mark { width: 3rem; height: 3rem; }
+  .about-activity-arrow { align-self: start; }
+  .about-activity-value { min-height: 1.75rem; }
+  .about-activity-metric { flex-direction: row-reverse; align-items: baseline; justify-content: flex-end; gap: 0.5rem; }
+}
+
+@media (prefers-color-scheme: dark) {
+  .tool-carousel-track .brand-icon[src="/brands/django.svg"] { filter: brightness(0) invert(1); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tool-carousel-track { animation: about-tools-loop 48s linear infinite; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tool-carousel:hover .tool-carousel-track { animation-play-state: paused; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tool-carousel { overflow-x: auto; }
+  .tool-carousel-copy { display: none; }
+}
+
+@keyframes about-tools-loop {
+  to { transform: translateX(-50%); }
+}
