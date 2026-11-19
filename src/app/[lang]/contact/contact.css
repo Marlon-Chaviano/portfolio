@@ -1,0 +1,12 @@
+.contact-details > .editorial-content { grid-column: -2 / -1; }
+.contact-details .contact-write-label { position: static; }
+
+@media (width < 1280px) {
+  .contact-details > .section-label { display: none; }
+}
+
+@media (width >= 1280px) {
+  .contact-write { grid-area: 1 / 1; }
+  .contact-form-column { grid-area: 1 / 2; }
+  .contact-write-label { display: none; }
+}
