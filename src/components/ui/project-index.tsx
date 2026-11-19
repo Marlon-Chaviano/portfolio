@@ -41,7 +41,7 @@ export function ProjectIndex({
 
   const cover = (item: ProjectIndexItem, sizes: string, priority = false) =>
     item.preview ? (
-      <Image src={item.preview} alt="" fill sizes={sizes} priority={priority} className="object-cover object-top" />
+      <Image src={item.preview} alt="" fill sizes={sizes} priority={priority} className="grayscale object-cover object-top" />
     ) : (
       <span className="poster absolute inset-0 grid place-items-center">
         <span className="label text-muted">{privateLabel}</span>

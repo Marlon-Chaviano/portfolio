@@ -1,0 +1,191 @@
+.case-page { padding-bottom: 0; }
+.case-header { gap: 1.25rem 2.5rem; padding-block-end: 0; }
+.case-context-row { border-top: 0; }
+.case-context-row::before { content: none; }
+
+.case-identity {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+}
+.case-identity .page-title {
+  min-width: 0;
+  margin: 0;
+  font-size: clamp(2.25rem, 6vw, 5rem);
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+.case-logo {
+  flex: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: contain;
+}
+.case-identity-hero .case-logo {
+  width: clamp(2.75rem, 6vw, 4.5rem);
+  height: clamp(2.75rem, 6vw, 4.5rem);
+}
+.case-identity:is([data-project="bmori"], [data-project="bmori-mobile"]) .case-logo { border-radius: 0.5rem; }
+@media (prefers-color-scheme: dark) {
+  .case-identity[data-project="first-commit"] .case-logo { filter: invert(1); }
+}
+
+.case-intro {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  margin-top: 1.25rem;
+}
+.case-tagline {
+  min-width: 0;
+  max-width: 56ch;
+  color: var(--muted);
+  font-size: clamp(1.0625rem, 2vw, 1.375rem);
+  line-height: 1.45;
+}
+.case-meta {
+  --case-meta-inset: var(--page-gutter);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 1.75rem;
+  margin-top: 1.75rem;
+  margin-inline: calc(-1 * var(--case-meta-inset)) calc(-1 * var(--page-gutter));
+  border-block: 1px solid var(--line);
+  padding-block: 1rem;
+  padding-inline: var(--case-meta-inset) var(--page-gutter);
+}
+.case-meta > :first-child { grid-column: 1 / -1; }
+.case-meta dt { color: var(--muted); font-size: 0.8125rem; }
+.case-meta dd { margin-top: 0.25rem; font-size: 0.9375rem; line-height: 1.45; }
+.case-status { display: flex; gap: 0.5rem; }
+.case-status::before {
+  content: "";
+  flex: none;
+  width: 0.375rem;
+  height: 0.375rem;
+  margin-block-start: calc((1lh - 0.375rem) / 2);
+  border-radius: 50%;
+  background: light-dark(#178548, #62d890);
+}
+@media (min-width: 640px) {
+  .case-meta { grid-template-columns: minmax(0, 1.4fr) minmax(5rem, 0.5fr) minmax(0, 1fr); }
+  .case-meta > :first-child { grid-column: auto; }
+}
+
+.case-actions, .case-platforms { display: flex; flex-wrap: wrap; justify-content: end; align-items: center; gap: 0.5rem 0.75rem; }
+.case-actions { flex: none; max-width: 50%; }
+.case-actions .btn {
+  min-height: 2.75rem;
+  max-width: 100%;
+  padding: 0.625rem 0.75rem;
+  text-align: center;
+  white-space: normal;
+}
+.case-actions .btn > :is(svg, img) { flex: none; }
+.case-actions .case-site-link { white-space: nowrap; }
+.case-platforms { gap: 0.5rem 1.25rem; }
+.case-platforms > li { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; }
+@media (max-width: 480px) {
+  .case-actions:has(.case-site-link) { max-width: 40%; }
+  .case-actions .btn {
+    gap: 0.375rem;
+    padding-inline: 0.5rem;
+    font-family: inherit;
+    font-size: 0.75rem;
+    letter-spacing: normal;
+    line-height: 1.2;
+    text-transform: none;
+  }
+}
+
+.case-context, .case-outcome { max-width: 70ch; font-size: 1rem; line-height: 1.65; }
+.case-context p + p { margin-top: 0.75rem; color: var(--muted); }
+
+.case-delivery { display: grid; align-items: start; gap: 1.75rem 2rem; }
+.case-points > li { padding-block: 1rem; }
+.case-points > li:first-child { padding-top: 0; }
+.case-points > li:last-child { padding-bottom: 0; }
+.case-points > li + li { border-top: 1px solid var(--line); }
+.case-points h3 { font-size: 1.125rem; line-height: 1.3; }
+.case-points p { margin-top: 0.375rem; color: var(--muted); line-height: 1.6; }
+
+.case-visuals {
+  display: grid;
+  align-items: start;
+  gap: 1.5rem 1rem;
+  max-width: 50rem;
+}
+@media (min-width: 520px) {
+  .case-visuals:has(> [data-orientation="landscape"] + [data-orientation="portrait"]) {
+    grid-template-columns: minmax(0, 1fr) minmax(7rem, 0.4fr);
+  }
+}
+.case-delivery-portrait .case-visuals {
+  width: 100%;
+  max-width: 27rem;
+  margin-inline: auto;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
+}
+.case-media { min-width: 0; }
+.case-media[data-orientation="portrait"] { width: min(100%, 13rem); margin-inline: auto; }
+.case-media picture { display: block; border: 1px solid var(--line); }
+.case-media img { display: block; width: 100%; height: auto; }
+.case-media figcaption { margin-top: 0.625rem; color: var(--muted); font-size: 0.8125rem; line-height: 1.45; }
+.case-media-placeholder {
+  display: grid;
+  place-items: center;
+  border: 1px dashed var(--faint);
+  background: var(--card);
+  padding: 0.75rem;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .case-decisions li {
+    display: grid;
+    grid-template-columns: minmax(10rem, 0.8fr) minmax(0, 2fr);
+    gap: 1.5rem;
+  }
+  .case-decisions p { max-width: 65ch; margin: 0; }
+}
+@media (min-width: 1100px) {
+  .case-delivery { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
+  .case-delivery-portrait { grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.6fr); }
+}
+
+.case-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  margin-top: 1.25rem;
+}
+.case-facts > li { display: grid; gap: 0.25rem; color: var(--muted); font-size: 0.8125rem; }
+.case-facts .display { color: var(--fg); font-size: 1.5rem; }
+
+.case-next {
+  display: grid;
+  align-items: center;
+  gap: 0.75rem 2.5rem;
+  margin-top: 3rem;
+  padding-block: 1.25rem;
+}
+.case-next-label { color: var(--muted); font-size: 0.875rem; }
+.case-next > .editorial-content { display: flex; align-items: center; }
+.case-next-link {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 2rem);
+  min-height: 2.75rem;
+  max-width: 100%;
+}
+.case-next-title { font-size: clamp(1.5rem, 4vw, 3.5rem); line-height: 1.1; overflow-wrap: anywhere; }
+.case-next-arrow { flex: none; color: var(--muted); }
+.case-next-link:is(:hover, :focus-visible) .case-next-arrow { color: var(--fg); }
+@media (min-width: 1024px) {
+  .case-meta { --case-meta-inset: calc(var(--editorial-divider) + 2.5rem + 1px); }
+  .case-next { grid-template-columns: 13rem minmax(0, 1fr); }
+}
