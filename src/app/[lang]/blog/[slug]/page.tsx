@@ -8,6 +8,7 @@ import { PageShell, SampleTag } from "@/components/ui/page-shell";
 import { formatDate } from "@/lib/format";
 import { getDict } from "@/lib/locale";
 import { absolute, breadcrumbLd, pageMetadata } from "@/lib/seo";
+import "../blog.css";
 
 // Posts are prerendered whole; the navigation waits for the article itself.
 export const instant = false;
@@ -42,7 +43,7 @@ export default async function PostPage({ params }: PageProps<"/[lang]/blog/[slug
   const next = posts[posts.indexOf(post) + 1];
 
   return (
-    <PageShell>
+    <PageShell className="blog-post">
       <article lang={text.lang} className="grid gap-x-10 gap-y-8 pt-8 lg:grid-cols-[13rem_minmax(0,1fr)]">
         <aside className="label rise flex flex-row flex-wrap gap-x-6 gap-y-2 text-faint lg:sticky lg:top-24 lg:flex-col lg:self-start" lang={locale}>
           <MoveLink href={`/${locale}/blog`} transitionTypes={["move-back"]} className="link text-muted">
@@ -77,11 +78,11 @@ export default async function PostPage({ params }: PageProps<"/[lang]/blog/[slug
             </p>
           )}
 
-          <div className="prose rise mt-12 border-t border-line pt-10" style={{ "--i": 3 } as React.CSSProperties}>
+          <div className="blog-section-rule prose rise mt-12 pt-10" style={{ "--i": 3 } as React.CSSProperties}>
             <Body />
           </div>
 
-          <footer className="label mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-5" lang={locale}>
+          <footer className="blog-section-rule label mt-16 flex flex-wrap items-center justify-between gap-4 pt-5" lang={locale}>
             <span className="text-faint">{site.name}</span>
             {next ? (
               <MoveLink href={`/${locale}/blog/${next.slug}`} className="link">

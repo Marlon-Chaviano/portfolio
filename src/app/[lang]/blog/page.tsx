@@ -6,6 +6,7 @@ import { PageHeader, PageShell, Row, SampleTag } from "@/components/ui/page-shel
 import { formatDate } from "@/lib/format";
 import { getDict } from "@/lib/locale";
 import { absolute, pageMetadata } from "@/lib/seo";
+import "./blog.css";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { locale, t } = await getDict();
@@ -17,7 +18,7 @@ export default async function BlogPage() {
   const b = t.blog;
 
   return (
-    <PageShell>
+    <PageShell className="blog-index">
       <PageHeader index="04" label={t.nav.blog} title={b.title} intro={b.intro} />
 
       <Row label={`${posts.length} · ${t.palette.posts}`}>
@@ -30,7 +31,7 @@ export default async function BlogPage() {
                 <MoveLink
                   href={`/${locale}/blog/${post.slug}`}
                   transitionTypes={["move-forward"]}
-                  className="group grid gap-x-10 gap-y-3 border-b border-line py-8 first:pt-0 md:grid-cols-[9rem_minmax(0,1fr)_auto]"
+                  className="blog-post-link group grid gap-x-10 gap-y-3 py-8 first:pt-0 md:grid-cols-[9rem_minmax(0,1fr)_auto]"
                 >
                   <span className="label flex flex-col gap-1 text-faint">
                     <time dateTime={post.date}>{formatDate(post.date, locale)}</time>
