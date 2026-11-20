@@ -1,6 +1,7 @@
 import { MoveLink } from "@/components/ui/move-link";
 import { PageShell } from "@/components/ui/page-shell";
 import { getDict } from "@/lib/locale";
+import "../not-found.css";
 
 export default async function NotFound() {
   const { locale, t } = await getDict();
@@ -10,7 +11,7 @@ export default async function NotFound() {
         <p className="label text-faint">404</p>
         <h1 className="display mt-5 text-[clamp(3.25rem,9vw,8rem)]">{t.notFound.title}</h1>
         <p className="mt-6 text-xl text-muted">{t.notFound.body}</p>
-        <MoveLink href={`/${locale}`} className="btn mt-10 w-fit">
+        <MoveLink href={`/${locale}`} className="btn not-found-home mt-10 w-fit">
           ← {t.notFound.back}
         </MoveLink>
       </div>

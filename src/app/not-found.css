@@ -1,0 +1,7 @@
+.btn.not-found-home {
+  border-color: #969696;
+  background: #fff;
+  color: #0e0e0e;
+}
+
+.btn.not-found-home:hover { background: #ededed; }

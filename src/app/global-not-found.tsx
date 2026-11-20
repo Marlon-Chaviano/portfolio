@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Archivo, Geist_Mono, Instrument_Serif } from "next/font/google";
-import Link from "next/link";
+import { GlobalHomeLink } from "@/components/site/global-home-link";
+import { en } from "@/i18n/en";
+import { es } from "@/i18n/es";
 import "./globals.css";
+import "./not-found.css";
 
 const archivo = Archivo({ variable: "--font-archivo", subsets: ["latin"], display: "swap" });
 const instrument = Instrument_Serif({
@@ -31,12 +34,7 @@ export default function GlobalNotFound() {
             This page does not exist or has moved. <span lang="es">Esta página no existe o se movió.</span>
           </p>
           <p className="mt-10 flex flex-wrap gap-3">
-            <Link href="/en" className="btn">
-              ← Back to home
-            </Link>
-            <Link href="/es" lang="es" className="btn">
-              ← Volver al inicio
-            </Link>
+            <GlobalHomeLink labels={{ en: en.notFound.back, es: es.notFound.back }} />
           </p>
         </main>
       </body>
