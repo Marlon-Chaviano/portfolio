@@ -4,7 +4,9 @@ import { notFound } from "next/navigation";
 import { ViewTransition } from "react";
 import { getProject, projects, type CaseMedia, type Project } from "@/content/projects";
 import { JsonLd } from "@/components/seo/json-ld";
+import { PhoneIcon } from "@/components/ui/phone-icon";
 import { MoveLink } from "@/components/ui/move-link";
+import { ExpandableCaseImage } from "@/components/ui/expandable-case-image";
 import { BrandIcon, TechnologyList } from "@/components/ui/brand-icon";
 import { PageShell, Row } from "@/components/ui/page-shell";
 import type { Locale } from "@/lib/i18n";
@@ -46,22 +48,25 @@ function CaseIdentity({ project, heading = false }: { project: Project; heading?
   );
 }
 
-function CaseFigure({ media, locale, pendingLabel }: { media: CaseMedia; locale: Locale; pendingLabel: string }) {
+function CaseFigure({ media, locale, pendingLabel, expand, close }: {
+  media: CaseMedia; locale: Locale; pendingLabel: string; expand: string; close: string;
+}) {
   const src = typeof media.src === "string" ? media.src : media.src?.[locale];
   const dark = typeof media.dark === "string" ? media.dark : media.dark?.[locale];
   return (
     <figure className="case-media" data-orientation={media.width < media.height ? "portrait" : "landscape"}>
       {src ? (
-        <picture>
-          {dark && <source media="(prefers-color-scheme: dark)" srcSet={dark} />}
-          <Image src={src} alt="" width={media.width} height={media.height} unoptimized />
-        </picture>
+        <ExpandableCaseImage ratio={media.frame === "iphone" ? 447 / 894 : media.width / media.height} caption={media.caption[locale]} expand={expand} close={close}>
+          <picture data-frame={media.frame}>
+            {dark && <source media="(prefers-color-scheme: dark)" srcSet={dark} />}
+            <Image src={src} alt={media.caption[locale]} width={media.width} height={media.height} unoptimized />
+          </picture>
+        </ExpandableCaseImage>
       ) : (
-        <div className="case-media-placeholder" style={{ aspectRatio: `${media.width} / ${media.height}` }}>
+        <div className="case-media-placeholder" data-frame={media.frame} style={{ aspectRatio: `${media.width} / ${media.height}` }}>
           {pendingLabel}
         </div>
       )}
-      <figcaption>{media.caption[locale]}</figcaption>
     </figure>
   );
 }
@@ -75,9 +80,10 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
   const index = projects.indexOf(project);
   const next = projects[(index + 1) % projects.length];
   const mobile = projects.find((candidate) => candidate.parent === project.slug);
+  const stores = Object.entries(project.storeLinks ?? {}).filter(([, url]) => url);
   const c = t.caseStudy;
   const { caseMedia: media } = project;
-  const projectImage = typeof media.src === "string" ? media.src : media.src[locale];
+  const projectImage = typeof media.src === "string" ? media.src : media.src?.[locale] ?? project.logo;
   const portrait = media.width < media.height;
   const meta = [
     { label: c.role, value: project.role[locale] },
@@ -90,57 +96,62 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
 
   return (
     <PageShell className="case-page">
-      <article>
+      <article data-case={project.slug}>
         <header className="page-header case-header">
-          <p className="section-label">
-            <MoveLink href={`/${locale}/work`} transitionTypes={["move-back"]} className="link text-muted">
-              ← {c.back}
+          <div className="section-label">
+            <MoveLink href={`/${locale}/work`} transitionTypes={["move-back"]} className="btn min-h-11">
+              <span aria-hidden="true">←</span> {c.back}
             </MoveLink>
-          </p>
-          <div className="editorial-content">
+          </div>
+          <div className="editorial-content case-heading">
             <CaseIdentity project={project} heading />
-            <div className="case-intro">
-              <p className="case-tagline">{project.tagline[locale]}</p>
-              {(project.url || project.repo || mobile || project.platforms) && (
-                <div className="case-actions">
-                  {project.repo && (
-                    <a href={project.repo} target="_blank" rel="noopener noreferrer" className="btn">
-                      {c.source} <BrandIcon name="github" size={16} />
-                    </a>
-                  )}
-                  {mobile && (
-                    <MoveLink href={`/${locale}/work/${mobile.slug}`} transitionTypes={["move-forward"]} className="btn">
-                      {t.work.viewMobileApp}
-                    </MoveLink>
-                  )}
-                  {project.platforms && (
-                    <ul role="list" className="case-platforms">
-                      {project.platforms.map((platform) => {
-                        const store = project.storeLinks?.[platform];
-                        const icon = <BrandIcon name={platform} size={18} />;
-                        return (
-                          <li key={platform}>
-                            {store ? (
-                              <a href={store} target="_blank" rel="noopener noreferrer" className="btn">
-                                {icon} {platform === "iOS" ? "App Store" : "Google Play"}
-                              </a>
-                            ) : (
-                              <>{icon} {platform}</>
-                            )}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  )}
-                  {project.url && (
-                    <a href={project.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary case-site-link">
-                      {t.work.visitSite}
-                      <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M7 17 17 7M7 7h10v10" /></svg>
-                    </a>
-                  )}
-                </div>
-              )}
-            </div>
+            <p className="case-tagline">{project.tagline[locale]}</p>
+            {(project.parent || project.url || project.repo || mobile || stores.length > 0) && (
+              <div className="case-actions">
+                {project.parent && (
+                  <MoveLink href={`/${locale}/work/${project.parent}`} transitionTypes={["move-back"]} className="btn btn-white">
+                    {t.work.webApp}
+                    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round">
+                      <rect x="2.5" y="4" width="19" height="13" rx="1.5" />
+                      <path d="M12 17v3m-5 0h10" />
+                    </svg>
+                  </MoveLink>
+                )}
+                {project.url && (
+                  <a href={project.url} target="_blank" rel="noopener noreferrer" className="btn case-site-link">
+                    {t.work.visitSite}
+                    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M7 17 17 7M7 7h10v10" /></svg>
+                  </a>
+                )}
+                {mobile && (
+                  <MoveLink href={`/${locale}/work/${mobile.slug}`} transitionTypes={["move-forward"]} className="btn btn-white">
+                    {t.work.mobileApp}
+                    <PhoneIcon />
+                  </MoveLink>
+                )}
+                {project.repo && (
+                  <a href={project.repo} target="_blank" rel="noopener noreferrer" className="btn btn-white">
+                    {c.source} <BrandIcon name="github" size={16} />
+                  </a>
+                )}
+                {stores.length > 0 && (
+                  <ul role="list" className="case-platforms">
+                    {stores.map(([platform, url]) => (
+                      <li key={platform}>
+                        <a href={url} target="_blank" rel="noopener noreferrer" className="btn">
+                          <BrandIcon name={platform} size={18} /> {platform === "iOS" ? "App Store" : "Google Play"}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
+          </div>
+        </header>
+
+        <div className="page-sections">
+          <Row label={c.details} className="case-meta-row">
             <dl className="case-meta">
               {meta.map((item) => (
                 <div key={item.label}>
@@ -149,18 +160,15 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
                 </div>
               ))}
             </dl>
-          </div>
-        </header>
-
-        <div className="page-sections">
-          <Row label={c.context} className="case-context-row">
+          </Row>
+          <Row label={c.context}>
             <div className="case-context">
               <p>{project.summary[locale]}</p>
               <p>{project.problem[locale]}</p>
             </div>
           </Row>
 
-          <Row label={c.built}>
+          <Row label={c.built} className="case-contributions-row">
             <div className={`case-delivery${portrait ? " case-delivery-portrait" : ""}`}>
               <ul role="list" className="case-points">
                 {project.built.map((point) => (
@@ -171,8 +179,8 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
                 ))}
               </ul>
               <div className="case-visuals">
-                <CaseFigure media={media} locale={locale} pendingLabel={c.screenshotPending} />
-                {project.additionalMedia && <CaseFigure media={project.additionalMedia} locale={locale} pendingLabel={c.screenshotPending} />}
+                <CaseFigure media={media} locale={locale} pendingLabel={c.screenshotPending} expand={c.expandImage} close={t.nav.close} />
+                {project.additionalMedia && <CaseFigure media={project.additionalMedia} locale={locale} pendingLabel={c.screenshotPending} expand={c.expandImage} close={t.nav.close} />}
               </div>
             </div>
           </Row>

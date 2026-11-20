@@ -427,6 +427,8 @@ body {
 .btn:hover {
   border-color: var(--fg);
 }
+.btn-white { background-color: #fff; color: #111; }
+.btn-white .brand-icon-mono { filter: brightness(0); }
 .btn-primary {
   border-color: var(--fg);
   background: var(--fg);

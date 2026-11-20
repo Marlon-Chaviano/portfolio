@@ -9,6 +9,7 @@ type CasePoint = { title: Localized; body: Localized };
 export type CaseMedia = {
   src?: string | Localized;
   dark?: string | Localized;
+  frame?: "iphone";
   width: number;
   height: number;
   caption: Localized;
@@ -30,7 +31,8 @@ export type Project = {
   logo: string;
   /** Cover used by the project index on the home page. */
   preview?: string;
-  caseMedia: CaseMedia & { src: string | Localized };
+  caseMedia: CaseMedia;
+  showcaseMedia?: CaseMedia & { src: string | Localized };
   additionalMedia?: CaseMedia;
   schemaType: "SoftwareApplication" | "MobileApplication" | "SoftwareSourceCode" | "WebSite";
   applicationCategory?: "FinanceApplication" | "BusinessApplication";
@@ -51,7 +53,7 @@ const bmoriMobileMedia = {
   src: "/projects/previews/bmori-mobile-light.webp",
   width: 360,
   height: 800,
-  caption: { en: "Recent activity in B-Morï Mobile.", es: "Pantalla de últimas operaciones de B-Morï Mobile." },
+  caption: { en: "Recent transactions", es: "Últimos movimientos" },
 };
 
 const all: Project[] = [
@@ -60,19 +62,18 @@ const all: Project[] = [
     logo: "/career/diodi.png",
     preview: "/projects/diodi.jpg",
     additionalMedia: {
-      width: 1280,
-      height: 800,
-      caption: { en: "Sources cited in an AI answer.", es: "Fuentes citadas en una respuesta de IA." },
+      src: { en: "/projects/details/diodi-sources-en-light.webp", es: "/projects/details/diodi-sources-es-light.webp" },
+      dark: { en: "/projects/details/diodi-sources-en-dark.webp", es: "/projects/details/diodi-sources-es-dark.webp" },
+      width: 1440,
+      height: 900,
+      caption: { en: "Most-cited Grialink pages", es: "Páginas de Grialink más citadas" },
     },
     caseMedia: {
       src: { en: "/projects/details/diodi-en-light.webp", es: "/projects/details/diodi-es-light.webp" },
       dark: { en: "/projects/details/diodi-en-dark.webp", es: "/projects/details/diodi-es-dark.webp" },
-      width: 800,
-      height: 500,
-      caption: {
-        en: "Demo dashboard with AI visibility, citation share and the most cited domains.",
-        es: "Panel de demostración con visibilidad en IA, cuota de citas y dominios más citados.",
-      },
+      width: 1440,
+      height: 900,
+      caption: { en: "Grialink’s visibility in AI search", es: "Visibilidad de Grialink en buscadores de IA" },
     },
     name: "Diodi",
     year: "2026",
@@ -93,108 +94,100 @@ const all: Project[] = [
       es: "Mide dónde aparecen las marcas en respuestas de IA y qué fuentes se citan.",
     },
     summary: {
-      en: "Diodi is an answer-engine-optimization platform. It diagnoses sites, measures a brand's presence in AI-generated answers, explains citations and competitors, and turns that evidence into improvements that can be verified.",
-      es: "Diodi es una plataforma de AEO. Diagnostica sitios, mide la presencia de una marca en respuestas generadas por IA, explica citas y competidores, y convierte esa evidencia en mejoras verificables.",
+      en: "I designed and built Diodi so a marketing team can check how AI search engines describe its brand. The dashboard connects each visibility report to the answers collected for that project.",
+      es: "Diseñé y desarrollé Diodi para que un equipo de marketing pueda ver cómo describen su marca los buscadores de IA. Desde el panel se puede pasar de un informe de visibilidad a las respuestas recopiladas para ese proyecto.",
     },
-    facts: [
-      { value: 2474, label: { en: "RSpec examples passed", es: "ejemplos de RSpec aprobados" } },
-      { value: 37, label: { en: "onboarding checks passed", es: "pruebas del onboarding aprobadas" } },
-    ],
+    facts: [],
     problem: {
-      en: "Search is moving into AI answers, and a business cannot see whether it is mentioned, which sources get cited instead, or what to change. The data is expensive to collect and slow to aggregate, so a dashboard that recomputes on every request is unusable.",
-      es: "La búsqueda se está mudando a las respuestas de IA, y un negocio no puede ver si lo mencionan, qué fuentes citan en su lugar ni qué cambiar. Los datos son caros de recolectar y lentos de agregar: un dashboard que recalcula en cada petición no sirve.",
+      en: "A brand can appear in an answer while the link sends the reader to a competitor. I needed to make mentions and citations separately measurable and let the reader inspect the source of either number.",
+      es: "Una respuesta puede mencionar una marca y enviar al lector a la web de un competidor. Necesitaba medir las menciones y las citas por separado y poder rastrear de dónde salía cada cifra.",
     },
     built: [
       {
-        title: { en: "Product design and dashboard", es: "Diseño de producto y panel" },
+        title: { en: "From a question to its cited sources", es: "De una pregunta a sus fuentes" },
         body: {
-          en: "I designed and built the Vue dashboard and Rails API for comparing brand visibility, citations, competitors and improvement opportunities.",
-          es: "Diseñé y desarrollé el panel en Vue y la API en Rails para comparar la visibilidad de marca, las citas, los competidores y las oportunidades de mejora.",
+          en: "I built the collection pipeline, the Rails reporting API and the Vue dashboard. A team can compare engines, pick a question and inspect the answer and the pages it cited.",
+          es: "Desarrollé la recogida de respuestas, la API de informes en Rails y el panel en Vue. El equipo puede comparar buscadores, elegir una pregunta y consultar tanto la respuesta como las páginas citadas.",
         },
       },
       {
-        title: { en: "AI measurement and reporting", es: "Medición de IA e informes" },
+        title: { en: "Traffic alongside visibility", es: "Tráfico y visibilidad" },
         body: {
-          en: "I built flows for collecting AI answers, extracting citations and aggregating results by project. Teams can inspect the evidence behind each reading and export reports.",
-          es: "Construí los flujos que recopilan respuestas de IA, extraen citas y agregan resultados por proyecto. Los equipos pueden consultar la evidencia de cada lectura y exportar informes.",
+          en: "I integrated Google Analytics so teams can compare incoming traffic with the visibility report. The interface flags gaps in the analytics data and discrepancies that deserve a closer look.",
+          es: "Integré Google Analytics para comparar el tráfico recibido con la visibilidad de la marca. El panel señala lagunas en los datos de analítica y discrepancias que conviene investigar.",
         },
       },
       {
-        title: { en: "GA4 integration", es: "Integración con GA4" },
+        title: { en: "The cost of a measurement", es: "El coste de una medición" },
         body: {
-          en: "I connected Google Analytics and made the interface distinguish a measured zero from missing data and flag discrepancies.",
-          es: "Conecté Google Analytics e hice que el panel distinguiera un cero medido de un dato desconocido y señalara discrepancias.",
+          en: "I connected Stripe billing and added a credit estimate before a user expands a paid analysis. I also built exports so the team can share the findings outside the dashboard.",
+          es: "Integré los cobros con Stripe y calculé los créditos que costará ampliar un análisis antes de que el usuario lo solicite. También desarrollé la exportación de resultados para compartirlos fuera del panel.",
         },
       },
       {
-        title: { en: "Billing and cost estimates", es: "Facturación y estimación de costes" },
+        title: { en: "Technical audits for cited pages", es: "Auditoría técnica de páginas citadas" },
         body: {
-          en: "I implemented Stripe billing and show users their estimated credit cost before they expand a paid analysis.",
-          es: "Implementé la facturación con Stripe y la estimación de créditos que se muestra antes de ampliar un análisis de pago.",
+          en: "I wrote checks for crawler access, indexing directives and canonical URLs. They help explain why a page might be hard for a search engine to find or index.",
+          es: "Implementé comprobaciones de acceso para rastreadores, directivas de indexación y URLs canónicas. Sirven para investigar por qué a un buscador le cuesta encontrar o indexar una página.",
         },
       },
       {
-        title: { en: "Quality and performance checks", es: "Pruebas de calidad y rendimiento" },
+        title: { en: "Competitor discovery", es: "Detección de competidores" },
         body: {
-          en: "I added regression checks in RSpec, Vitest and Playwright, including axe accessibility checks and a latency budget for cached summaries.",
-          es: "Añadí pruebas de regresión con RSpec, Vitest y Playwright, incluidas comprobaciones de accesibilidad con axe y un límite de latencia para resúmenes en caché.",
+          en: "I built a review step for brands that turn up in collected answers. A team can inspect a suggested competitor and decide whether to include it in future comparisons.",
+          es: "Desarrollé la revisión de marcas detectadas en las respuestas. El equipo puede examinar cada competidor sugerido y decidir si lo incorpora a sus comparaciones.",
         },
       },
     ],
     decisions: [
       {
-        title: { en: "Background analytics", es: "Analítica en segundo plano" },
+        title: { en: "Reuse the right report", es: "Reutilizar el informe correcto" },
         body: {
-          en: "The first request for an analytics view returns 202 while a background job prepares the result. PostgreSQL shares those results across processes and enforces access by project with row-level security. CI flags cached summaries that take more than one second to load.",
-          es: "La primera solicitud de una vista analítica devuelve 202 mientras un job prepara el resultado. PostgreSQL comparte los resultados entre procesos y aplica el control de acceso por proyecto mediante row-level security. La CI detecta resúmenes en caché que tardan más de un segundo en cargar.",
+          en: "I moved expensive aggregations into background jobs. The cache key includes the filters, and each report carries its preparation time. While it refreshes, the team can read the last valid result for up to 30 minutes.",
+          es: "Pasé las agregaciones más costosas a tareas en segundo plano. La clave de caché incluye los filtros y cada informe conserva su hora de cálculo. Durante la actualización, el equipo puede consultar el último resultado válido durante un máximo de 30 minutos.",
         },
       },
       {
-        title: { en: "Timestamped results", es: "Resultados con fecha de actualización" },
+        title: { en: "Give zero a precise meaning", es: "Distinguir un cero de un dato pendiente" },
         body: {
-          en: "A valid reading can be served for up to 30 minutes while it refreshes, always with its date and state visible. Permission and evidence checks run outside the cache, and exports keep their synchronous verification.",
-          es: "Una lectura válida puede servirse hasta 30 minutos mientras se actualiza, siempre con fecha y estado visibles. Los permisos y la evidencia se comprueban fuera de la caché, y las exportaciones conservan su verificación síncrona.",
-        },
-      },
-      {
-        title: { en: "A budget for every asset", es: "Un presupuesto para cada asset" },
-        body: {
-          en: "Translations load per language before the app mounts, and secondary areas load their dictionaries on entry. A script checks gzip and Brotli sizes of the initial dictionary and the main routes on every build.",
-          es: "Las traducciones se cargan por idioma antes de montar la app, y las áreas secundarias cargan sus diccionarios al entrar. Un script comprueba en cada build el tamaño gzip y Brotli del diccionario inicial y las rutas principales.",
+          en: "I kept a missing analytics reading distinct from a measured zero. When both sources cover the same site and period, clicks in Search Console alongside zero sessions in GA4 warrant investigation. In that case, the dashboard flags a possible discrepancy. If either source lacks data, it marks the comparison as unavailable.",
+          es: "Separé las lecturas pendientes de los ceros medidos. Si ambas fuentes cubren el mismo sitio y período, y Search Console registra clics mientras GA4 devuelve cero sesiones, el panel señala una posible discrepancia. Si faltan datos de alguna fuente, indica que la comparación aún no está disponible.",
         },
       },
     ],
     outcome: {
-      en: "The November 18, 2026 release shipped background competitor suggestions during project setup. The figures below are from that release’s pre-deployment test run.",
-      es: "La versión del 18 de noviembre de 2026 incorporó sugerencias de competidores en segundo plano durante la configuración del proyecto. Las cifras corresponden a las pruebas previas a ese despliegue.",
+      en: "A team reviewing its brand can now trace a citation count back to a specific answer and URL. The Grialink example in the gallery shows which pages were cited, giving the team a concrete starting point for its next content review.",
+      es: "Hoy un equipo puede rastrear un recuento de citas hasta la respuesta y la URL que lo explican. El ejemplo de Grialink en la galería muestra qué páginas aparecieron como fuentes y le da al equipo un punto de partida para revisar su contenido.",
     },
-    stack: ["Ruby on Rails", "Vue 3", "TypeScript", "Pinia", "Vite", "Redis", "PostgreSQL (RLS)", "Sidekiq", "TanStack Query", "Tailwind CSS", "Stripe", "GA4", "Playwright", "Vitest", "RSpec", "Heroku"],
+    stack: ["Ruby on Rails", "Vue", "TypeScript", "Pinia", "Vite", "Redis", "PostgreSQL (RLS)", "Sidekiq", "TanStack Query", "Tailwind CSS", "Stripe", "GA4", "Playwright", "Vitest", "RSpec", "Heroku"],
   },
   {
     slug: "grialink",
     logo: "/career/grialink.png",
     preview: "/projects/grialink.jpg",
     additionalMedia: {
-      width: 1280,
-      height: 800,
-      caption: { en: "AI receptionist settings and business hours.", es: "Configuración y horario de atención de la recepcionista de IA." },
+      src: "/projects/details/grialink-call-history-light.webp",
+      dark: "/projects/details/grialink-call-history-dark.webp",
+      width: 1230,
+      height: 776,
+      caption: { en: "Call history with quality scores", es: "Historial de llamadas con puntuaciones" },
     },
     caseMedia: {
       src: "/projects/details/grialink-light.webp",
       dark: "/projects/details/grialink-dark.webp",
       width: 1280,
       height: 820,
-      caption: {
-        en: "Grialink’s shared inbox with a conversation and its contact record open side by side.",
-        es: "Bandeja compartida de Grialink con una conversación y la ficha del contacto abiertas lado a lado.",
-      },
+      caption: { en: "Shared inbox and contact details", es: "Bandeja compartida y ficha de contacto" },
     },
     name: "Grialink",
     year: "2025—26",
     kinds: ["web", "ai"],
     url: "https://www.grialink.com/",
     schemaType: "SoftwareApplication",
-    status: { en: "Web live · mobile app in development", es: "Web en línea · app móvil en desarrollo" },
+    status: {
+      en: "Web, iOS and Android available",
+      es: "Disponible en web, iOS y Android",
+    },
     role: {
       en: "Sole engineer — web platform, mobile app, landing",
       es: "Único ingeniero: plataforma web, app móvil, landing",
@@ -208,83 +201,72 @@ const all: Project[] = [
       es: "Agentes de IA que atienden llamadas, responden mensajes y agendan citas.",
     },
     summary: {
-      en: "Grialink is an Agentic Relationship Management (ARM) platform built on Chatwoot. Its AI agents answer calls, book appointments and help teams follow up on customer conversations. I built the voice integrations, native mobile app and marketing site.",
-      es: "Grialink es una plataforma ARM (Agentic Relationship Management) construida sobre Chatwoot. Sus agentes de IA atienden llamadas, agendan citas y ayudan al equipo a dar seguimiento a las conversaciones con clientes. Desarrollé las integraciones de voz, la app móvil y el sitio web.",
+      en: "I built the voice and messaging agents for Grialink on top of Chatwoot’s shared inbox. A practice can use the same workspace to answer a call, book a visit and follow up with the patient.",
+      es: "Desarrollé los agentes de voz y mensajería de Grialink sobre la bandeja compartida de Chatwoot. Desde un mismo espacio, una clínica puede atender una llamada, agendar una visita y retomar la conversación con el paciente.",
     },
-    facts: [
-      { value: "3", label: { en: "surfaces: dashboard, mobile app and site", es: "interfaces: panel, app móvil y sitio público" } },
-      { value: "iOS + Android", label: { en: "from one React Native app", es: "desde una sola app React Native" } },
-      { value: "Voice", label: { en: "calls handled by agents", es: "llamadas atendidas por agentes" } },
-    ],
+    facts: [],
     problem: {
-      en: "Small businesses lose customers in the gap between a message arriving and a person answering it. They need one inbox for every channel, and an agent that can actually do things — book an appointment, pick up a call — rather than only reply.",
-      es: "Los negocios pequeños pierden clientes en el hueco entre que llega un mensaje y alguien lo responde. Necesitan una bandeja para todos los canales y un agente que haga cosas de verdad —agendar una cita, atender una llamada— y no solo conteste.",
+      en: "A receptionist needs to know which times are free before promising a visit. A colleague taking over later needs the conversation, the appointment and the call record to agree.",
+      es: "Para ofrecer una cita, la recepción necesita saber qué horarios están libres. Quien retome el caso después debe poder relacionar la conversación, la reserva y el registro de la llamada.",
     },
     built: [
       {
-        title: { en: "AI receptionists and appointment booking", es: "Recepcionistas de IA y citas" },
+        title: { en: "Voice reception and booking", es: "Recepción por voz y reserva de citas" },
         body: {
-          en: "I built voice agents that answer calls, use business hours and services to check availability, and book appointments. The front desk can escalate calls to staff.",
-          es: "Desarrollé agentes de voz que atienden llamadas, consultan disponibilidad según los horarios y servicios del negocio y agendan citas. La recepcionista puede transferir llamadas al equipo.",
+          en: "I built Grial Front Desk to answer calls, check business hours and services, and book an available slot. It can transfer the call when a member of staff needs to take over.",
+          es: "Desarrollé Grial Front Desk para atender llamadas, consultar horarios y servicios y reservar un turno disponible. Cuando hace falta la intervención del personal, el recepcionista puede transferir la llamada.",
         },
       },
       {
-        title: { en: "Grial Mind in the inbox", es: "Grial Mind en la bandeja de entrada" },
+        title: { en: "Grial Mind in the shared inbox", es: "Grial Mind en la bandeja compartida" },
         body: {
-          en: "I built the agent that answers inbox conversations using the business’s knowledge and tools, with handoff to a person when needed.",
-          es: "Desarrollé el agente que responde en la bandeja de entrada con el conocimiento y las herramientas del negocio, con derivación a una persona cuando hace falta.",
+          en: "I built the agent that replies using the business’s knowledge and tools. Staff can take over the existing conversation and see what the agent has already told the customer.",
+          es: "Creé el agente que responde con la información y las herramientas del negocio. El equipo puede retomar el mismo hilo y ver qué le ha dicho ya el agente al cliente.",
         },
       },
       {
-        title: { en: "Telephony and call analysis", es: "Telefonía y análisis de llamadas" },
+        title: { en: "A call record the team can review", es: "Un historial que el equipo puede revisar" },
         body: {
-          en: "I integrated Twilio Voice into the web and mobile clients and built call records with playback, transcripts and analysis.",
-          es: "Integré Twilio Voice en la web y en la app móvil y desarrollé el historial de llamadas con reproducción, transcripciones y análisis.",
+          en: "I integrated Twilio Voice on web and mobile and built the call history with recordings, transcripts and quality scores.",
+          es: "Integré Twilio Voice en la web y en la app móvil y desarrollé el historial con grabaciones, transcripciones y puntuaciones de calidad.",
         },
       },
       {
-        title: { en: "Mobile app", es: "Aplicación móvil" },
+        title: { en: "Appointment reminders", es: "Recordatorios de citas" },
         body: {
-          en: "I built the React Native app for iOS and Android, including the shared inbox, contacts, push notifications and native calls.",
-          es: "Construí la aplicación en React Native para iOS y Android, con bandeja compartida, contactos, notificaciones push y llamadas nativas.",
+          en: "I built the scheduler for confirmations and reminders. When a visit moves, it cancels the pending reminders and schedules them for the new time.",
+          es: "Desarrollé la programación de confirmaciones y recordatorios. Si una cita cambia de hora, se cancelan los avisos pendientes y se programan para el nuevo horario.",
         },
       },
       {
-        title: { en: "Public website", es: "Sitio público" },
+        title: { en: "A guide to the agents", es: "Guía de los agentes" },
         body: {
-          en: "I developed the public site in Astro with GSAP and WebGL and deployed it on Vercel.",
-          es: "Desarrollé el sitio público en Astro con GSAP y WebGL y lo desplegué en Vercel.",
+          en: "I built the public pages that introduce each agent. A clinic can explore how voice reception, messaging and appointment follow-up fit into its daily work.",
+          es: "Desarrollé las páginas que presentan a cada agente. La clínica puede explorar cómo encajan la recepción de llamadas, la mensajería y el seguimiento de citas en su trabajo diario.",
         },
       },
     ],
     decisions: [
       {
-        title: { en: "Extend an open-source base", es: "Extender una base de código abierto" },
+        title: { en: "Keep the conversation when a person takes over", es: "Conservar el hilo al pasar a una persona" },
         body: {
-          en: "Chatwoot already solves the omnichannel inbox. Building on it under its MIT license let the effort go into what is different — agents, voice and appointments — instead of rebuilding message plumbing.",
-          es: "Chatwoot ya resuelve la bandeja omnicanal. Construir encima, bajo su licencia MIT, permitió dedicar el esfuerzo a lo diferente —agentes, voz y citas— en vez de rehacer la mensajería.",
+          en: "I extended the existing Chatwoot inbox and contact records with agent tools. That kept the customer’s message history in the place where staff already reply and let me concentrate the new work on calls and booking.",
+          es: "Amplié la bandeja y las fichas de contacto de Chatwoot con herramientas para los agentes. Así el historial quedó en el mismo lugar donde responde el personal y pude concentrar el desarrollo en las llamadas y las reservas.",
         },
       },
       {
-        title: { en: "One API for both clients", es: "Una API para ambos clientes" },
+        title: { en: "One definition of an available slot", es: "Una sola regla para ofrecer horarios" },
         body: {
-          en: "The app consumes the same REST API as the web dashboard. One contract to maintain, and a feature shipped to the API is available to both clients.",
-          es: "La app consume la misma API REST que el dashboard web. Un solo contrato que mantener, y lo que se publica en la API queda disponible para ambos clientes.",
-        },
-      },
-      {
-        title: { en: "Shared appointment availability", es: "Disponibilidad compartida para citas" },
-        body: {
-          en: "The booking portal, Grial Mind and the voice receptionist all use one availability service. It checks business hours, existing appointments and busy time from connected calendars.",
-          es: "El portal de reservas, Grial Mind y la recepcionista de voz usan un mismo servicio de disponibilidad. Consulta los horarios del negocio, las citas existentes y los bloques ocupados en calendarios conectados.",
+          en: "I used the same availability service for the booking portal and the agents. It combines opening hours, appointments and busy intervals from connected calendars. If a calendar cannot be read, the agent cannot offer that time as free.",
+          es: "Usé el mismo servicio de disponibilidad para el portal de reservas y los agentes. Cruza horarios de apertura, citas existentes e intervalos ocupados en calendarios conectados. Si falla la consulta de un calendario, el agente no ofrece esa hora como libre.",
         },
       },
     ],
     outcome: {
-      en: "The web platform is live at grialink.com. The mobile app is in active development against the same API.",
-      es: "La plataforma web está en línea en grialink.com. La app móvil está en desarrollo activo contra la misma API.",
+      en: "Grialink runs on the web and has companion apps for iOS and Android. After a receptionist handles a call, staff can open its recording and transcript, review the analysis and decide what follow-up the customer needs.",
+      es: "Grialink está disponible en web, iOS y Android. Después de que el recepcionista atiende una llamada, el equipo puede escuchar la grabación, leer la transcripción y usar el análisis para decidir cómo dar seguimiento al cliente.",
     },
-    stack: ["Ruby on Rails", "PostgreSQL", "Redis", "Sidekiq", "Vue 3", "Vuex", "Vite", "React Native", "Expo", "TypeScript", "Twilio Voice", "Firebase Messaging", "TanStack Query", "Zustand", "Astro", "GSAP", "Maestro", "EAS", "Playwright", "RSpec"],
+    stack: ["Ruby on Rails", "PostgreSQL", "Redis", "Sidekiq", "Vue", "Vuex", "Vite", "React Native", "Expo SDK", "TypeScript", "Twilio Voice", "Firebase Messaging", "TanStack Query", "Zustand", "Astro", "GSAP", "Maestro", "EAS", "Playwright", "RSpec"],
   },
   {
     slug: "grialink-mobile",
@@ -299,9 +281,11 @@ const all: Project[] = [
       Android: "https://play.google.com/store/apps/details?id=com.grialink",
     },
     additionalMedia: {
-      width: 390,
-      height: 844,
-      caption: { en: "Call detail with its transcription and analysis.", es: "Detalle de una llamada con su transcripción y análisis." },
+      src: "/projects/details/grialink-mobile-call-analysis.webp",
+      width: 1206,
+      height: 2622,
+      frame: "iphone",
+      caption: { en: "Call analysis and follow-up", es: "Análisis de llamada y seguimiento" },
     },
     schemaType: "MobileApplication",
     applicationCategory: "BusinessApplication",
@@ -309,9 +293,12 @@ const all: Project[] = [
       src: "/projects/grialink-mobile.webp",
       width: 447,
       height: 894,
-      caption: { en: "Shared conversation inbox in Grialink Mobile.", es: "Bandeja de conversaciones compartida en Grialink Mobile." },
+      caption: { en: "Shared inbox on iPhone", es: "Bandeja compartida en iPhone" },
     },
-    status: { en: "In development", es: "En desarrollo" },
+    status: {
+      en: "Available on iOS and Android",
+      es: "Disponible en iOS y Android",
+    },
     role: { en: "Mobile app development", es: "Desarrollo de la aplicación móvil" },
     tagline: {
       en: "Grialink’s shared inbox and business calls on iOS and Android.",
@@ -332,67 +319,73 @@ const all: Project[] = [
     },
     built: [
       {
-        title: { en: "Conversations and contacts", es: "Conversaciones y contactos" },
+        title: { en: "Business calls on a personal device", es: "Llamadas desde el número del negocio" },
         body: {
-          en: "I built the shared inbox and contact views against Grialink’s REST API, so teams can follow up from the same workspace they use on the web.",
-          es: "Desarrollé la bandeja compartida y las vistas de contactos sobre la API REST de Grialink. El equipo puede hacer seguimiento desde el mismo espacio de trabajo que usa en la web.",
+          en: "I integrated Twilio Voice so staff can receive calls and call back from their Grialink number. I built the Recents and call detail screens, including playback, the transcript and the analysis when available.",
+          es: "Integré Twilio Voice para recibir llamadas y devolverlas desde el número de Grialink. Desarrollé las vistas de llamadas recientes y de detalle, con reproducción, transcripción y análisis cuando están disponibles.",
         },
       },
       {
-        title: { en: "Native calls and call history", es: "Llamadas nativas e historial" },
+        title: { en: "The inbox away from the desk", es: "La bandeja fuera de la oficina" },
         body: {
-          en: "I integrated Twilio Voice for business calls and built the call history and detail screens, including playback and analysis.",
-          es: "Integré Twilio Voice para las llamadas del negocio y desarrollé el historial y el detalle de llamadas, con reproducción y análisis.",
+          en: "I brought conversations and contacts into the React Native app. Staff can open a message notification, read the thread and reply with a photo or document from the phone.",
+          es: "Llevé las conversaciones y los contactos a la app de React Native. El equipo puede abrir un aviso, leer el hilo y responder con una foto o un documento desde el teléfono.",
         },
       },
       {
-        title: { en: "Notifications and biometric unlock", es: "Notificaciones y desbloqueo biométrico" },
+        title: { en: "Device access and call tests", es: "Acceso al dispositivo y pruebas de llamadas" },
         body: {
-          en: "I implemented push notifications that open the relevant record, plus secure session storage and biometric unlock.",
-          es: "Implementé notificaciones push que abren el registro correspondiente, almacenamiento seguro de la sesión y desbloqueo biométrico.",
+          en: "I added biometric unlock and secure session storage. I also covered notification routing and voice registration in automated tests, alongside Maestro flows for the mobile interface.",
+          es: "Implementé el desbloqueo biométrico y el almacenamiento seguro de la sesión. Añadí pruebas automatizadas para la navegación desde notificaciones y el registro de llamadas entrantes, además de recorridos de interfaz con Maestro.",
         },
       },
       {
-        title: { en: "Builds and device tests", es: "Builds y pruebas en dispositivos" },
+        title: { en: "Contact notes", es: "Notas de contacto" },
         body: {
-          en: "I set up native builds for both platforms and added Maestro flows for end-to-end checks.",
-          es: "Configuré builds nativos para las dos plataformas y añadí recorridos de extremo a extremo con Maestro.",
+          en: "I built the mobile contact notes view so staff can record a follow-up after a call and read earlier notes before contacting the customer again.",
+          es: "Desarrollé las notas de contacto para que el equipo pueda anotar el seguimiento de una llamada y consultar lo acordado antes de volver a contactar al cliente.",
         },
       },
     ],
     decisions: [
       {
-        title: { en: "One API for web and mobile", es: "Una API para la web y la app" },
+        title: { en: "Keep incoming calls reachable", es: "Mantener la recepción de llamadas" },
         body: {
-          en: "The app uses the same REST API as the web dashboard, so conversations and contacts stay in the same workspace.",
-          es: "La app usa la misma API REST que el panel web, así que las conversaciones y los contactos se mantienen en el mismo espacio de trabajo.",
+          en: "Android can rotate its push token while the app is closed. On return, I compare it with the token registered for voice and renew the registration if it changed. The regression test covers a phone whose voice access token is still valid.",
+          es: "Android puede cambiar el identificador de notificaciones mientras la app está cerrada. Al volver, lo comparo con el registrado para recibir llamadas y renuevo el registro si cambió. La prueba cubre el caso en que la credencial de voz todavía es válida.",
+        },
+      },
+      {
+        title: { en: "Open the notification in its workspace", es: "Abrir el aviso en la cuenta correcta" },
+        body: {
+          en: "A team member may belong to several accounts. Before opening a call or conversation from a push notification, the app switches to its account and checks access. This avoids sending someone to an empty thread in the wrong workspace.",
+          es: "Una persona puede pertenecer a varias cuentas. Antes de abrir una llamada o conversación desde una notificación, la app selecciona la cuenta de origen y comprueba el acceso. Así evita abrir un hilo vacío en otro espacio de trabajo.",
         },
       },
     ],
     outcome: {
-      en: "The mobile app is in development, with native builds for both platforms.",
-      es: "La aplicación móvil está en desarrollo y cuenta con builds nativos para ambas plataformas.",
+      en: "The app is available on the App Store and Google Play for teams with a Grialink account. A missed call can now be followed up on the same phone, from the call record through to a callback or a message.",
+      es: "La app está disponible en App Store y Google Play para equipos con cuenta de Grialink. Desde el teléfono, el equipo puede revisar una llamada perdida y responder con otra llamada o un mensaje.",
     },
-    stack: ["React Native", "Expo", "TypeScript", "Twilio Voice", "Firebase Messaging", "Zustand", "Maestro", "EAS"],
+    stack: ["React Native", "Expo SDK", "TypeScript", "Twilio Voice", "Firebase Messaging", "Zustand", "Maestro", "EAS"],
   },
   {
     slug: "first-commit",
     logo: "/projects/first-commit-symbol.svg",
     preview: "/projects/first-commit.jpg",
     additionalMedia: {
-      width: 1280,
-      height: 800,
-      caption: { en: "Kit configurator with stack options and an installation plan.", es: "Configurador de kits con las opciones del stack y el plan de instalación." },
+      src: "/projects/details/first-commit-configurator-light.webp",
+      dark: "/projects/details/first-commit-configurator-dark.webp",
+      width: 1440,
+      height: 900,
+      caption: { en: "Expo kit configuration", es: "Configuración del kit de Expo" },
     },
     caseMedia: {
       src: "/projects/previews/first-commit-light.webp",
       dark: "/projects/previews/first-commit-dark.webp",
       width: 1280,
       height: 800,
-      caption: {
-        en: "The first-commit site previews the setup steps a kit will run.",
-        es: "El sitio de first-commit muestra los pasos de configuración que ejecutará un kit.",
-      },
+      caption: { en: "Kit installation preview", es: "Vista previa de la instalación" },
     },
     name: "first-commit",
     year: "2026",
@@ -411,13 +404,12 @@ const all: Project[] = [
       es: "Una CLI de código abierto que prepara proyectos para agentes de programación.",
     },
     summary: {
-      en: "first-commit is an open-source CLI. One command creates a project, installs its dependencies, the agent skills and the MCP servers, and writes the AGENTS.md a coding agent reads before touching a line.",
-      es: "first-commit es una CLI de código abierto. Un comando crea el proyecto, instala sus dependencias, las skills del agente y los servidores MCP, y escribe el AGENTS.md que un agente de código lee antes de tocar una línea.",
+      en: "I created first-commit to package the setup I kept repeating on new projects. A kit describes the stack, tools and instructions for a coding agent. Developers can choose their options and inspect the install plan before it runs.",
+      es: "Creé first-commit para empaquetar la configuración que repetía al empezar proyectos. Cada kit describe el stack, las herramientas y las instrucciones para el agente de programación. Quien lo usa puede elegir las opciones y revisar el plan antes de ejecutarlo.",
     },
     facts: [
       { value: "70", label: { en: "official kits", es: "kits oficiales" } },
       { value: "9", label: { en: "languages", es: "lenguajes" } },
-      { value: "1", label: { en: "command: npx create-first-commit", es: "comando: npx create-first-commit" } },
     ],
     problem: {
       en: "Starting a project with an agent means scaffolding it, installing a UI library, hunting for the right skills, wiring an MCP server, and then explaining the conventions again in every new session.",
@@ -425,60 +417,60 @@ const all: Project[] = [
     },
     built: [
       {
-        title: { en: "CLI and kit registry", es: "CLI y catálogo de kits" },
+        title: { en: "The CLI and kit format", es: "La CLI y el formato de los kits" },
         body: {
-          en: "I built the command-line installer and the official kits. A kit declares its stack options, dependencies, skills, MCP servers and project instructions.",
-          es: "Desarrollé el instalador de línea de comandos y los kits oficiales. Cada kit declara las opciones de su stack, dependencias, skills, servidores MCP e instrucciones del proyecto.",
+          en: "I designed the kit schema and wrote the CLI that resolves a developer’s choices into files, dependencies and agent instructions. It also records what it installed so the project can receive kit updates.",
+          es: "Diseñé el esquema de los kits y desarrollé la CLI que convierte las opciones elegidas en archivos, dependencias e instrucciones para el agente. La CLI registra lo que instala para poder actualizar el proyecto después.",
         },
       },
       {
-        title: { en: "Planning and compatibility", es: "Planificación y compatibilidad" },
+        title: { en: "A catalog developers can inspect", es: "Un catálogo que se puede explorar" },
         body: {
-          en: "I built the shared planner that resolves selected options, catches incompatible combinations and previews commands before installation.",
-          es: "Construí el planificador que resuelve las opciones elegidas, detecta combinaciones incompatibles y muestra los comandos antes de instalar.",
+          en: "I built the registry and web configurator. Developers can compare kits, select their agent and package manager, and copy a command for that exact combination. I added build checks for combinations of kit options.",
+          es: "Desarrollé el registro y el configurador web. Se pueden comparar kits, elegir agente y gestor de paquetes y copiar el comando que corresponde a esa combinación. Añadí comprobaciones que compilan proyectos con distintas combinaciones de opciones.",
         },
       },
       {
-        title: { en: "MCP server", es: "Servidor MCP" },
+        title: { en: "Kit setup from a coding agent", es: "Configurar un kit desde un agente" },
         body: {
-          en: "I exposed kit search and planning through MCP. The local server can install a selected kit with the user’s approval.",
-          es: "Expuse la búsqueda y la planificación de kits mediante MCP. El servidor local puede instalar un kit con la aprobación del usuario.",
+          en: "I wrote an MCP server so a coding agent can search the catalog and show the setup plan in the conversation. The hosted server returns a command. The local server can run the installer after the developer approves the plan.",
+          es: "Desarrollé un servidor MCP para que un agente pueda buscar kits y mostrar el plan de instalación en la conversación. El servidor alojado devuelve el comando. El servidor local puede ejecutar la instalación cuando el usuario aprueba el plan.",
         },
       },
       {
-        title: { en: "Website and publishing", es: "Sitio web y publicación" },
+        title: { en: "Project diagnostics", es: "Diagnóstico del proyecto" },
         body: {
-          en: "I built the Next.js configurator, documentation, verified-kit catalog and publishing flow so users can share and compare their kits.",
-          es: "Construí el configurador en Next.js, la documentación, el catálogo de kits verificados y el flujo de publicación para que los usuarios compartan y comparen sus kits.",
+          en: "I wrote the doctor command to find missing setup files, environment variables and agent skills. It can report errors directly in CI when a project drifts from its kit.",
+          es: "Escribí el comando doctor para detectar archivos de configuración, variables de entorno y herramientas del agente que faltan. Los errores también se pueden detectar en integración continua.",
         },
       },
       {
-        title: { en: "Project maintenance", es: "Mantenimiento del proyecto generado" },
+        title: { en: "Kits for existing projects", es: "Kits para proyectos existentes" },
         body: {
-          en: "I added commands to update kits, install more libraries and check whether a project still follows the kit’s declared configuration.",
-          es: "Añadí comandos para actualizar kits, sumar librerías y comprobar si un proyecto sigue la configuración declarada por el kit.",
+          en: "I built the add command for installing individual catalog items in an existing repository. A developer can preview the changes before applying them to the project.",
+          es: "Desarrollé el comando add para instalar elementos del catálogo en un repositorio existente. El desarrollador puede revisar los cambios previstos antes de aplicarlos.",
         },
       },
     ],
     decisions: [
       {
-        title: { en: "See it before it runs", es: "Verlo antes de que corra" },
+        title: { en: "Separate planning from execution", es: "Separar la planificación de la ejecución" },
         body: {
-          en: "Every command is shown in a plan first and --dry-run executes nothing. Official kits are integrity-checked and verified by building real option combinations.",
-          es: "Cada comando se muestra primero en un plan y --dry-run no ejecuta nada. Los kits oficiales pasan control de integridad y se verifican construyendo combinaciones reales de opciones.",
+          en: "I made kit resolution produce a list of steps before the CLI writes files or runs commands. The dry run and the installer consume the same plan, so the preview reflects what the installer is about to do.",
+          es: "Hice que la resolución del kit produzca una lista de pasos antes de escribir archivos o ejecutar comandos. La simulación y el instalador leen el mismo plan, de modo que la vista previa refleja lo que se va a ejecutar.",
         },
       },
       {
-        title: { en: "Projects stay connected", es: "Los proyectos siguen conectados" },
+        title: { en: "Preserve edits across kit updates", es: "Respetar los cambios al actualizar un kit" },
         body: {
-          en: "A kits.lock file remembers where a project came from. update brings in a kit's improvements without touching files you changed, add pulls in more libraries, and doctor checks the project still follows its rules.",
-          es: "Un archivo kits.lock recuerda de dónde salió el proyecto. update trae las mejoras del kit sin tocar los archivos que cambiaste, add suma librerías y doctor comprueba que el proyecto sigue sus reglas.",
+          en: "The CLI saves a hash of each managed file in kits.lock. During an update it compares that baseline with the file on disk. A developer can accept upstream changes to untouched files while keeping edits and deletions they made locally.",
+          es: "La CLI guarda en kits.lock una huella de cada archivo que gestiona. Al actualizar, la compara con el archivo que hay en disco. Así se pueden incorporar cambios del kit en archivos intactos y conservar las ediciones y eliminaciones locales.",
         },
       },
     ],
     outcome: {
-      en: "Published on npm as create-first-commit, with the site live at first-commit.dev. Works with Claude Code, Cursor, Codex, Gemini CLI, GitHub Copilot, Windsurf and OpenCode.",
-      es: "Publicado en npm como create-first-commit, con el sitio en first-commit.dev. Funciona con Claude Code, Cursor, Codex, Gemini CLI, GitHub Copilot, Windsurf y OpenCode.",
+      en: "The CLI and official kits are public under the MIT license. To inspect a real setup, run npx create-first-commit landing-next demo --dry-run. It prints the steps for a Next.js project and leaves the project directory untouched.",
+      es: "La CLI y los kits oficiales son públicos bajo licencia MIT. Para inspeccionar un caso real, ejecuta npx create-first-commit landing-next demo --dry-run. Muestra los pasos para preparar un proyecto de Next.js y deja intacto el directorio del proyecto.",
     },
     stack: ["TypeScript", "Node.js", "pnpm workspaces", "MCP", "Next.js", "React", "Tailwind CSS", "PostgreSQL", "Drizzle ORM", "Better Auth", "Stripe", "Zod", "Vitest", "Playwright", "GitHub Actions"],
   },
@@ -489,7 +481,18 @@ const all: Project[] = [
     year: "2026",
     kinds: ["web"],
     websitePending: true,
-    caseMedia: bmoriMobileMedia,
+    caseMedia: {
+      src: "/projects/details/bmori-web-dashboard.webp",
+      width: 2836,
+      height: 1700,
+      caption: { en: "Weekly inflows and outflows", es: "Entradas y salidas semanales" },
+    },
+    additionalMedia: {
+      src: "/projects/details/bmori-web-operations.webp",
+      width: 2847,
+      height: 1693,
+      caption: { en: "Spending by transaction type", es: "Gastos por tipo de operación" },
+    },
     schemaType: "SoftwareApplication",
     applicationCategory: "FinanceApplication",
     status: { en: "Mobile complete · web in development", es: "App móvil terminada · web en desarrollo" },
@@ -503,36 +506,72 @@ const all: Project[] = [
       es: "La banca de Bonafide Microbank. La app móvil está terminada y la versión web está en desarrollo.",
     },
     summary: {
-      en: "B-Morï gives Bonafide Microbank customers a way to view account activity and move money.",
-      es: "B-Morï permite a los clientes de Bonafide Microbank consultar sus operaciones y mover dinero.",
+      en: "After building Bonafide Microbank’s mobile app, I started its web banking interface. The account overview shows money in and out, and the operations view lets a customer investigate an amount down to an individual transaction.",
+      es: "Después de desarrollar la app móvil de Bonafide Microbank, empecé la banca web. El resumen muestra las entradas y salidas de dinero. Desde la vista de operaciones, el cliente puede investigar un importe hasta localizar el movimiento que lo explica.",
     },
     problem: {
-      en: "The project brings those everyday banking tasks to iOS and Android, with browser access as the next step.",
-      es: "El proyecto lleva las operaciones bancarias del día a día a iOS y Android. El acceso desde el navegador es el siguiente paso.",
+      en: "A customer looking into an unfamiliar debit needs more than a balance. The account, period and type of operation matter, especially when the same customer holds several accounts.",
+      es: "Cuando un cliente investiga un cargo que no reconoce, el saldo dice poco por sí solo. Necesita identificar el período, el tipo de operación y la cuenta de origen, sobre todo si tiene varias.",
     },
     facts: [],
     built: [
       {
-        title: { en: "B-Morï Mobile", es: "B-Morï Mobile" },
+        title: { en: "Account overview", es: "Resumen de la cuenta" },
         body: {
-          en: "I rebuilt the iOS and Android app in React Native and Expo, including account activity, transfers, top-ups and PDF receipts.",
-          es: "Reconstruí la app de iOS y Android en React Native y Expo, con consulta de operaciones, transferencias, recargas y comprobantes en PDF.",
+          en: "I built the account switcher and the overview of cash flows, operation types and recent activity. The selected period sets the context for both the charts and the totals.",
+          es: "Desarrollé el selector de cuentas y el resumen de entradas, salidas, tipos de operación y actividad reciente. El período elegido determina qué movimientos entran en los gráficos y los totales.",
         },
       },
       {
-        title: { en: "B-Morï Web", es: "B-Morï Web" },
+        title: { en: "Searchable operations", es: "Consulta de operaciones" },
         body: {
-          en: "I’m developing the version that runs in the browser.",
-          es: "Estoy desarrollando la versión que funciona en el navegador.",
+          en: "I built the spending breakdown and transaction list with filters for account, period and operation type. Customers can narrow the list by recipient or reference when an amount alone is ambiguous.",
+          es: "Desarrollé el desglose de gastos y el listado de movimientos con filtros por cuenta, período y tipo de operación. Cuando el importe no basta para identificar un cargo, se puede buscar por destinatario o referencia.",
+        },
+      },
+      {
+        title: { en: "Transfer review", es: "Revisión de transferencias" },
+        body: {
+          en: "I connected the web forms to server-side actions for quoting and submitting operations. The review step gives the customer the amount and fees before authorization.",
+          es: "Conecté los formularios web con las acciones de servidor que calculan el coste y envían las operaciones. El cliente puede revisar el importe y las comisiones antes de autorizar el envío.",
+        },
+      },
+      {
+        title: { en: "Account statements", es: "Estados de cuenta" },
+        body: {
+          en: "I built a statement view that brings together the available balance, money in and out, and dated entries for the selected account and period.",
+          es: "Desarrollé el estado de cuenta que reúne el saldo disponible, las entradas, las salidas y el detalle por fecha para la cuenta y el período elegidos.",
+        },
+      },
+      {
+        title: { en: "Cash pickup codes", es: "Códigos de retiro" },
+        body: {
+          en: "I added a way to resend the pickup code for a pending cash withdrawal. The replacement invalidates the earlier code, so the recipient knows which one to use.",
+          es: "Añadí el reenvío del código de retiro cuando el efectivo sigue pendiente de cobro. El nuevo código invalida el anterior para que el destinatario pueda usar el último que recibió.",
         },
       },
     ],
-    decisions: [],
+    decisions: [
+      {
+        title: { en: "Put the history filters in the URL", es: "Guardar los filtros del historial en la URL" },
+        body: {
+          en: "I used the URL as the source for the account, period, operation type and search text. Reloading restores the same investigation. Text searches wait briefly while the customer types before requesting another result.",
+          es: "Usé la URL para conservar la cuenta, el período, el tipo de operación y la búsqueda. Al recargar se recupera la misma consulta. El buscador espera una pausa al escribir para evitar una petición por cada tecla.",
+        },
+      },
+      {
+        title: { en: "Validate monetary operations on the server", es: "Validar las operaciones en el servidor" },
+        body: {
+          en: "I kept the banking session on the server and validated operation inputs there with Zod. The browser submits the customer’s choices and receives a result the interface can explain, while the server handles the credentials for the banking API.",
+          es: "Mantuve la sesión bancaria en el servidor y validé allí los datos de cada operación con Zod. El navegador envía las opciones elegidas y recibe un resultado que puede mostrar al cliente. Las credenciales para la API bancaria se gestionan en el servidor.",
+        },
+      },
+    ],
     outcome: {
-      en: "The mobile app has development, staging and production build profiles.",
-      es: "La app móvil cuenta con perfiles de compilación para desarrollo, staging y producción.",
+      en: "The mobile app is complete and the web version is in development. Its demo can show both a populated account and one with no movements. The web screenshots here show the two views available for investigating activity with simulated transactions.",
+      es: "La aplicación móvil está terminada y la web sigue en desarrollo. La demo permite recorrer tanto una cuenta con movimientos como una sin actividad. Las capturas muestran cómo se investiga el gasto desde el resumen y el historial con operaciones simuladas.",
     },
-    stack: ["React Native", "Expo", "TypeScript"],
+    stack: ["Next.js", "React", "TypeScript", "Zod", "React Native", "Expo SDK"],
   },
   {
     slug: "bmori-mobile",
@@ -543,15 +582,27 @@ const all: Project[] = [
     kinds: ["mobile"],
     platforms: ["iOS", "Android"],
     additionalMedia: {
-      width: 390,
-      height: 844,
-      caption: { en: "Transfer confirmation with demo data.", es: "Confirmación de una transferencia con datos de demostración." },
+      frame: "iphone",
+      src: "/projects/details/bmori-mobile-send-cash.webp",
+      width: 1206,
+      height: 2622,
+      caption: { en: "Sending 25,000 XAF", es: "Envío de 25.000 XAF" },
     },
-    caseMedia: bmoriMobileMedia,
+    showcaseMedia: bmoriMobileMedia,
+    caseMedia: {
+      frame: "iphone",
+      src: "/projects/details/bmori-mobile-home.webp",
+      width: 1206,
+      height: 2622,
+      caption: { en: "Account home with balance hidden", es: "Inicio con el saldo oculto" },
+    },
     schemaType: "MobileApplication",
     applicationCategory: "FinanceApplication",
     status: { en: "Development complete", es: "Desarrollo completado" },
-    role: { en: "Mobile engineer — architecture and build", es: "Ingeniero móvil: arquitectura y construcción" },
+    role: {
+      en: "Mobile architecture and development",
+      es: "Arquitectura y desarrollo móvil",
+    },
     tagline: {
       en: "I rebuilt Bonafide Microbank’s app for viewing account activity, transferring money and topping up phones.",
       es: "Reconstruí la app de Bonafide Microbank para consultar operaciones, hacer transferencias y recargar teléfonos.",
@@ -561,87 +612,81 @@ const all: Project[] = [
       es: "La app de Bonafide Microbank para consultar transacciones y hacer transferencias.",
     },
     summary: {
-      en: "The new B-Morï app for Bonafide Microbank on iOS and Android. It replaces the previous Codename One app with a simpler, modern design built on Expo and React Native.",
-      es: "La nueva app B-Morï de Bonafide Microbank para iOS y Android. Sustituye a la app anterior hecha en Codename One por un diseño más simple y moderno sobre Expo y React Native.",
+      en: "I rebuilt Bonafide Microbank’s Codename One app in React Native for iOS and Android. My work covered the transaction flow from checking an account through authorizing a payment and retrieving its receipt.",
+      es: "Reconstruí en React Native la app de Bonafide Microbank, que antes usaba Codename One. Desarrollé el recorrido en iOS y Android desde la consulta de una cuenta hasta la autorización de un pago y la obtención de su comprobante.",
     },
-    facts: [
-      { value: "Expo 57", label: { en: "React Native 0.86", es: "React Native 0.86" } },
-      { value: "3", label: { en: "build environments", es: "entornos de build" } },
-      { value: "0", label: { en: "mock data outside development", es: "datos simulados fuera de desarrollo" } },
-    ],
+    facts: [],
     problem: {
-      en: "The existing app was built on an aging cross-platform toolkit and was hard to evolve. The replacement had to be developed while its backends were still being connected, without ever letting simulated data reach a real user.",
-      es: "La app existente estaba hecha con un toolkit multiplataforma envejecido y costaba evolucionarla. El reemplazo debía desarrollarse mientras sus backends aún se conectaban, sin que un dato simulado llegara jamás a un usuario real.",
+      en: "Several banking services were still being connected during the rebuild. I needed to develop and test each journey independently, including what customers see when a service is unavailable or a transfer is still pending.",
+      es: "Durante la reconstrucción aún se estaban conectando varios servicios bancarios. Necesitaba desarrollar y probar cada operación por separado, incluido lo que ve el cliente si un servicio falla o una transferencia sigue pendiente.",
     },
     built: [
       {
-        title: { en: "Account activity and receipts", es: "Movimientos y comprobantes" },
-        body: {
-          en: "I built account and recent activity screens, filters for transactions, and PDF receipts and statements.",
-          es: "Desarrollé las pantallas de cuentas y operaciones, los filtros de movimientos y la generación de comprobantes e informes en PDF.",
-        },
-      },
-      {
         title: { en: "Transfers and top-ups", es: "Transferencias y recargas" },
         body: {
-          en: "I implemented transfer flows for local and CEMAC payments, beneficiary selection, and Airtel top-ups.",
-          es: "Implementé flujos de transferencias locales y CEMAC, selección de beneficiarios y recargas de Airtel.",
+          en: "I implemented cash sends, account transfers, regional CEMAC transfers and Airtel top-ups. For a regional transfer, the customer reviews the beneficiary, destination bank, fees and total before entering a PIN.",
+          es: "Implementé envíos de efectivo, transferencias entre cuentas, transferencias regionales CEMAC y recargas de Airtel. Para una transferencia regional, el cliente revisa el beneficiario, el banco de destino, las comisiones y el total antes de introducir el PIN.",
         },
       },
       {
-        title: { en: "Sign-in and device security", es: "Acceso y seguridad en el dispositivo" },
+        title: { en: "History and receipts", es: "Historial y comprobantes" },
         body: {
-          en: "I built password and verification-code sign-in, PIN and biometric unlock, secure storage and screen-capture protection.",
-          es: "Desarrollé el acceso con contraseña y códigos de verificación, el desbloqueo con PIN y biometría, el almacenamiento seguro y la protección frente a capturas de pantalla.",
+          en: "I built the activity and receipt views, including PDF receipts a customer can share from the phone. I also integrated biometric unlock for returning to the app.",
+          es: "Desarrollé el historial y las vistas de comprobantes, incluida la generación de recibos en PDF que se pueden compartir desde el móvil. También integré el desbloqueo biométrico para volver a la app.",
         },
       },
       {
-        title: { en: "Mobile architecture and delivery", es: "Arquitectura móvil y entrega" },
+        title: { en: "Agent and branch finder", es: "Localizador de agentes y sucursales" },
         body: {
-          en: "I set up Expo Router, translations in Spanish, French and English, and Jest tests for screens and forms. I configured EAS build profiles for development, staging and production.",
-          es: "Configuré Expo Router, traducciones en español, francés e inglés y pruebas de pantallas y formularios con Jest. Preparé perfiles EAS para desarrollo, staging y producción.",
+          en: "I built a directory of agents and bank branches. Customers can search by city and open a location in their phone’s maps app.",
+          es: "Desarrollé el directorio de agentes y sucursales. El cliente puede buscar por ciudad y abrir la dirección elegida en la aplicación de mapas del móvil.",
+        },
+      },
+      {
+        title: { en: "Transaction limits", es: "Límites por operación" },
+        body: {
+          en: "I built a limits screen that shows the minimum and maximum per transaction, how much of the allowance is used and how much remains in the selected period.",
+          es: "Creé la consulta de límites para ver el mínimo y el máximo por operación, cuánto se ha utilizado y cuánto queda disponible en el período elegido.",
         },
       },
     ],
     decisions: [
       {
-        title: { en: "The UI talks to one contract", es: "La UI habla con un solo contrato" },
+        title: { en: "Keep a pending transfer identifiable", es: "Dar seguimiento a una transferencia pendiente" },
         body: {
-          en: "Screens only know the BmoriApi interface. In development, with no URL configured, everything is a mock; each backend that gets configured turns its group real. A single file decides which is which.",
-          es: "Las pantallas solo conocen la interfaz BmoriApi. En desarrollo, sin URL configurada, todo es simulado; cada backend que se configura vuelve real su grupo. Un único archivo decide cuál es cuál.",
+          en: "Submitting a CEMAC transfer can return a pending operation. I keep its identifier so the app can check that same transfer when the customer returns. The interface distinguishes acceptance, rejection and a refund.",
+          es: "El envío de una transferencia CEMAC puede devolver una operación pendiente. Conservo su identificador para que la app consulte esa misma transferencia cuando el cliente vuelva. La interfaz distingue la aceptación, el rechazo y el reembolso.",
         },
       },
       {
-        title: { en: "Validate production build settings", es: "Validar la configuración de producción" },
+        title: { en: "Integrate one service at a time", es: "Conectar los servicios por separado" },
         body: {
-          en: "In preview and production there is no simulation: if a backend is missing the build fails, and the app never falls back to fake data.",
-          es: "En preview y producción no hay simulación: si falta un backend el build falla, y la app nunca recurre a datos falsos.",
+          en: "I put identity, agency and catalog calls behind separate adapters. Development can simulate the services still being connected. Preview and production builds surface an unavailable service explicitly, so a missing integration cannot look like a successful payment.",
+          es: "Separé las conexiones de identidad, agencia y catálogo. En desarrollo se pueden simular los servicios pendientes de integración. En las compilaciones de prueba y producción, la app indica qué servicio no está disponible para que el cliente no confunda un fallo con un pago realizado.",
         },
       },
     ],
     outcome: {
-      en: "The iOS and Android app is built, with development, staging and production profiles on EAS.",
-      es: "La app de iOS y Android está terminada y cuenta con perfiles EAS de desarrollo, staging y producción.",
+      en: "Development for iOS and Android is complete. The transfer tests cover fees before authorization and what happens after submission, including a pending operation that is later rejected and refunded. Those cases matter when a customer needs to know whether to send money again.",
+      es: "El desarrollo para iOS y Android está terminado. Las pruebas de transferencias cubren las comisiones antes de autorizar y lo que ocurre después del envío, incluido un movimiento pendiente que acaba rechazado y reembolsado. Ese estado permite al cliente saber qué pasó con su dinero antes de intentar otro envío.",
     },
-    stack: ["Expo SDK 57", "React Native 0.86", "TypeScript", "Expo Router", "TanStack Query", "Zustand", "React Hook Form", "Zod", "SQLite", "Jest", "EAS"],
+    stack: ["Expo SDK", "React Native", "TypeScript", "Expo Router", "TanStack Query", "Zustand", "React Hook Form", "Zod", "SQLite", "Jest", "EAS"],
   },
   {
     slug: "global-dentistry-group",
     logo: "/career/global.png",
     preview: "/projects/global-dentistry-group.jpg",
     additionalMedia: {
-      width: 390,
-      height: 844,
-      caption: { en: "Appointment request form on mobile.", es: "Formulario de solicitud de cita en móvil." },
+      src: "/projects/details/global-dentistry-home-mobile.webp",
+      width: 780,
+      height: 1688,
+      caption: { en: "Dental clinic homepage on mobile", es: "Portada de la clínica dental en móvil" },
     },
     caseMedia: {
       src: "/projects/previews/global-dentistry-group-light.webp",
       width: 1280,
       height: 800,
-      caption: {
-        en: "Global Dentistry Group’s homepage with shortcuts to services and appointment requests.",
-        es: "Inicio de Global Dentistry Group con accesos a los servicios y la solicitud de citas.",
-      },
+      caption: { en: "Dental services and appointment requests", es: "Servicios dentales y solicitud de citas" },
     },
     name: "Global Dentistry Group",
     year: "2025",
@@ -659,53 +704,56 @@ const all: Project[] = [
       es: "Sitio de una clínica dental con información de servicios y reserva de citas.",
     },
     summary: {
-      en: "A marketing site for a dental group, built with Astro so pages ship as static HTML, with React only where a visitor interacts: forms, date pickers and carousels.",
-      es: "Un sitio de marketing para un grupo dental, hecho con Astro para que las páginas salgan como HTML estático, con React solo donde el visitante interactúa: formularios, selectores de fecha y carruseles.",
+      en: "I designed and built the public site for a clinic that offers both dental and spa treatments. I connected its service pages to an appointment form that carries the patient’s treatment choice into the request.",
+      es: "Diseñé y desarrollé el sitio de una clínica que ofrece tratamientos dentales y de spa. Conecté las páginas de servicios con un formulario que conserva el tratamiento elegido al solicitar una cita.",
     },
-    facts: [
-      { value: "Astro", label: { en: "static HTML first", es: "HTML estático primero" } },
-      { value: "React", label: { en: "islands for forms only", es: "islas solo para formularios" } },
-      { value: "Vercel", label: { en: "hosting", es: "hosting" } },
-    ],
+    facts: [],
     problem: {
-      en: "A clinic's site has one job: let a patient understand the services and ask for an appointment, quickly, on a phone.",
-      es: "El sitio de una clínica tiene un trabajo: que un paciente entienda los servicios y pida una cita, rápido y desde el teléfono.",
+      en: "Dental and spa patients share a reception desk but choose from different treatments. Someone who had already picked a service on the site needed a way to request a date without searching the catalog again.",
+      es: "Los pacientes de odontología y de spa pasan por la misma recepción, pero eligen entre tratamientos distintos. Quien ya había escogido un servicio en la web necesitaba poder pedir una fecha sin buscar de nuevo en el catálogo.",
     },
     built: [
       {
-        title: { en: "Clinic website", es: "Sitio de la clínica" },
+        title: { en: "From treatment to appointment", es: "Del tratamiento a la solicitud" },
         body: {
-          en: "I built the responsive Astro site so visitors can find dental services, clinic information and appointment links from their phones.",
-          es: "Desarrollé el sitio adaptable en Astro para que los visitantes pudieran encontrar servicios dentales, información de la clínica y el acceso a citas desde el teléfono.",
+          en: "I designed the responsive service pages and the booking dialog. A treatment page can open the dialog with its service already selected. Patients who enter through the general booking link can choose between the dental and spa catalogs.",
+          es: "Diseñé las páginas de servicios y el formulario de citas para móvil y escritorio. Desde una página de tratamiento, el formulario puede abrirse con el servicio ya elegido. Desde el acceso general se puede escoger entre odontología y spa.",
         },
       },
       {
-        title: { en: "Appointment requests", es: "Solicitud de citas" },
+        title: { en: "Booking API integration", es: "Integración con la API de citas" },
         body: {
-          en: "I built a React form with a date picker, international phone input and service selection. I connected it to the backend API and handled submission feedback.",
-          es: "Construí un formulario en React con selector de fecha, teléfono internacional y selección de servicios. Lo conecté a la API y añadí mensajes de confirmación y error.",
+          en: "I implemented the date picker, contact fields and request submission. The form gives patients a confirmation when the API accepts the request and a way to retry or contact reception if it fails.",
+          es: "Implementé el calendario, los campos de contacto y el envío de la solicitud. El formulario confirma la recepción cuando la API la acepta. Si falla, el paciente puede reintentarlo o contactar con recepción.",
         },
       },
       {
-        title: { en: "Web delivery and accessibility", es: "Publicación y accesibilidad web" },
+        title: { en: "Meet the clinical team", es: "Presentación del equipo clínico" },
         body: {
-          en: "I configured the sitemap, optimized images and added accessibility linting to the frontend.",
-          es: "Configuré el sitemap, optimicé imágenes y añadí comprobaciones de accesibilidad al frontend.",
+          en: "I built the team directory with portraits, names and clinical roles. On a phone, patients can see who works at the practice before they request a visit.",
+          es: "Desarrollé el directorio del equipo con retratos, nombres y especialidades o cargos. Desde el móvil, un paciente puede conocer al personal antes de solicitar la cita.",
         },
       },
     ],
     decisions: [
       {
-        title: { en: "JavaScript only where it earns it", es: "JavaScript solo donde se lo gana" },
+        title: { en: "Represent a visit as a calendar date", es: "Enviar la fecha como día de calendario" },
         body: {
-          en: "Content pages need no client code. Astro islands hydrate the form and the carousel and leave everything else as HTML.",
-          es: "Las páginas de contenido no necesitan código de cliente. Las islas de Astro hidratan el formulario y el carrusel y dejan todo lo demás como HTML.",
+          en: "The form sends the preferred visit and birth dates as calendar dates. Serializing them as UTC timestamps could turn the patient’s selection into the previous or following day when systems use different time zones.",
+          es: "El formulario envía tanto la fecha preferida como la de nacimiento como días de calendario. Convertirlas en instantes UTC podría desplazar la fecha elegida un día al pasar entre sistemas con distintos husos horarios.",
+        },
+      },
+      {
+        title: { en: "Clear the form only after acceptance", es: "Vaciar el formulario tras la confirmación" },
+        body: {
+          en: "I tied the success message and form reset to the API’s creation response. The submit control is disabled during the request, and a failure leaves the fields filled in for a retry.",
+          es: "Vinculé el mensaje de confirmación y el reinicio del formulario a la respuesta de creación de la API. Durante el envío se desactiva el botón y, si hay un fallo, los campos conservan sus valores para reintentarlo.",
         },
       },
     ],
     outcome: {
-      en: "The site is live on Vercel. Patients can choose a service and send an appointment request from the website.",
-      es: "El sitio está en línea en Vercel. Los pacientes pueden elegir un servicio y enviar una solicitud de cita desde allí.",
+      en: "On the public site, a patient can go from a treatment description to requesting a preferred date on a phone. The confirmation acknowledges receipt of that request. The clinic still controls the final appointment.",
+      es: "En el sitio público se puede pasar de leer sobre un tratamiento a solicitar una fecha desde el teléfono. La confirmación indica que la solicitud se ha recibido. La asignación definitiva de la cita queda en manos de la clínica.",
     },
     stack: ["Astro", "React", "TypeScript", "Tailwind CSS", "Radix UI", "React Hook Form", "Python", "Django", "Django REST Framework", "Celery", "Redis", "Vercel"],
   },
@@ -713,18 +761,16 @@ const all: Project[] = [
     slug: "nel-shey-medical-center",
     logo: "/career/nel.png",
     additionalMedia: {
-      width: 390,
-      height: 844,
-      caption: { en: "Choosing a date and time for an appointment on mobile.", es: "Selección de fecha y horario para una cita en móvil." },
+      src: "/projects/details/nel-shey-home-mobile.webp",
+      width: 780,
+      height: 1688,
+      caption: { en: "Medical center homepage on mobile", es: "Portada del centro médico en móvil" },
     },
     caseMedia: {
       src: "/projects/previews/nel-shey-medical-center-light.webp",
       width: 1280,
       height: 800,
-      caption: {
-        en: "Nel & Shey’s homepage with its appointment calendar and links to services.",
-        es: "Inicio de Nel & Shey con el calendario de citas y los accesos a servicios.",
-      },
+      caption: { en: "Clinic services and appointment calendar", es: "Servicios médicos y calendario de citas" },
     },
     name: "Nel & Shey Medical Center",
     year: "2024",
@@ -747,44 +793,51 @@ const all: Project[] = [
     },
     facts: [],
     problem: {
-      en: "Patients needed a way to find the right service and request a visit from their phones.",
-      es: "Los pacientes necesitaban encontrar el servicio adecuado y poder solicitar una cita desde el teléfono.",
+      en: "The medical center needed to explain very different services within one site. A patient reading about a treatment on a phone also needed room to enter contact details and choose a preferred date and time.",
+      es: "El centro necesitaba explicar servicios médicos distintos dentro de un mismo sitio. Quien consultara un tratamiento desde el móvil también debía poder completar sus datos y elegir una fecha y una hora con comodidad.",
     },
     built: [
       {
-        title: { en: "Visual design", es: "Diseño visual" },
+        title: { en: "Homepage and treatment pages", es: "Portada y páginas de tratamientos" },
         body: {
-          en: "I designed the homepage and service pages, including how visitors find the appointment flow from each section.",
-          es: "Diseñé la página de inicio y las páginas de servicios, incluida la forma de acceder a la solicitud de citas desde cada sección.",
+          en: "I designed the homepage and service pages, then implemented the layouts in Astro. Each treatment has room for its own medical content and a consistent route to appointment requests.",
+          es: "Diseñé la portada y las páginas de servicios y las implementé en Astro. Cada tratamiento tiene espacio para su contenido médico y conserva el mismo acceso a la solicitud de citas.",
         },
       },
       {
-        title: { en: "Responsive layout", es: "Adaptación a móviles" },
+        title: { en: "Mobile layout and appointment calendar", es: "Diseño móvil y calendario de citas" },
         body: {
-          en: "I adapted the navigation, page sections and calendar for narrow screens.",
-          es: "Adapté la navegación, las secciones y el calendario para pantallas estrechas.",
+          en: "I adapted the site for narrow screens and built the calendar and time selector. The appointment form places contact and insurance fields in a single column on phones and groups them in columns on larger screens.",
+          es: "Adapté el sitio a pantallas estrechas y desarrollé el calendario y el selector de hora. En el móvil, el formulario ordena los campos de contacto y seguro en una columna. En pantallas grandes los agrupa en varias columnas.",
         },
       },
       {
-        title: { en: "Calendar and appointment requests", es: "Calendario y solicitud de citas" },
+        title: { en: "Patient reviews", es: "Reseñas de pacientes" },
         body: {
-          en: "I built the React calendar and connected the appointment form to the clinic’s API so patients can submit their preferred date and time.",
-          es: "Desarrollé el calendario en React y conecté el formulario de citas con la API de la clínica para enviar la fecha y el horario preferidos.",
+          en: "I built the patient review form and connected it to the clinic’s API. Visitors can leave a star rating and describe their experience in their own words.",
+          es: "Desarrollé el formulario de reseñas y lo conecté con la API de la clínica. Los pacientes pueden puntuar su visita con estrellas y contar su experiencia.",
         },
       },
     ],
     decisions: [
       {
-        title: { en: "One appointment flow across the site", es: "Un mismo flujo de citas en todo el sitio" },
+        title: { en: "Share the layout across service pages", es: "Compartir la estructura de las páginas de servicios" },
         body: {
-          en: "Appointment links from the home and service pages lead to the same form. It sends the preferred date and time to the clinic’s Laravel API.",
-          es: "Los enlaces de citas del inicio y las páginas de servicios llevan al mismo formulario. Este envía la fecha y el horario preferidos a la API de la clínica en Laravel.",
+          en: "I used one Astro route driven by the service catalog, with a shared layout and treatment-specific content components. A treatment can have its own explanation while navigation and booking links stay consistent across the catalog.",
+          es: "Usé una ruta de Astro alimentada por el catálogo, con una plantilla común y componentes específicos para el contenido de cada tratamiento. Así cada servicio tiene su propia explicación y mantiene la misma navegación y el mismo acceso a citas.",
+        },
+      },
+      {
+        title: { en: "Keep the patient’s date and time separate", es: "Conservar por separado el día y la hora" },
+        body: {
+          en: "I made the calendar capture a preferred day and a separate time selection. The form passes both fields to the appointment API, so reception receives the actual preference along with the patient’s contact details.",
+          es: "Hice que el calendario recogiera el día preferido y que la hora se eligiera por separado. El formulario envía ambos campos a la API de citas, de modo que recepción recibe la preferencia concreta junto con los datos de contacto.",
         },
       },
     ],
     outcome: {
-      en: "Patients can browse services and send an appointment request from the clinic’s website.",
-      es: "Los pacientes pueden consultar los servicios y enviar una solicitud de cita desde el sitio de la clínica.",
+      en: "The site is public. A patient can read about a service, select a preferred day and time and send the request to reception. The desktop and phone screenshots show how the same homepage adapts, from the navigation down to the appointment link.",
+      es: "El sitio está publicado. Un paciente puede consultar un servicio, elegir día y hora y enviar la solicitud a recepción. Las capturas de escritorio y móvil permiten comparar cómo adapté la misma portada, desde la navegación hasta el acceso a citas.",
     },
     stack: ["Astro", "React", "TypeScript", "Tailwind CSS", "Laravel"],
   },
@@ -792,18 +845,16 @@ const all: Project[] = [
     slug: "connetcare",
     logo: "/career/connetcare.png",
     additionalMedia: {
-      width: 1280,
-      height: 800,
-      caption: { en: "Learner view with course modules and available lessons.", es: "Vista del alumno con los módulos del curso y las lecciones disponibles." },
+      src: "/projects/details/connetcare-blog.webp",
+      width: 1440,
+      height: 900,
+      caption: { en: "Health blog article", es: "Artículo del blog de salud" },
     },
     caseMedia: {
       src: "/projects/previews/connetcare-light.webp",
       width: 1280,
       height: 800,
-      caption: {
-        en: "ConnetCare’s public site for discovering services, courses and articles.",
-        es: "Sitio público de ConnetCare para descubrir servicios, cursos y artículos.",
-      },
+      caption: { en: "Services and course catalog", es: "Servicios y catálogo de cursos" },
     },
     name: "ConnetCare",
     year: "2024–2026",
@@ -831,53 +882,60 @@ const all: Project[] = [
     },
     built: [
       {
-        title: { en: "Public site and blog", es: "Sitio público y blog" },
+        title: { en: "Public site and learner interface", es: "Sitio público e interfaz del alumno" },
         body: {
-          en: "I implemented the web interface and the Astro blog, with React components for browsing courses.",
-          es: "Implementé la interfaz web y el blog en Astro, con componentes React para explorar los cursos.",
+          en: "I implemented the public web interface and Astro blog, then built the course experience where a learner opens a module and works through its lessons. The course view distinguishes available and locked modules.",
+          es: "Implementé la interfaz del sitio público y el blog en Astro. Después desarrollé la vista donde el alumno abre un módulo y recorre sus lecciones. Ahí puede distinguir qué módulos tiene disponibles y cuáles siguen bloqueados.",
         },
       },
       {
-        title: { en: "Course experience", es: "Plataforma de cursos" },
+        title: { en: "Checkout and sign-in", es: "Pago e inicio de sesión" },
         body: {
-          en: "I built the interface for learners to browse a course, see which modules are available and watch lessons.",
-          es: "Desarrollé la interfaz para que los alumnos consulten un curso, vean los módulos habilitados y reproduzcan las lecciones.",
+          en: "I connected Stripe checkout to the NestJS backend and implemented account access with HTTP-only cookies. A returning learner can sign in and reopen the modules their payments have unlocked.",
+          es: "Conecté el pago con Stripe al backend en NestJS e implementé el acceso a la cuenta mediante cookies HttpOnly. Al volver, el alumno puede iniciar sesión y retomar los módulos que ha desbloqueado con sus pagos.",
         },
       },
       {
-        title: { en: "Stripe payments", es: "Pagos con Stripe" },
+        title: { en: "Access administration", es: "Administración de accesos" },
         body: {
-          en: "I integrated Stripe Checkout for purchases and subscriptions and handled payment confirmation in NestJS.",
-          es: "Integré Stripe Checkout para compras y suscripciones y gestioné la confirmación de pagos en NestJS.",
+          en: "I built the staff controls for managing access by learner and module. Support can inspect or adjust a specific enrollment when a learner asks why a lesson is locked.",
+          es: "Desarrollé los controles con los que el equipo administra el acceso por alumno y módulo. Así puede revisar o ajustar una matrícula concreta cuando alguien consulta por una lección bloqueada.",
         },
       },
       {
-        title: { en: "Authentication and session cookies", es: "Autenticación y cookies de sesión" },
+        title: { en: "Course editing tools", es: "Edición de cursos" },
         body: {
-          en: "I implemented sign-in with email or Google and session cookies managed by the NestJS backend.",
-          es: "Implementé el inicio de sesión con correo o Google y cookies de sesión gestionadas por el backend en NestJS.",
+          en: "I built the admin screens for editing modules and their videos. Staff can change a lesson or add material to a course from the same interface they use to organize it.",
+          es: "Desarrollé las pantallas de administración de módulos y vídeos. El equipo puede editar una lección o añadir material desde la misma interfaz donde organiza el curso.",
         },
       },
       {
-        title: { en: "Course administration", es: "Administración de cursos" },
+        title: { en: "Health blog publishing", es: "Publicación del blog de salud" },
         body: {
-          en: "I worked on the course administration flow that lets staff publish courses and manage module access for each learner.",
-          es: "Trabajé en el flujo de administración que permite al equipo publicar cursos y gestionar el acceso a módulos de cada alumno.",
+          en: "I built the article template and category navigation around a Markdown collection. Each article carries its author and publication date from the source file into the reading view.",
+          es: "Creé la plantilla de artículos y la navegación por categorías a partir de una colección en Markdown. La vista de lectura toma el autor y la fecha de publicación del archivo de cada artículo.",
         },
       },
     ],
     decisions: [
       {
-        title: { en: "Confirm payment on the server", es: "Confirmar los pagos en el servidor" },
+        title: { en: "Grant access from a verified payment", es: "Conceder acceso tras verificar el pago" },
         body: {
-          en: "The backend verifies Stripe’s webhook before recording the payment. The course interface reads module access from the API, and staff can adjust it for individual learners in the admin panel.",
-          es: "El backend verifica el webhook de Stripe antes de registrar el pago. La interfaz de cursos consulta en la API qué módulos están habilitados, y el equipo puede ajustar el acceso de cada alumno desde el panel de administración.",
+          en: "The NestJS webhook verifies Stripe’s signature against the raw request and checks payment status before unlocking content. Processing the same event twice leaves access unchanged. Once payment clears, enrollment can finish even if the learner has closed the checkout tab.",
+          es: "El webhook de NestJS comprueba la firma de Stripe sobre la petición original y verifica el estado del pago antes de desbloquear contenido. Recibir dos veces el mismo evento deja los permisos intactos. Una vez confirmado el cobro, la matrícula puede completarse aunque el alumno ya haya cerrado la pestaña.",
+        },
+      },
+      {
+        title: { en: "Keep earned access after the last installment", es: "Conservar lo adquirido tras la última cuota" },
+        body: {
+          en: "I tracked access by learner and module. Paid installments progressively unlock content, and a completed payment plan can end its Stripe subscription without taking away modules the learner has already paid for.",
+          es: "Registré los permisos por alumno y módulo. Cada cuota pagada habilita el contenido correspondiente y, al liquidar el plan, la suscripción de Stripe puede terminar sin retirar los módulos ya adquiridos.",
         },
       },
     ],
     outcome: {
-      en: "Learners can buy a course and return to their available lessons. Staff can publish courses and manage access from the admin panel.",
-      es: "Los alumnos pueden comprar un curso y retomar las lecciones que tienen habilitadas. El equipo puede publicar cursos y gestionar el acceso desde el panel de administración.",
+      en: "A learner paying in installments can come back between payments and continue with the modules already unlocked. Backend tests cover duplicate Stripe notifications and the end of a fully paid plan, two points where an enrollment could otherwise be granted twice or lost.",
+      es: "Un alumno que paga a plazos puede volver entre cuotas y continuar con los módulos que ya tiene disponibles. Las pruebas del backend cubren los avisos duplicados de Stripe y el cierre de un plan liquidado, dos situaciones en las que se podría conceder acceso dos veces o perder lo ya adquirido.",
     },
     stack: ["Astro", "React", "Next.js", "TypeScript", "NestJS", "Prisma", "Stripe"],
   },
