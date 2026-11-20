@@ -19,7 +19,7 @@ export default async function WorkPage() {
   const { locale, t } = await getDict();
   const items = projects.filter((project) => !project.parent).map((project) => {
     const mobile = projects.find((candidate) => candidate.parent === project.slug);
-    const previewSlug = project.slug === "bmori" ? "bmori-mobile" : project.slug;
+    const webPreview = project.slug === "bmori" ? project.caseMedia : undefined;
     return {
       slug: project.slug,
       name: project.name,
@@ -30,12 +30,13 @@ export default async function WorkPage() {
       repo: project.repo,
       logo: project.logo,
       preview: {
-        src: `/projects/previews/${previewSlug}-light.webp`,
+        src: (typeof webPreview?.src === "string" ? webPreview.src : webPreview?.src?.[locale])
+          ?? `/projects/previews/${project.slug}-light.webp`,
         dark: darkPreviews.has(project.slug) ? `/projects/previews/${project.slug}-dark.webp` : undefined,
-        width: previewSlug === "bmori-mobile" ? 360 : 1280,
-        height: 800,
+        width: webPreview?.width ?? 1280,
+        height: webPreview?.height ?? 800,
       },
-      mobile: mobile && { slug: mobile.slug, platforms: mobile.platforms },
+      mobile: mobile && { slug: mobile.slug },
     };
   });
   const kinds = [...new Set(items.flatMap((project) => project.kinds))];

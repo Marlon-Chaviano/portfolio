@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useId, useRef, useState, ViewTransition } from "react";
+import { useEffect, useId, useRef, useState, ViewTransition, type CSSProperties } from "react";
 import type { Project, ProjectKind } from "@/content/projects";
+import { PhoneIcon } from "./phone-icon";
 import { BrandIcon } from "./brand-icon";
 import { MoveLink } from "./move-link";
 import { Row } from "./page-shell";
@@ -10,7 +11,7 @@ import { Row } from "./page-shell";
 type GalleryItem = Pick<Project, "slug" | "name" | "url" | "repo" | "kinds" | "logo" | "websitePending"> & {
   description: string;
   preview: { src: string; dark?: string; width: number; height: number };
-  mobile?: Pick<Project, "slug" | "platforms">;
+  mobile?: Pick<Project, "slug">;
 };
 type GalleryLabels = { count: string; filter: string; visit: string; source: string; mobile: string; unavailable: string };
 type FilterKey = "all" | ProjectKind;
@@ -79,7 +80,7 @@ function ProjectCard({ item, locale, labels, previewPosition, onPreviewOpen, onP
         onNavigate={onPreviewClose}
       >
         <ViewTransition name={`project-logo-${item.slug}`} share="morph" default="none">
-          <Image src={item.logo} alt="" width={52} height={52} className="work-card-logo" />
+          <Image src={item.logo} alt="" width={52} height={52} loading="eager" className="work-card-logo" />
         </ViewTransition>
         <div className="work-card-heading">
           <h3 className="min-w-0">
@@ -111,7 +112,7 @@ function ProjectCard({ item, locale, labels, previewPosition, onPreviewOpen, onP
           </a>
         )}
         {item.repo && (
-          <a href={item.repo} target="_blank" rel="noopener noreferrer" aria-label={`${labels.source} · ${item.name} (GitHub)`} className="work-card-action">
+          <a href={item.repo} target="_blank" rel="noopener noreferrer" aria-label={`${labels.source} · ${item.name} (GitHub)`} className="work-card-action btn-white">
             {labels.source}
             <BrandIcon name="github" size={18} />
           </a>
@@ -124,11 +125,7 @@ function ProjectCard({ item, locale, labels, previewPosition, onPreviewOpen, onP
             onNavigate={onPreviewClose}
           >
             <span>{labels.mobile}</span>
-            {item.mobile.platforms && (
-              <span className="work-mobile-platforms" aria-hidden="true">
-                {item.mobile.platforms.map((platform) => <BrandIcon key={platform} name={platform} size={13} monochrome />)}
-              </span>
-            )}
+            <PhoneIcon />
           </MoveLink>
         )}
       </div>
@@ -157,12 +154,14 @@ export function WorkGallery({ items, locale, filters, labels }: {
   filters: { key: FilterKey; label: string }[];
   labels: GalleryLabels;
 }) {
-  const [filter, setFilter] = useState<FilterKey>("all");
+  const [{ filter, direction }, setSelection] = useState<{
+    filter: FilterKey;
+    direction?: "forward" | "back";
+  }>({ filter: "all" });
   const [activePreview, setActivePreview] = useState<ActivePreview | null>(null);
   const visible = items.filter((item) => filter === "all" || item.kinds.includes(filter));
   const activeCard = activePreview?.card;
   const activeAspectRatio = activePreview?.aspectRatio;
-
   useEffect(() => {
     if (!activeCard || !activeAspectRatio) return;
 
@@ -187,15 +186,17 @@ export function WorkGallery({ items, locale, filters, labels }: {
   return (
     <Row label={labels.count} className="work-projects">
       <div role="group" aria-label={labels.filter} className="work-filters">
-        {filters.map(({ key, label }) => (
+        {filters.map(({ key, label }, index) => (
           <button
             key={key}
             type="button"
             className="work-filter"
             aria-pressed={filter === key}
             onClick={() => {
+              if (filter === key) return;
               setActivePreview(null);
-              setFilter(key);
+              const previous = filters.findIndex(option => option.key === filter);
+              setSelection({ filter: key, direction: index > previous ? "forward" : "back" });
             }}
             data-sound="tab"
           >
@@ -203,9 +204,9 @@ export function WorkGallery({ items, locale, filters, labels }: {
           </button>
         ))}
       </div>
-      <ol role="list" className="work-gallery-grid" data-filter={filter}>
-        {visible.map((item) => (
-          <li key={item.slug}>
+      <ol key={filter} role="list" className="work-gallery-grid" data-filter={filter} data-direction={direction}>
+        {visible.map((item, index) => (
+          <li key={item.slug} style={{ "--card-order": Math.min(index, 4) } as CSSProperties}>
             <ProjectCard
               item={item}
               locale={locale}
