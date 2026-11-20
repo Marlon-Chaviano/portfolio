@@ -26,7 +26,7 @@ export function Footer({ locale, t }: { locale: Locale; t: Dict }) {
             </ul>
           </nav>
 
-          <nav aria-label={f.elsewhere}><SocialLinks variant="footer" /></nav>
+          <nav aria-label={f.elsewhere}><SocialLinks variant="footer" includeWhatsApp /></nav>
         </div>
 
         <div className="footer-meta frame-rule-top grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 py-3 font-mono text-xs text-muted sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:py-2">
