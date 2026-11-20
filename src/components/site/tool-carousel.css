@@ -1,0 +1,37 @@
+.tool-carousel { contain: inline-size; overflow: clip; cursor: default; }
+.tool-carousel:focus-visible { outline-offset: -3px; }
+.tool-carousel-track { display: flex; width: max-content; }
+.tool-carousel-list { display: flex; flex: none; }
+.tool-carousel-item {
+  display: flex;
+  width: clamp(9rem, 13vw, 12rem);
+  min-height: clamp(4.5rem, 6vw, 6rem);
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  border-inline-end: 1px solid var(--line);
+}
+.tool-carousel-track .brand-icon:not(.brand-icon-mono) { filter: none; }
+
+@media (prefers-color-scheme: dark) {
+  .tool-carousel-track .brand-icon[src="/brands/django.svg"] { filter: brightness(0) invert(1); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tool-carousel-track { animation: tools-loop 48s linear infinite; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tool-carousel:hover .tool-carousel-track { animation-play-state: paused; }
+}
+
+.tool-carousel:focus-visible .tool-carousel-track { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tool-carousel { overflow-x: auto; }
+  .tool-carousel-copy { display: none; }
+}
+
+@keyframes tools-loop {
+  to { transform: translateX(-50%); }
+}

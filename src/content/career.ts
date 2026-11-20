@@ -29,7 +29,7 @@ export const career: CareerEntry[] = [
         en: "I built Bonafide’s single sign-on (SSO) interface and authentication flow, along with a service for the banking platform.",
       },
     ],
-    links: [{ label: "B-Morï", url: "/work/bmori" }],
+    links: [{ label: "B-Morï", url: "/work/bmori", logo: "/career/bmori-mobile.png" }],
   },
   {
     title: { es: "Ezi Group LLC", en: "Ezi Group LLC" },

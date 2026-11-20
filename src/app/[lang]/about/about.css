@@ -1,4 +1,63 @@
+.page-header.about-header {
+  margin-inline-end: calc(1px - var(--page-gutter));
+  padding-block: 0;
+}
+.about-header > .section-label { margin-block-start: 2rem; }
+.about-signature {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) min(24vw, 17.5rem);
+  align-items: center;
+  --portrait-inset: clamp(.75rem, 1.8vw, 1.5rem);
+  padding-block: var(--portrait-inset);
+  padding-inline-end: var(--portrait-inset);
+}
+.about-intro {
+  padding-inline-end: clamp(.75rem, 2vw, 2rem);
+}
+.about-signature .page-title { font-size: clamp(3.25rem, 8.5vw, 7.25rem); line-height: .96; }
+.about-portrait-frame { position: relative; aspect-ratio: 1; }
+.about-portrait { object-fit: cover; object-position: 50% 24%; filter: saturate(.35); }
+@media (max-width: 639px) {
+  .about-signature { grid-template-columns: minmax(0, 1fr) 30vw; }
+  .about-signature .page-title { font-size: clamp(2.25rem, 11vw, 3.75rem); }
+  .about-intro p { margin-top: .75rem; font-size: .95rem; }
+  .about-portrait-frame { aspect-ratio: 4 / 5; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .about-portrait { filter: saturate(0); opacity: .85; }
+  .about-signature:hover .about-portrait { filter: saturate(1); opacity: 1; }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .about-portrait { transition: filter 350ms ease-out, opacity 350ms ease-out; }
+}
+
+.profile-statement {
+  max-inline-size: 36ch;
+  font-size: clamp(1.5rem, 2.7vw, 2.35rem);
+  line-height: 1.23;
+  letter-spacing: -.025em;
+  text-wrap: pretty;
+}
+.profile-ink { display: none; }
+@media screen and (prefers-reduced-motion: no-preference) and (scripting: enabled) and (forced-colors: none) {
+  .profile-word { position: relative; display: inline-block; color: var(--faint); }
+  .profile-ink {
+    position: absolute;
+    display: block;
+    inset: 0;
+    color: var(--fg);
+    pointer-events: none;
+    user-select: none;
+    clip-path: inset(0 clamp(0%, calc((var(--word-order) + 1 - var(--read-position, 0)) * 100%), 100%) 0 0);
+  }
+  .profile-ink::before { content: attr(data-word); }
+}
+
 section.about-building { padding-block: clamp(2.75rem, 6vw, 5rem); }
+.career-copy:focus-within { opacity: 1 !important; transform: none !important; }
+@media (prefers-reduced-motion: reduce), (scripting: none), print {
+  .career-copy { opacity: 1 !important; transform: none !important; }
+}
 .about-building > .editorial-content { container-type: inline-size; }
 .about-projects { display: grid; gap: 0.75rem; }
 
@@ -52,8 +111,6 @@ section.about-tools {
   padding-block: 0.875rem 0;
 }
 .about-tools > .section-label { position: static; align-self: center; }
-.tool-carousel { contain: inline-size; overflow: clip; cursor: default; }
-.tool-carousel:focus-visible { outline-offset: -3px; }
 @media (width < 1024px) {
   .about-tools .tool-carousel {
     margin-inline: calc(-1 * var(--page-gutter));
@@ -65,18 +122,6 @@ section.about-tools {
   .about-tools > .editorial-content { padding-inline-start: 0; }
   .about-tools .tool-carousel { inline-size: calc(100% + var(--page-gutter)); }
 }
-.tool-carousel-track { display: flex; width: max-content; }
-.tool-carousel-list { display: flex; flex: none; }
-.tool-carousel-item {
-  display: flex;
-  width: clamp(9rem, 13vw, 12rem);
-  min-height: clamp(4.5rem, 6vw, 6rem);
-  align-items: center;
-  justify-content: center;
-  gap: 0.625rem;
-  border-inline-end: 1px solid var(--line);
-}
-.tool-carousel-track .brand-icon:not(.brand-icon-mono),
 .about-activity-mark .brand-icon:not(.brand-icon-mono) { filter: none; }
 
 .about-activities {
@@ -120,25 +165,4 @@ section.about-tools {
   .about-activity-arrow { align-self: start; }
   .about-activity-value { min-height: 1.75rem; }
   .about-activity-metric { flex-direction: row-reverse; align-items: baseline; justify-content: flex-end; gap: 0.5rem; }
-}
-
-@media (prefers-color-scheme: dark) {
-  .tool-carousel-track .brand-icon[src="/brands/django.svg"] { filter: brightness(0) invert(1); }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .tool-carousel-track { animation: about-tools-loop 48s linear infinite; }
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .tool-carousel:hover .tool-carousel-track { animation-play-state: paused; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .tool-carousel { overflow-x: auto; }
-  .tool-carousel-copy { display: none; }
-}
-
-@keyframes about-tools-loop {
-  to { transform: translateX(-50%); }
 }

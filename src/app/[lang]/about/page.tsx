@@ -1,13 +1,13 @@
 import Image from "next/image";
-import { CareerMarker, CareerProgress } from "@/components/site/career-progress";
+import { CareerEntryContent, CareerMarker, CareerProgress } from "@/components/site/career-progress";
+import { ScrollInkText } from "@/components/site/scroll-ink-text";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { career, education } from "@/content/career";
-import { coreTools } from "@/content/platform-tools";
 import { site } from "@/content/site";
 import { JsonLd } from "@/components/seo/json-ld";
 import { MoveLink } from "@/components/ui/move-link";
-import { PageHeader, PageShell, Row } from "@/components/ui/page-shell";
+import { PageShell, Row } from "@/components/ui/page-shell";
 import { CvDownload } from "@/components/ui/cv-download";
 import { SocialLinks } from "@/components/site/social-links";
 import { BrandIcon } from "@/components/ui/brand-icon";
@@ -48,10 +48,23 @@ export default async function AboutPage() {
 
   return (
     <PageShell>
-      <PageHeader index="02" label={a.title} title={site.name} intro={`${site.role} · ${site.location}`} />
+      <header className="page-header about-header">
+        <p className="section-label hidden lg:block">{a.title}</p>
+        <div className="editorial-content about-signature">
+          <div className="about-intro">
+            <h1 className="display page-title">{site.name}</h1>
+            <p className="mt-5 text-lg leading-relaxed text-muted">{site.role} · {site.location}</p>
+          </div>
+          <div className="about-portrait-frame">
+            <Image src="/marlon-chaviano.webp" alt="" fill
+              sizes="(min-width: 1167px) 280px, (min-width: 640px) 24vw, 30vw"
+              className="about-portrait" />
+          </div>
+        </div>
+      </header>
       <div className="page-sections">
         <Row label={a.profile}>
-          <p className="max-w-2xl text-xl leading-relaxed sm:text-2xl">{a.bio}</p>
+          <ScrollInkText text={a.bio} intro />
           <p className="mt-5 max-w-2xl leading-relaxed text-muted">{a.bioMore}</p>
           <div className="mt-6 flex flex-wrap items-center gap-2">
             <SocialLinks />
@@ -69,11 +82,13 @@ export default async function AboutPage() {
                     <CareerMarker />
                     <p className="label text-muted">{entry.period[locale]}</p>
                   </div>
-                  <div className="editorial-content">
+                  <CareerEntryContent>
                     <h3 className="title text-3xl sm:text-4xl">{entry.title[locale]}</h3>
                     <p className="mt-2 font-medium">{entry.role[locale]}</p>
                     <ul className="mt-4 max-w-prose space-y-2 leading-relaxed text-muted">
-                      {entry.highlights.map((detail) => <li key={detail.en}>{detail[locale]}</li>)}
+                      {entry.highlights.map((detail) => (
+                        <li key={detail.en}><ScrollInkText text={detail[locale]} /></li>
+                      ))}
                     </ul>
                     {entry.links && (
                       <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
@@ -94,7 +109,7 @@ export default async function AboutPage() {
                         })}
                       </div>
                     )}
-                  </div>
+                  </CareerEntryContent>
                 </li>
               ))}
             </ol>
@@ -119,14 +134,7 @@ export default async function AboutPage() {
           </ul>
         </Row>
         <Row id="tools" label={a.skills} className="about-tools scroll-mt-16">
-          <ToolCarousel label={a.skills}>
-            {coreTools.map((name) => (
-              <li key={name} className="tool-carousel-item">
-                <BrandIcon name={name} size={26} />
-                <span className="whitespace-nowrap text-xs font-medium">{name}</span>
-              </li>
-            ))}
-          </ToolCarousel>
+          <ToolCarousel label={a.skills} />
         </Row>
         <Row label={a.offTitle}>
           <ul role="list" className="about-activities">

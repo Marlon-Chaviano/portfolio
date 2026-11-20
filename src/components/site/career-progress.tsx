@@ -1,7 +1,20 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
+
+export function CareerEntryContent({ children }: { children: ReactNode }) {
+  const content = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: content, offset: ["start 86%", "start 44%"] });
+  const opacity = useTransform(scrollYProgress, [0, 1], [0.38, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], [40, 0]);
+
+  return (
+    <div ref={content} className="editorial-content">
+      <motion.div className="career-copy" style={{ opacity, y }}>{children}</motion.div>
+    </div>
+  );
+}
 
 /** The rail itself is the scroll target, so its fill tracks the viewport midpoint. */
 export function CareerProgress() {
