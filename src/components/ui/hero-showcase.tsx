@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import type { Dict } from "@/i18n/en";
 import { BrandIcon } from "./brand-icon";
@@ -20,12 +20,17 @@ type ShowcaseItem = {
 const transitionMs = 1650;
 const holdMs = (layer: ShowcaseLayer, last: boolean) => layer.holdMs ?? (last ? 5000 : 3200);
 
-function WebShot({ shot, eager = false }: { shot: Shot; eager?: boolean }) {
+function WebShot({ shot, phone, eager }: { shot: Shot; phone: boolean; eager: boolean }) {
+  const sizes = phone
+    ? "(max-width: 799px) 24vw, (max-width: 1320px) 13vw, 175px"
+    : "(max-width: 799px) 80vw, (max-width: 1320px) 44vw, 575px";
+  const common = { width: shot.width, height: shot.height, sizes };
+  const dark = shot.dark && getImageProps({ ...common, src: shot.dark, alt: "" }).props;
   return (
     <picture>
-      {shot.dark && <source media="(prefers-color-scheme: dark)" srcSet={shot.dark} />}
-      <Image src={shot.src} alt="" width={shot.width} height={shot.height}
-        loading={eager ? "eager" : "lazy"} unoptimized />
+      {dark && <source media="(prefers-color-scheme: dark)" srcSet={dark.srcSet} sizes={sizes} />}
+      <Image {...common} src={shot.src} alt="" loading={eager ? "eager" : "lazy"}
+        fetchPriority={eager && !phone ? "high" : undefined} />
     </picture>
   );
 }
@@ -42,7 +47,7 @@ function ShowcaseClip({ shot, paused, onFinish }: {
     function update() {
       if (!video) return;
       const src = dark.matches ? shot.darkClip ?? shot.clip : shot.clip;
-      if (!src || !motion.matches || document.hidden) {
+      if (paused || !src || !motion.matches || document.hidden) {
         video.pause();
         return;
       }
@@ -51,9 +56,7 @@ function ShowcaseClip({ shot, paused, onFinish }: {
         onFinish?.("playing");
         video.src = src;
       }
-      if (paused) {
-        video.pause();
-      } else if (!video.ended) {
+      if (!video.ended) {
         void video.play().catch((error: DOMException) => {
           if (error.name !== "AbortError") onFinish?.("unavailable");
         });
@@ -125,7 +128,7 @@ function ProjectLayers({ item, presenting, paused, autoAdvance, onNext, pendingL
               if (event.target === event.currentTarget && event.animationName === "showcase-send-back") setFront(i + 1);
             }}>
             {shot ? <>
-              <WebShot shot={shot} eager={eager && i < 2} />
+              <WebShot shot={shot} phone={Boolean(phone)} eager={eager && i < 2} />
               {shot.clip && presenting && position !== "far" && <ShowcaseClip shot={shot} paused={paused || !playClip} onFinish={i === last ? setFinalClip : undefined} />}
             </> : (
               <div className="home-web-placeholder">
