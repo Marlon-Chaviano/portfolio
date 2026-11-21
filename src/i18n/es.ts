@@ -41,7 +41,7 @@ export const es: Dict = {
     top: "Volver arriba",
   },
   meta: {
-    home: { title: "Marlon Chaviano — Full Stack AI Engineer" },
+    home: { title: "Marlon Chaviano — Ingeniero full stack de IA" },
     work: {
       title: "Trabajo",
       description: "Casos de estudio de Marlon Chaviano: Diodi, Grialink, first-commit, B-Morï Mobile y más — productos web, móviles y de IA construidos de principio a fin.",
@@ -55,7 +55,7 @@ export const es: Dict = {
       description: "Los libros que Marlon Chaviano está leyendo ahora y los que ya terminó.",
     },
     blog: {
-      title: "Blog",
+      title: "Notas de ingeniería",
       description: "Notas de Marlon Chaviano sobre construir productos de principio a fin: frontend, backend, móvil y agentes de IA.",
     },
     contact: {

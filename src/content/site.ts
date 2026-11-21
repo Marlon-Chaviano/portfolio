@@ -11,11 +11,12 @@ export const site = {
   timeZone: "America/Havana",
 
   /** Production origin, no trailing slash. Set NEXT_PUBLIC_SITE_URL on the host. */
-  url:
-    process.env.NEXT_PUBLIC_SITE_URL ??
+  url: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
     (process.env.VERCEL_PROJECT_PRODUCTION_URL
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
       : "http://localhost:3000"),
+  ).origin,
 
   // Public contact details confirmed by Marlon.
   email: "chavianomarlon@gmail.com",
@@ -49,7 +50,7 @@ export const site = {
   /** One citable sentence. Used in metadata, JSON-LD and llms.txt. */
   description: {
     en: "Marlon Chaviano is a Full Stack AI Engineer based in Villa Clara, Cuba. He builds web products, mobile apps and AI tools, including Grialink, Diodi and first-commit.",
-    es: "Marlon Chaviano es un Full Stack AI Engineer radicado en Villa Clara, Cuba. Construye productos web, apps móviles y herramientas con IA, entre ellos Grialink, Diodi y first-commit.",
+    es: "Marlon Chaviano es ingeniero full stack de IA en Villa Clara, Cuba. Conoce su trabajo en aplicaciones web y móviles como Grialink, Diodi y B-Morï.",
   } satisfies Localized,
 
   knowsAbout: [

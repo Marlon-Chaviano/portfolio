@@ -23,21 +23,23 @@ export function pageMetadata({
 }): Metadata {
   const url = `/${locale}${path}`;
   // Nested pages replace the inherited Open Graph block, so the shared card is named here.
-  const image = { url: `/${locale}/opengraph-image`, width: 1200, height: 630, alt: `${site.name} — ${site.role}` };
+  const socialTitle = path ? `${title} — ${site.name}` : title;
+  const image = { url: `/${locale}/opengraph-image`, width: 1200, height: 630, alt: locale === "es" ? "Marlon Chaviano, ingeniero full stack de IA" : `${site.name}, ${site.role}` };
   return {
     title,
     description,
     alternates: { canonical: url, languages: languageAlternates(path) },
     openGraph: {
-      title,
+      title: socialTitle,
       description,
       url,
       siteName: site.name,
       locale: locale === "es" ? "es_ES" : "en_US",
+      alternateLocale: locale === "es" ? "en_US" : "es_ES",
       type: "website",
       images: [image],
     },
-    twitter: { card: "summary_large_image", title, description, images: [image] },
+    twitter: { card: "summary_large_image", creator: "@marlonchaviano", title: socialTitle, description, images: [image] },
   };
 }
 
@@ -50,7 +52,8 @@ export const personLd = (locale: Locale) => ({
   name: site.name,
   jobTitle: site.role,
   description: site.description[locale],
-  url: absolute(`/${locale}`),
+  url: absolute(`/${locale}/about`),
+  image: absolute("/marlon-chaviano.webp"),
   address: { "@type": "PostalAddress", addressRegion: "Villa Clara", addressCountry: "CU" },
   knowsAbout: site.knowsAbout,
   knowsLanguage: ["es", "en"],

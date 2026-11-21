@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/work/[slug
   return pageMetadata({
     locale,
     path: `/work/${slug}`,
-    title: `${project.name} — ${project.tagline[locale]}`,
+    title: `${project.name} · ${locale === "es" ? "Caso de estudio" : "Case study"}`,
     description: project.summary[locale],
   });
 }

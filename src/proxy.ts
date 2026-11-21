@@ -4,11 +4,19 @@ import { defaultLocale, isLocale, locales } from "@/lib/i18n";
 /** Pick the visitor's language from Accept-Language; English when in doubt. */
 function preferredLocale(request: NextRequest) {
   const header = request.headers.get("accept-language") ?? "";
+  let best = defaultLocale;
+  let highest = 0;
   for (const part of header.split(",")) {
-    const tag = part.split(";")[0].trim().slice(0, 2).toLowerCase();
-    if (isLocale(tag)) return tag;
+    const [range, ...params] = part.trim().toLowerCase().split(";");
+    const tag = range.trim().split("-")[0];
+    const weight = params.map((param) => param.trim()).find((param) => param.startsWith("q="));
+    const quality = weight === undefined ? 1 : Number(weight.slice(2));
+    if (isLocale(tag) && quality > highest && quality <= 1) {
+      best = tag;
+      highest = quality;
+    }
   }
-  return defaultLocale;
+  return best;
 }
 
 export function proxy(request: NextRequest) {
@@ -18,7 +26,9 @@ export function proxy(request: NextRequest) {
 
   const url = request.nextUrl.clone();
   url.pathname = `/${preferredLocale(request)}${pathname === "/" ? "" : pathname}`;
-  return NextResponse.redirect(url);
+  const response = NextResponse.redirect(url);
+  response.headers.append("Vary", "Accept-Language");
+  return response;
 }
 
 export const config = {

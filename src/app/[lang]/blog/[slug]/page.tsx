@@ -27,7 +27,8 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/blog/[slug
   const base = pageMetadata({ locale, path: `/blog/${slug}`, title: text.title, description: text.summary });
   return {
     ...base,
-    openGraph: { ...base.openGraph, type: "article", publishedTime: post.date, authors: [site.name] },
+    ...(post.sample && { robots: { index: false, follow: true } }),
+    openGraph: { ...base.openGraph, type: "article", publishedTime: post.date, authors: [absolute(`/${locale}/about`)] },
   };
 }
 

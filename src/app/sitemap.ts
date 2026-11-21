@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     ...navRoutes.map((r) => r.path),
     ...projects.map((p) => `/work/${p.slug}`),
-    ...posts.map((p) => `/blog/${p.slug}`),
+    ...posts.filter((post) => !post.sample).map((p) => `/blog/${p.slug}`),
   ];
 
   return paths.flatMap((path) =>

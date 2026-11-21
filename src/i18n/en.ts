@@ -53,7 +53,7 @@ export const en = {
       description: "The books Marlon Chaviano is reading now and the ones he has finished.",
     },
     blog: {
-      title: "Blog",
+      title: "Engineering notes",
       description: "Notes by Marlon Chaviano on building products end to end: frontend, backend, mobile and AI agents.",
     },
     contact: {

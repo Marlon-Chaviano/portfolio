@@ -61,7 +61,7 @@ export async function generateMetadata(): Promise<Metadata> {
     applicationName: site.name,
     authors: [{ name: site.name, url: site.url }],
     creator: site.name,
-    robots: { index: true, follow: true, googleBot: { "max-image-preview": "large", "max-snippet": -1 } },
+    robots: { index: process.env.VERCEL_ENV !== "preview", follow: true, googleBot: { "max-image-preview": "large", "max-snippet": -1 } },
   };
 }
 
