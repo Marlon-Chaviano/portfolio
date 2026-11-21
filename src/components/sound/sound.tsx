@@ -133,9 +133,10 @@ export function SoundEffects() {
     const onKey = (event: KeyboardEvent) => {
       unlock();
       if (event.key.toLowerCase() !== "m") return;
-      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      if (!event.ctrlKey || !event.shiftKey || event.metaKey || event.altKey || event.repeat) return;
       const el = event.target as HTMLElement | null;
       if (el?.closest("input, textarea, select, [contenteditable]")) return;
+      event.preventDefault();
       toggleSound();
     };
 
@@ -162,7 +163,7 @@ export function SoundToggle({ on, off, hint }: { on: string; off: string; hint: 
       onClick={toggleSound}
       aria-label={isOn ? on : off}
       aria-pressed={isOn}
-      aria-keyshortcuts="M"
+      aria-keyshortcuts="Control+Shift+M"
       title={`${isOn ? on : off} · ${hint}`}
       data-sound="none"
       className="nav-tool aria-pressed:text-fg"

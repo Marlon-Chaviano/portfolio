@@ -6,12 +6,11 @@ import { motion, useScroll, useTransform } from "motion/react";
 export function CareerEntryContent({ children }: { children: ReactNode }) {
   const content = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: content, offset: ["start 86%", "start 44%"] });
-  const opacity = useTransform(scrollYProgress, [0, 1], [0.38, 1]);
   const y = useTransform(scrollYProgress, [0, 1], [40, 0]);
 
   return (
     <div ref={content} className="editorial-content">
-      <motion.div className="career-copy" style={{ opacity, y }}>{children}</motion.div>
+      <motion.div className="career-copy" style={{ y }}>{children}</motion.div>
     </div>
   );
 }

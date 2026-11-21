@@ -59,7 +59,7 @@ export default async function ContactPage() {
                 </p>
               </div>
             </div>
-            <nav aria-label={c.elsewhere} className="contact-socials border-t border-line pt-4">
+            <nav aria-label={`${c.title} · ${c.elsewhere}`} className="contact-socials border-t border-line pt-4">
               <SocialLinks includeWhatsApp />
             </nav>
           </div>

@@ -1,4 +1,4 @@
-.tool-carousel { contain: inline-size; overflow: clip; cursor: default; }
+.tool-carousel { position: relative; contain: inline-size; overflow: clip; cursor: default; }
 .tool-carousel:focus-visible { outline-offset: -3px; }
 .tool-carousel-track { display: flex; width: max-content; }
 .tool-carousel-list { display: flex; flex: none; }
@@ -34,4 +34,27 @@
 
 @keyframes tools-loop {
   to { transform: translateX(-50%); }
+}
+
+.tool-carousel-control {
+  position: absolute;
+  inset-inline-end: 0;
+  bottom: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  color: var(--fg);
+  background: var(--bg);
+  border: 1px solid var(--line);
+}
+.tool-carousel-control:focus-within { outline: 2px solid var(--fg); outline-offset: -3px; }
+.tool-carousel:has(input:checked) .tool-carousel-track { animation-play-state: paused; }
+.tool-carousel-control .tools-play,
+.tool-carousel-control:has(input:checked) .tools-pause { display: none; }
+.tool-carousel-control:has(input:checked) .tools-play { display: block; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tool-carousel-control { display: none; }
 }

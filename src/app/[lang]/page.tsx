@@ -193,7 +193,7 @@ export default async function HomePage() {
         </section>
         <ActivitySection locale={locale} labels={h.activity} />
         <div className="home-tools">
-          <ToolCarousel label={t.about.skills} />
+          <ToolCarousel label={t.about.skills} pause={t.home.showcase.pause} />
         </div>
       </ScrollReveals>
 

@@ -84,7 +84,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
       label: localizePost(post, locale).title,
       href: `/${locale}/blog/${post.slug}`,
     })),
-    { group: t.palette.actions, label: t.palette.toggleSound, hint: "M", action: "sound" as const },
+    { group: t.palette.actions, label: t.palette.toggleSound, hint: "Ctrl+Shift+M", action: "sound" as const },
     {
       group: t.palette.actions,
       label: t.palette.switchLanguage,

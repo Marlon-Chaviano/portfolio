@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useDesktopInteractions } from "@/lib/desktop-interactions";
 import { otherLocale, stripLocale, type Locale } from "@/lib/i18n";
 import { navRoutes, sectionOf, type NavKey } from "@/lib/routes";
@@ -30,11 +30,22 @@ export function Header({ locale, name, cvHref, labels }: { locale: Locale; name:
   const [open, setOpen] = useState(false);
   const desktop = useDesktopInteractions();
   const macShortcut = desktop && /^Mac/i.test(window.navigator.platform);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const navLabel = locale === "es" ? "Principal" : "Main";
   const active = sectionOf(pathname);
   const switchHref = `/${otherLocale(locale)}${stripLocale(pathname)}`;
 
   return (
     <header
+      onKeyDown={(event) => {
+        if (open && event.key === "Escape") {
+          setOpen(false);
+          menuButton.current?.focus();
+        }
+      }}
+      onBlur={(event) => {
+        if (open && !event.currentTarget.contains(event.relatedTarget)) setOpen(false);
+      }}
       style={{ viewTransitionName: "site-header" }}
       className="fixed inset-x-0 top-0 z-50 border-b border-line bg-bg/80 text-fg backdrop-blur-md"
     >
@@ -46,7 +57,7 @@ export function Header({ locale, name, cvHref, labels }: { locale: Locale; name:
           <CvDownload href={cvHref} label={labels.cv} className="nav-icon" />
         </div>
 
-        <nav aria-label="Main" className="hidden items-stretch lg:flex">
+        <nav aria-label={navLabel} className="hidden items-stretch lg:flex">
           {navRoutes.slice(1).map((route) => (
             <MoveLink
               key={route.key}
@@ -66,7 +77,7 @@ export function Header({ locale, name, cvHref, labels }: { locale: Locale; name:
               <button
                 type="button"
                 onClick={openPalette}
-                aria-label={labels.search}
+                aria-label={`${labels.search} · ${macShortcut ? "⌘" : "Ctrl"}+K`}
                 aria-keyshortcuts={macShortcut ? "Meta+K" : "Control+K"}
                 title={`${labels.search} · ${macShortcut ? "⌘" : "Ctrl"}+K`}
                 className="nav-tool"
@@ -88,7 +99,8 @@ export function Header({ locale, name, cvHref, labels }: { locale: Locale; name:
             type="button"
             className="nav-menu-toggle flex items-center justify-center border-l border-line text-fg uppercase lg:hidden"
             aria-expanded={open}
-            aria-controls="mobile-menu"
+            ref={menuButton}
+            aria-controls={open ? "mobile-menu" : undefined}
             onClick={() => setOpen((v) => !v)}
           >
             {open ? labels.close : labels.menu}
@@ -97,7 +109,7 @@ export function Header({ locale, name, cvHref, labels }: { locale: Locale; name:
       </div>
 
       {open && (
-        <nav id="mobile-menu" aria-label="Main" className="site-mobile-menu absolute inset-x-0 overflow-y-auto bg-bg px-5 sm:px-10 lg:hidden">
+        <nav id="mobile-menu" aria-label={navLabel} className="site-mobile-menu absolute inset-x-0 overflow-y-auto bg-bg px-5 sm:px-10 lg:hidden">
           <div className="site-mobile-menu-links flex flex-col">
             {navRoutes.map((route) => (
               <MoveLink

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { useDesktopInteractions } from "@/lib/desktop-interactions";
 import { toggleSound } from "../sound/sound";
 
@@ -28,6 +28,7 @@ export function CommandPalette({
   empty: string;
   hint: string;
 }) {
+  const listId = useId();
   const router = useRouter();
   const dialog = useRef<HTMLDialogElement>(null);
   const [query, setQuery] = useState("");
@@ -70,6 +71,10 @@ export function CommandPalette({
     else if (item.href) router.push(item.href);
   };
 
+  useEffect(() => {
+    if (dialog.current?.open) document.getElementById(`${listId}-${selected}`)?.scrollIntoView({ block: "nearest" });
+  }, [selected, listId]);
+
   if (!desktop) return null;
 
   return (
@@ -83,6 +88,12 @@ export function CommandPalette({
       }}
     >
       <input
+        role="combobox"
+        aria-autocomplete="list"
+        aria-expanded={true}
+        aria-controls={listId}
+        aria-activedescendant={results.length ? `${listId}-${selected}` : undefined}
+        aria-describedby={`${listId}-hint`}
         value={query}
         onChange={(event) => {
           setQuery(event.target.value);
@@ -106,25 +117,25 @@ export function CommandPalette({
         spellCheck={false}
         className="w-full border-b border-line bg-transparent px-5 py-4 text-base outline-none placeholder:text-muted"
       />
-      <ul role="listbox" className="max-h-[50vh] overflow-y-auto py-2">
-        {results.length === 0 && <li className="px-4 py-6 font-mono text-sm text-muted">{empty}</li>}
+      <ul id={listId} role="listbox" aria-label={placeholder} className="max-h-[50vh] overflow-y-auto py-2">
         {results.map((item, i) => (
-          <li key={`${item.group}-${item.label}`} role="option" aria-selected={i === selected}>
-            <button
-              type="button"
-              onClick={() => run(item)}
-              onPointerMove={() => setIndex(i)}
-              className={`flex w-full items-baseline justify-between gap-4 px-5 py-2.5 text-left text-sm ${
-                i === selected ? "bg-fg text-bg" : ""
-              }`}
-            >
-              <span>{item.label}</span>
-              <span className="label opacity-50">{item.hint ?? item.group}</span>
-            </button>
+          <li
+            key={`${item.group}-${item.label}`}
+            id={`${listId}-${i}`}
+            role="option"
+            aria-selected={i === selected}
+            onMouseDown={(event) => event.preventDefault()}
+            onClick={() => run(item)}
+            onPointerMove={() => setIndex(i)}
+            className={`flex w-full items-baseline justify-between gap-4 px-5 py-2.5 text-left text-sm ${i === selected ? "bg-fg text-bg" : ""}`}
+          >
+            <span>{item.label}</span>
+            <span className="label">{item.hint ?? item.group}</span>
           </li>
         ))}
       </ul>
-      <p className="label border-t border-line px-4 py-3 text-muted">{hint}</p>
+      {results.length === 0 && <p role="status" className="px-4 py-6 font-mono text-sm text-muted">{empty}</p>}
+      <p id={`${listId}-hint`} className="label border-t border-line px-4 py-3 text-muted">{hint}</p>
     </dialog>
   );
 }

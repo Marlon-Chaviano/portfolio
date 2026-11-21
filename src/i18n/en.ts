@@ -15,7 +15,7 @@ export const en = {
   sound: {
     on: "Sound on",
     off: "Sound off",
-    hint: "Press M",
+    hint: "Press Ctrl+Shift+M",
   },
   palette: {
     open: "Search",

@@ -52,8 +52,8 @@
   }
   .work-gallery-grid .work-card:focus-within :is(.work-card-link, .work-card-actions) { animation: none; }
   @keyframes work-content-enter {
-    from { opacity: .3; transform: translate(var(--arrival-x), var(--arrival-y)); }
-    to { opacity: 1; transform: none; }
+    from { transform: translate(var(--arrival-x), var(--arrival-y)); }
+    to { transform: none; }
   }
 }
 .work-card-preview {

@@ -134,7 +134,7 @@ export default async function AboutPage() {
           </ul>
         </Row>
         <Row id="tools" label={a.skills} className="about-tools scroll-mt-16">
-          <ToolCarousel label={a.skills} />
+          <ToolCarousel label={a.skills} pause={t.home.showcase.pause} />
         </Row>
         <Row label={a.offTitle}>
           <ul role="list" className="about-activities">
@@ -144,15 +144,14 @@ export default async function AboutPage() {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`${name} · ${action}`}
-                  aria-describedby={`${icon}-metric`}
                   title={action}
                   className="about-activity-link"
                 >
                   <span className="about-activity-mark"><BrandIcon name={icon} size={24} /></span>
                   <div className="about-activity-copy">
                     <h3 className="title text-base sm:text-lg">{name}</h3>
-                    <div id={`${icon}-metric`} className="about-activity-value">
+                    <span className="sr-only">{action}</span>
+                    <div className="about-activity-value">
                       <Suspense fallback={<p role="status" className="text-xs text-muted">{loading}</p>}>
                         {stats}
                       </Suspense>

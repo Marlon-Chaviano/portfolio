@@ -17,7 +17,7 @@ export const es: Dict = {
   sound: {
     on: "Sonido activado",
     off: "Sonido apagado",
-    hint: "Pulsa M",
+    hint: "Pulsa Ctrl+Shift+M",
   },
   palette: {
     open: "Buscar",
