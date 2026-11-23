@@ -1,3 +1,4 @@
+import { ContactInvitation } from "@/components/site/contact-invitation";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -218,6 +219,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/[lang]/work/
         </div>
       </article>
 
+      <ContactInvitation locale={locale} t={t} placement="caseStudy" />
       <div className="frame-rule-top case-next">
         <span className="case-next-label">{c.next}</span>
         <div className="editorial-content">

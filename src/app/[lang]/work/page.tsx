@@ -1,3 +1,4 @@
+import { ContactInvitation } from "@/components/site/contact-invitation";
 import type { Metadata } from "next";
 import { projects } from "@/content/projects";
 import type { ProjectSlug } from "@/content/slugs";
@@ -62,6 +63,7 @@ export default async function WorkPage() {
         items={items}
       />
 
+      <ContactInvitation locale={locale} t={t} placement="work" />
       <JsonLd
         data={{
           "@context": "https://schema.org",

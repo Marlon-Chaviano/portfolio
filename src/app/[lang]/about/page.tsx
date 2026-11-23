@@ -1,3 +1,4 @@
+import { ContactInvitation } from "@/components/site/contact-invitation";
 import Image from "next/image";
 import { CareerEntryContent, CareerMarker, CareerProgress } from "@/components/site/career-progress";
 import { ScrollInkText } from "@/components/site/scroll-ink-text";
@@ -166,6 +167,7 @@ export default async function AboutPage() {
         <Row label={a.play}>
           <TilePuzzle labels={a.puzzle} />
         </Row>
+        <ContactInvitation locale={locale} t={t} placement="about" />
       </div>
       <JsonLd data={{ "@context": "https://schema.org", "@type": "ProfilePage", url: absolute(`/${locale}/about`), inLanguage: locale, name: `${a.title} — ${site.name}`, mainEntity: personLd(locale) }} />
     </PageShell>

@@ -14,6 +14,19 @@ export const es: Dict = {
     language: "English",
     languageLabel: "Switch to English",
   },
+  invitation: {
+    action: "Escríbeme",
+    work: {
+      heading: "¿Qué te gustaría construir?",
+      detail: "Cuéntame qué tienes en mente y quién usaría la primera versión.",
+      shortDetail: "¿Qué tienes en mente y para quién?",
+    },
+    caseStudy: { heading: "¿Tienes un proyecto parecido?", detail: "" },
+    about: {
+      heading: "¿Hay sitio en tu equipo?",
+      detail: "Me gustaría saber qué están construyendo y dónde podría aportar.",
+    },
+  },
   sound: {
     on: "Sonido activado",
     off: "Sonido apagado",

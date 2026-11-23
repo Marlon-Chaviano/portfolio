@@ -7,6 +7,7 @@ import { getProject, projects, type Project } from "@/content/projects";
 import { site } from "@/content/site";
 import { JsonLd } from "@/components/seo/json-ld";
 import { HeroShowcase, type ShowcaseLayer } from "@/components/ui/hero-showcase";
+import { ContactInvitation } from "@/components/site/contact-invitation";
 import { ToolCarousel } from "@/components/site/tool-carousel";
 import { ActivitySection } from "@/components/home/activity-section";
 import { ScrollReveals } from "@/components/home/scroll-reveals";
@@ -108,7 +109,7 @@ export default async function HomePage() {
           <p className="home-lede">{site.tagline[locale]}</p>
           <div className="home-actions">
             <a href="#selected-work" className="btn btn-primary">{h.ctaWork} <span aria-hidden>↓</span></a>
-            <MoveLink href={`/${locale}/contact`} className="btn">{h.ctaContact}</MoveLink>
+            <MoveLink href={`/${locale}/contact`} className="btn btn-white">{h.ctaContact}</MoveLink>
           </div>
         </div>
         <HeroShowcase items={showcase} locale={locale} labels={h.showcase} />
@@ -196,6 +197,7 @@ export default async function HomePage() {
           <ToolCarousel label={t.about.skills} pause={t.home.showcase.pause} />
         </div>
       </ScrollReveals>
+      <ContactInvitation locale={locale} t={t} placement="work" />
 
       <JsonLd
         data={{

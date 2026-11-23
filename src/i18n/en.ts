@@ -12,6 +12,19 @@ export const en = {
     language: "Español",
     languageLabel: "Cambiar a español",
   },
+  invitation: {
+    action: "Get in touch",
+    work: {
+      heading: "What would you like to build?",
+      detail: "Tell me what you have in mind and who would use the first version.",
+      shortDetail: "What’s your idea, and who’s it for?",
+    },
+    caseStudy: { heading: "Working on something similar?", detail: "" },
+    about: {
+      heading: "Is there a role on your team?",
+      detail: "I’d love to hear what you’re building and where I could help.",
+    },
+  },
   sound: {
     on: "Sound on",
     off: "Sound off",
