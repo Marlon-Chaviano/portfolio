@@ -43,8 +43,8 @@ export const site = {
   leetcode: { username: "Marlon-Chaviano" },
 
   tagline: {
-    en: "Full Stack AI Engineer. I build web and mobile products that bring AI into calls, conversations and analytics.",
-    es: "Ingeniero full stack de IA. Construyo productos web y móviles que incorporan IA en llamadas, conversaciones y análisis de datos.",
+    en: "I’m a full-stack engineer building AI products for web and mobile. My work includes voice agents that book appointments and tools that track brand mentions in AI search.",
+    es: "Soy ingeniero full stack y desarrollo productos de IA para web y móvil. He creado agentes de voz que agendan citas y herramientas que rastrean menciones de marcas en buscadores de IA.",
   } satisfies Localized,
 
   /** One citable sentence. Used in metadata, JSON-LD and llms.txt. */

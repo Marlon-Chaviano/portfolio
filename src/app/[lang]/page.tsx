@@ -108,8 +108,8 @@ export default async function HomePage() {
           </h1>
           <p className="home-lede">{site.tagline[locale]}</p>
           <div className="home-actions">
-            <a href="#selected-work" className="btn btn-primary">{h.ctaWork} <span aria-hidden>↓</span></a>
             <MoveLink href={`/${locale}/contact`} className="btn btn-white">{h.ctaContact}</MoveLink>
+            <a href="#selected-work" className="btn">{h.ctaWork} <span aria-hidden>↓</span></a>
           </div>
         </div>
         <HeroShowcase items={showcase} locale={locale} labels={h.showcase} />
@@ -122,7 +122,7 @@ export default async function HomePage() {
           </div>
           <ul className="home-projects">
             {selected.map((project) => (
-              <li key={project.slug} data-reveal="project">
+              <li key={project.slug}>
                 <MoveLink href={`/${locale}/work/${project.slug}`} className="home-project" data-project={project.slug}>
                   <div className="home-project-content">
                     <div className="home-project-top">
@@ -137,7 +137,7 @@ export default async function HomePage() {
                       </ViewTransition>
                       <span aria-hidden>→</span>
                     </h3>
-                    <p>{(project.shortDescription ?? project.tagline)[locale]}</p>
+                    <p data-reveal="project">{(project.shortDescription ?? project.tagline)[locale]}</p>
                   </div>
                 </MoveLink>
               </li>

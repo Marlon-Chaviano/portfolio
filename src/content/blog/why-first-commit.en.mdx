@@ -1,0 +1,41 @@
+import Image from "next/image";
+import { ArticleVideo } from "@/components/ui/article-video";
+
+Starting a project meant picking a framework and installing its dependencies. I was fine with that part. What got tedious was hunting down the same design, architecture and security *skills* I’d used in another repo. Those instructions tell my coding agent how I want it to design a screen or review code. I already knew which ones worked for me, and there I was looking them up again so I could install them.
+
+That’s where first-commit came from. I wanted to save that setup once and pick it the next time I opened a repo. I called it a *kit*.
+
+## What I wanted waiting in my editor
+
+Take a mobile app. I might pick Expo as the framework and NativeWind for styling. I also want pnpm, and I want my mobile design instructions in place when I open the project in Claude Code or Codex. Those decisions fit in a single kit. The configurator gives me the command for that combination, and I can read the install plan before running it.
+
+<figure>
+  <Image src="/projects/details/first-commit-configurator-dark.webp" width={1440} height={900} sizes="(max-width: 768px) 92vw, 704px" alt="The Expo kit configurator with NativeWind, pnpm, Claude Code and Codex selected." />
+  <figcaption className="mt-2 text-sm leading-relaxed text-muted">As I change the Expo options, the command on the right picks up my choices.</figcaption>
+</figure>
+
+## At Bonafide, we’d already picked the typeface
+
+Building several projects for Bonafide brought up a different kind of repetition. Each app had a different job, but they all started with the same design system. With CSS, that meant bringing the variables over from another project. With Tailwind, I’d set up the theme again with those same colors and fonts.
+
+That’s why I added *brands*. A brand holds the palette, fonts and logo. Applying it generates CSS variables and writes the values to `docs/brand/tokens.json`. I can use Bonafide’s profile even if the next app starts from a different kit.
+
+If the identity already lives in one of my public GitHub repos, I can choose the branch and folder that contain the interface. first-commit looks through stylesheets, files such as `tokens.json`, and logo assets. It suggests colors and fonts and shows where it found them. That matters even for something as small as a button. A blue in the stylesheet might be the link color. I want to decide whether it also belongs in the brand’s primary color field. [Create a brand from GitHub](https://first-commit.dev/brands/new?source=github).
+
+## Turning the last project into my next kit
+
+Sometimes the best starting point is an app I already have running. To make a kit from that repo, I select the folder that contains its `package.json`. If the website and mobile app share a repository, I can pick the one I want to start from.
+
+first-commit reads the dependencies, looks for the framework the project uses, and looks for skills listed in `skills-lock.json`. Then I choose what to keep. I might take the form library and the accessibility instructions, and leave behind a dependency that only one screen in the old app needed. I can review the install plan and download the kit with the files I picked. [Create a kit from GitHub](https://first-commit.dev/kits/new).
+
+That’s the start I wanted at Bonafide. For the next app I can pick a stack that fits, apply the brand and get to work on the first screen. I’d much rather open the old repo to see how I solved a problem than to look up the same color again.
+
+<figure id="kit-demo">
+  <ArticleVideo className="block h-auto w-full" width={1600} height={900} controls playsInline preload="none" poster="/blog/first-commit/kit-demo.webp" aria-labelledby="kit-demo-caption">
+    <source src="/blog/first-commit/kit-demo.mp4" type="video/mp4" />
+    <track kind="subtitles" srcLang="es" label="Español" src="/blog/first-commit/kit-demo.es.vtt" />
+    <track kind="subtitles" srcLang="en" label="English" src="/blog/first-commit/kit-demo.en.vtt" />
+    <a href="/blog/first-commit/kit-demo.mp4">Download the video</a>
+  </ArticleVideo>
+  <figcaption id="kit-demo-caption" className="mt-2 text-sm leading-relaxed text-muted">Here’s how I choose the Next.js and Supabase kit, add Stripe and run the install command.</figcaption>
+</figure>

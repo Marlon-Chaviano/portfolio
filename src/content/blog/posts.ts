@@ -10,6 +10,7 @@ export type Post = {
   title: Partial<Record<Locale, string>>;
   summary: Partial<Record<Locale, string>>;
   tags: string[];
+  image?: string;
   /** Reading time in minutes. */
   minutes: number;
   /** Hidden from the site while true. */
@@ -22,24 +23,23 @@ export type Post = {
  * To publish a post:
  *   1. Write it in this folder as <slug>.en.mdx and/or <slug>.es.mdx.
  *   2. Add an entry here (newest first).
- * TODO(marlon): replace the sample post with your first real one.
  */
 const all: Post[] = [
   {
-    slug: "hello-world",
-    date: "2026-11-16",
+    slug: "why-first-commit",
+    image: "/projects/details/first-commit-configurator-dark.webp",
+    date: "2026-11-24",
     langs: ["en", "es"],
     title: {
-      en: "A first post, and how this blog works",
-      es: "Un primer artículo, y cómo funciona este blog",
+      en: "Why I built first-commit",
+      es: "Por qué creé first-commit",
     },
     summary: {
-      en: "A placeholder that shows what a post looks like here: headings, code, quotes and lists, written in MDX.",
-      es: "Un texto de ejemplo que muestra cómo se ve un artículo aquí: títulos, código, citas y listas, escrito en MDX.",
+      en: "I wanted to keep the agent skills I used to start a project. Building apps for Bonafide made me want to keep the brand settings, too.",
+      es: "Quería guardar las skills que usaba al empezar un proyecto. Trabajando para Bonafide me di cuenta de que también quería guardar la marca.",
     },
-    tags: ["meta"],
-    minutes: 2,
-    sample: true,
+    tags: ["first-commit", "GitHub"],
+    minutes: 3,
   },
 ];
 

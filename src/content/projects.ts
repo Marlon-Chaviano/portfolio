@@ -90,14 +90,16 @@ const all: Project[] = [
       es: "Construí una plataforma para medir cuándo aparecen las marcas en respuestas de IA y qué fuentes citan esas respuestas.",
     },
     shortDescription: {
-      en: "Tracks where brands appear in AI answers and which sources those answers cite.",
-      es: "Mide dónde aparecen las marcas en respuestas de IA y qué fuentes se citan.",
+      en: "More than 1,200 customers use Diodi to track brand mentions and sources cited in AI answers.",
+      es: "Más de 1200 clientes usan Diodi para seguir las menciones de marca y las fuentes citadas en respuestas de IA.",
     },
     summary: {
       en: "I designed and built Diodi so a marketing team can check how AI search engines describe its brand. The dashboard connects each visibility report to the answers collected for that project.",
       es: "Diseñé y desarrollé Diodi para que un equipo de marketing pueda ver cómo describen su marca los buscadores de IA. Desde el panel se puede pasar de un informe de visibilidad a las respuestas recopiladas para ese proyecto.",
     },
-    facts: [],
+    facts: [
+      { value: "1200+", label: { en: "customers", es: "clientes" } },
+    ],
     problem: {
       en: "A brand can appear in an answer while the link sends the reader to a competitor. I needed to make mentions and citations separately measurable and let the reader inspect the source of either number.",
       es: "Una respuesta puede mencionar una marca y enviar al lector a la web de un competidor. Necesitaba medir las menciones y las citas por separado y poder rastrear de dónde salía cada cifra.",
@@ -197,14 +199,17 @@ const all: Project[] = [
       es: "Amplié Chatwoot con agentes de IA que atienden llamadas, responden mensajes y agendan citas.",
     },
     shortDescription: {
-      en: "AI agents that answer calls, reply to messages, and book appointments.",
-      es: "Agentes de IA que atienden llamadas, responden mensajes y agendan citas.",
+      en: "AI agents for calls, messages and bookings. More than 150 active businesses and 500 users in total.",
+      es: "Agentes de IA para llamadas, mensajes y citas. Más de 150 negocios activos y 500 usuarios en total.",
     },
     summary: {
       en: "I built the voice and messaging agents for Grialink on top of Chatwoot’s shared inbox. A practice can use the same workspace to answer a call, book a visit and follow up with the patient.",
       es: "Desarrollé los agentes de voz y mensajería de Grialink sobre la bandeja compartida de Chatwoot. Desde un mismo espacio, una clínica puede atender una llamada, agendar una visita y retomar la conversación con el paciente.",
     },
-    facts: [],
+    facts: [
+      { value: "150+", label: { en: "active businesses", es: "negocios activos" } },
+      { value: 500, label: { en: "total users", es: "usuarios en total" } },
+    ],
     problem: {
       en: "A receptionist needs to know which times are free before promising a visit. A colleague taking over later needs the conversation, the appointment and the call record to agree.",
       es: "Para ofrecer una cita, la recepción necesita saber qué horarios están libres. Quien retome el caso después debe poder relacionar la conversación, la reserva y el registro de la llamada.",

@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { site } from "@/content/site";
-import { locales, type Locale } from "./i18n";
+import { defaultLocale, locales, type Locale } from "./i18n";
 
 export const absolute = (path: string) => `${site.url}${path}`;
 
 /** hreflang map for a locale-less path such as "/work". */
-export const languageAlternates = (path: string) => ({
-  ...Object.fromEntries(locales.map((l) => [l, `/${l}${path}`])),
-  "x-default": `/en${path}`,
+export const languageAlternates = (path: string, langs: readonly Locale[] = locales) => ({
+  ...Object.fromEntries(langs.map((l) => [l, absolute(`/${l}${path}`)])),
+  "x-default": absolute(`/${langs.includes(defaultLocale) ? defaultLocale : langs[0]}${path}`),
 });
 
 export function pageMetadata({
@@ -15,11 +15,15 @@ export function pageMetadata({
   path,
   title,
   description,
+  langs = locales,
+  imageUrl,
 }: {
   locale: Locale;
   path: string;
   title: string;
   description: string;
+  langs?: readonly Locale[];
+  imageUrl?: string;
 }): Metadata {
   const url = `/${locale}${path}`;
   // Nested pages replace the inherited Open Graph block, so the shared card is named here.
@@ -28,18 +32,18 @@ export function pageMetadata({
   return {
     title,
     description,
-    alternates: { canonical: url, languages: languageAlternates(path) },
+    alternates: { canonical: url, languages: languageAlternates(path, langs) },
     openGraph: {
       title: socialTitle,
       description,
       url,
       siteName: site.name,
       locale: locale === "es" ? "es_ES" : "en_US",
-      alternateLocale: locale === "es" ? "en_US" : "es_ES",
+      alternateLocale: langs.filter((lang) => lang !== locale).map((lang) => lang === "es" ? "es_ES" : "en_US"),
       type: "website",
-      images: [image],
+      images: [imageUrl ?? image],
     },
-    twitter: { card: "summary_large_image", creator: "@marlonchaviano", title: socialTitle, description, images: [image] },
+    twitter: { card: "summary_large_image", creator: "@marlonchaviano", title: socialTitle, description, images: [imageUrl ?? image] },
   };
 }
 

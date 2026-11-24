@@ -530,6 +530,29 @@ body {
   animation-timing-function: var(--ease-out);
 }
 
+/* Keep the shared logos and titles above the incoming page until the handoff. */
+::view-transition-group(project-diodi),
+::view-transition-group(project-grialink),
+::view-transition-group(project-first-commit),
+::view-transition-group(project-logo-diodi),
+::view-transition-group(project-logo-grialink),
+::view-transition-group(project-logo-first-commit) {
+  z-index: 1;
+}
+
+/* Move one rendering of the letters. Crossfading two font sizes doubles their edges. */
+::view-transition-old(project-diodi),
+::view-transition-old(project-grialink),
+::view-transition-old(project-first-commit) {
+  display: none;
+}
+::view-transition-new(project-diodi),
+::view-transition-new(project-grialink),
+::view-transition-new(project-first-commit) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
 ::view-transition-group(site-header) {
   animation: none;
   z-index: 100;

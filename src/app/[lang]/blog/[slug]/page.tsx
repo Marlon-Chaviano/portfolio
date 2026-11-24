@@ -24,7 +24,10 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/blog/[slug
   const post = getPost(slug);
   if (!post) return {};
   const text = localizePost(post, locale);
-  const base = pageMetadata({ locale, path: `/blog/${slug}`, title: text.title, description: text.summary });
+  const base = pageMetadata({
+    locale: text.lang, path: `/blog/${slug}`, title: text.title, description: text.summary,
+    langs: post.langs, imageUrl: post.image,
+  });
   return {
     ...base,
     ...(post.sample && { robots: { index: false, follow: true } }),
@@ -66,24 +69,26 @@ export default async function PostPage({ params }: PageProps<"/[lang]/blog/[slug
           )}
         </aside>
 
-        <div className="max-w-[44rem]">
-          <h1 className="display rise text-[clamp(2.5rem,6vw,5rem)]" style={{ "--i": 1 } as React.CSSProperties}>
-            {text.title}
-          </h1>
-          <p className="serif rise mt-6 text-2xl leading-snug text-muted" style={{ "--i": 2 } as React.CSSProperties}>
-            {text.summary}
-          </p>
+        <div className="min-w-0">
+          <header className="@container">
+            <h1 className="display rise text-[clamp(1.5rem,8.6cqi,5rem)]" style={{ "--i": 1 } as React.CSSProperties}>
+              {text.title}
+            </h1>
+            <p className="serif rise mt-6 max-w-[44rem] text-2xl leading-snug text-muted" style={{ "--i": 2 } as React.CSSProperties}>
+              {text.summary}
+            </p>
+          </header>
           {text.lang !== locale && (
             <p className="label mt-6 text-faint" lang={locale}>
               {b.onlyIn}
             </p>
           )}
 
-          <div className="blog-section-rule prose rise mt-12 pt-10" style={{ "--i": 3 } as React.CSSProperties}>
+          <div className="blog-section-rule prose rise mt-12 max-w-[44rem] pt-10" style={{ "--i": 3 } as React.CSSProperties}>
             <Body />
           </div>
 
-          <footer className="blog-section-rule label mt-16 flex flex-wrap items-center justify-between gap-4 pt-5" lang={locale}>
+          <footer className="blog-section-rule label mt-16 flex max-w-[44rem] flex-wrap items-center justify-between gap-4 pt-5" lang={locale}>
             <span className="text-faint">{site.name}</span>
             {next ? (
               <MoveLink href={`/${locale}/blog/${next.slug}`} className="link">
@@ -104,12 +109,13 @@ export default async function PostPage({ params }: PageProps<"/[lang]/blog/[slug
           "@type": "BlogPosting",
           headline: text.title,
           description: text.summary,
+          image: post.image && absolute(post.image),
           datePublished: post.date,
           inLanguage: text.lang,
           keywords: post.tags.join(", "),
           author: { "@id": absolute("/#person") },
           publisher: { "@id": absolute("/#person") },
-          mainEntityOfPage: absolute(`/${locale}/blog/${post.slug}`),
+          mainEntityOfPage: absolute(`/${text.lang}/blog/${post.slug}`),
         }}
       />
       <JsonLd

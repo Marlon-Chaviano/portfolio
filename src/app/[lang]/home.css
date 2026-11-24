@@ -1,4 +1,15 @@
 .home-page { padding-bottom: 0; overflow-x: clip; }
+@media (min-width: 1024px) {
+  .home-page > .editorial-row::after {
+    content: "";
+    position: absolute;
+    grid-column: 2;
+    inset-block: 0;
+    inset-inline-start: 0;
+    border-inline-start: 1px solid var(--line);
+    pointer-events: none;
+  }
+}
 .home-hero {
   display: grid;
   grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
@@ -197,7 +208,7 @@
       view-timeline-name: --project-entry;
       view-timeline-inset: 0 18%;
     }
-    .home-project:not(:focus-within) .home-project-content {
+    .home-project:not(:focus-within) [data-reveal="project"] {
       animation: home-project-enter linear both;
       animation-timeline: --project-entry;
       animation-range: entry var(--entry-start, 15%) entry var(--entry-end, 85%);
